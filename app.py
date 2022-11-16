@@ -28,6 +28,8 @@ connect_pool = mysql.connector.pooling.MySQLConnectionPool(
 )
 
 # Pages
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -161,12 +163,15 @@ def getAttractions():
     if (conn.is_connected()):
         cursor = conn.cursor()
     try:
-        page = int(request.args.get("page"))
+        page = request.args.get("page")
 
-        if (page < 0):
-            raise Exception("page no less than 0!")
+        if not re.match(r'^\d+$', page):
+            return jsonify({
+                "error": True,
+                "message": "使用者輸入錯誤"
+            }), 400
 
-        limitStart = page * 12
+        limitStart = int(page) * 12
         keyword = request.args.get("keyword")
 
         if (keyword != None):
@@ -185,7 +190,7 @@ def getAttractions():
             cursor.execute(
                 "select count(*) from attraction att inner join category cat on att.category_id = cat.id where cat.category = %s or attraction_name like %s", (keyword, f"%{keyword}%"))
             count = cursor.fetchone()[0]
-            
+
         else:
             cursor.execute(
                 "select att.id, att.attraction_name, cat.category, att.description, att.address, att.transport, mrt.mrt, att.latitude, att.longitude, att.image " +
