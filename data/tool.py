@@ -31,9 +31,6 @@ def addCat(mycursor, ata):
         category = results["CAT"]
         categorySet.add(category)
 
-    mycursor.execute(
-        "INSERT INTO trip.category (category) VALUES (%s)", (None, ))
-
     for cat in categorySet:
         if (cat == None):
             continue

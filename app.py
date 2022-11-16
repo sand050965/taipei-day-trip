@@ -16,7 +16,7 @@ app.config['SECRET_KEY'] = uuid.uuid4().hex
 dbconfig = {
     "host": "localhost",
     "user": "root",
-    "password": "root1234",
+    "password": "",
     "database": "trip"
 }
 
