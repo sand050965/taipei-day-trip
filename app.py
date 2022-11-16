@@ -16,7 +16,7 @@ app.config['SECRET_KEY'] = uuid.uuid4().hex
 dbconfig = {
     "host": "localhost",
     "user": "root",
-    "password": "",
+    "password": "root1234",
     "database": "trip"
 }
 
@@ -170,7 +170,8 @@ def getAttractions():
                 "message": "使用者輸入錯誤"
             }), 400
 
-        limitStart = int(page) * 12
+        page = int(page)
+        limitStart = page * 12
         keyword = request.args.get("keyword")
 
         if (keyword != None):
