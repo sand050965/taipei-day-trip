@@ -137,6 +137,9 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# VSCode stuff
+launch.json
+
 # Mac stuff
 .DS_Store
 
