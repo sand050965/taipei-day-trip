@@ -1,6 +1,5 @@
 from flask import *
 from sqlite3 import connect
-from decimal import *
 import mysql.connector
 import uuid
 import jwt
@@ -17,7 +16,7 @@ app.config['SECRET_KEY'] = uuid.uuid4().hex
 dbconfig = {
     "host": "localhost",
     "user": "root",
-    "password": "root1234",
+    "password": "",
     "database": "trip"
 }
 

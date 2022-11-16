@@ -6,7 +6,7 @@ import tool as module
 dbconfig = {
     "host": "localhost",
     "user": "root",
-    "password": "root1234",
+    "password": "",
     "database": "trip"
 }
 
