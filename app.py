@@ -309,14 +309,15 @@ def getCategories():
     if (conn.is_connected()):
         cursor = conn.cursor()
     try:
-        cursor.execute("select category from category")
+        cursor.execute("select category from attraction")
         categories = cursor.fetchall()
+        
+        dataSet = set()
 
-        dataList = []
         for category in categories:
-            dataList.append(category[0])
+            dataSet.add(category[0])
 
-        response = jsonify({"data": dataList})
+        response = jsonify({"data": list(dataSet)})
         return response, 200
 
     except Exception as e:
