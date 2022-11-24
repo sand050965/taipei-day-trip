@@ -157,8 +157,10 @@ def doUserAuth():
 @app.route("/api/attractions", methods=["GET"])
 def getAttractions():
     conn = connect_pool.get_connection()
+
     if (conn.is_connected()):
         cursor = conn.cursor()
+
     try:
         page = request.args.get("page")
 
@@ -174,53 +176,55 @@ def getAttractions():
 
         if (keyword != None):
             cursor.execute(
-                "select att.id, att.attraction_name, cat.category, att.description, att.address, att.transport, mrt.mrt, att.latitude, att.longitude, att.image " +
+                "select att.id, att.attraction_name, att.category, att.description, att.address, att.transport, att.mrt, att.latitude, att.longitude, group_concat(img.image_url) " +
                 "from attraction att " +
-                "inner join category cat on att.category_id = cat.id " +
-                "inner join mrt mrt on att.mrt_id = mrt.id " +
-                "where cat.category = %s " +
+                "inner join image img " +
+                "on att.id = img.attraction_id " +
+                "where att.category = %s " +
                 "or att.attraction_name like %s " +
+                "group by img.attraction_id " +
                 "limit %s, %s", (
-                    keyword, f"%{keyword}%", limitStart, 12)
+                    keyword, f"%{keyword}%", limitStart, 13)
             )
             attractions = cursor.fetchall()
-
-            cursor.execute(
-                "select count(*) from attraction att inner join category cat on att.category_id = cat.id where cat.category = %s or attraction_name like %s", (keyword, f"%{keyword}%"))
-            count = cursor.fetchone()[0]
 
         else:
             cursor.execute(
-                "select att.id, att.attraction_name, cat.category, att.description, att.address, att.transport, mrt.mrt, att.latitude, att.longitude, att.image " +
+                "select att.id, att.attraction_name, att.category, att.description, att.address, att.transport, att.mrt, att.latitude, att.longitude, group_concat(img.image_url) " +
                 "from attraction att " +
-                "inner join category cat on att.category_id = cat.id " +
-                "inner join mrt mrt on att.mrt_id = mrt.id " +
+                "inner join image img " +
+                "on att.id = img.attraction_id " +
+                "group by img.attraction_id " +
                 "limit %s, %s", (
-                    limitStart, 12)
+                    limitStart, 13)
             )
             attractions = cursor.fetchall()
 
-            cursor.execute("select count(*) from attraction")
-            count = cursor.fetchone()[0]
-
         dataList = []
+
         if (len(attractions) != 0):
-            for attraction in attractions:
+
+            for i in range(len(attractions)):
+
+                if i == 12:
+                    break
+
                 dataList.append({
-                    "id": attraction[0],
-                    "name": attraction[1],
-                    "category": attraction[2],
-                    "description": attraction[3],
-                    "address": attraction[4],
-                    "transport": attraction[5],
-                    "mrt": attraction[6],
-                    "lat": attraction[7],
-                    "lng": attraction[8],
-                    "images": eval(str(attraction[9])[2:-1])
+                    "id": attractions[i][0],
+                    "name": attractions[i][1],
+                    "category": attractions[i][2],
+                    "description": attractions[i][3],
+                    "address": attractions[i][4],
+                    "transport": attractions[i][5],
+                    "mrt": attractions[i][6],
+                    "lat": attractions[i][7],
+                    "lng": attractions[i][8],
+                    "images": (attractions[i][9].split(","))
                 })
 
         nextPage = None
-        if (len(dataList) != 0 and (count-limitStart-12 > 0)):
+
+        if (len(attractions) == 13):
             nextPage = page + 1
 
         response = jsonify({
@@ -243,8 +247,7 @@ def getAttractions():
 
 
 @app.route("/api/attraction/<attractionId>", methods=["GET"])
-def getAttractionById(attractionId):
-
+def getAttractionById(attractionId):   
     if not re.match(r'^[+]?[1-9][0-9]*$', attractionId):
         return jsonify({
             "error": True,
@@ -252,8 +255,10 @@ def getAttractionById(attractionId):
         }), 400
 
     conn = connect_pool.get_connection()
+    
     if (conn.is_connected()):
         cursor = conn.cursor()
+    
     try:
         cursor.execute(
             "select att.id, att.attraction_name, cat.category, att.description, att.address, att.transport, mrt.mrt, att.latitude, att.longitude, att.image " +

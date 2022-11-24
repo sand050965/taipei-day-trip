@@ -4,34 +4,19 @@ let attractionContainer = $("#attraction-container");
 let categoryList = $("#category-list");
 let searchBar = $("#search-bar");
 let magnifier = $("#magnifier");
+let isLoading = false;
 let isClickedSearchBar = false;
 let nextPage = null;
 let keyword = null;
-
-const throttle = (callback, delay) => {
-  let timer = null,
-    isClose = false;
-  return (...args) => {
-    if (isClose) return;
-
-    isClose = true;
-    clearTimeout(timer);
-    timer = setTimeout(
-      function () {
-        callback.apply(this, args);
-        isClose = false;
-      }.bind(this),
-      delay
-    );
-  };
-};
 
 const loadMore = () => {
   if (nextPage != null) {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
     if (clientHeight + scrollTop >= scrollHeight - 5) {
-      loadAttraction(nextPage, keyword);
+      if (!isLoading) {
+        loadAttraction(nextPage, keyword);
+      }
     }
   }
 };
@@ -42,6 +27,8 @@ const loadAttraction = async (page, keyword) => {
   if (keyword != null && keyword != "") {
     url += "&keyword=" + keyword;
   }
+
+  isLoading = true;
 
   const response = await fetch(url);
   const jsonResult = await response.json();
@@ -75,6 +62,8 @@ const loadAttraction = async (page, keyword) => {
 
     attractionContainer.appendChild(attractionItem);
   }
+
+  isLoading = false;
 };
 
 const clearAttraction = () => {
@@ -138,7 +127,7 @@ const searchByKeyword = () => {
 
 window.addEventListener("load", loadAttraction(0, null));
 
-window.addEventListener("scroll", throttle(loadMore, 100), false);
+window.addEventListener("scroll", loadMore, false);
 
 searchBar.addEventListener("click", loadCategory, true);
 
@@ -146,4 +135,4 @@ window.addEventListener("click", closeCategory, true);
 
 categoryList.addEventListener("click", fillInputKeyword, true);
 
-magnifier.addEventListener("click", searchByKeyword, 1000, true);
+magnifier.addEventListener("click", searchByKeyword, true);
