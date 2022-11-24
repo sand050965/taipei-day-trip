@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taipei Trip 台北一日遊</title>
+    <link rel="stylesheet" href={{url_for('static', filename='css/index.css')}}
+    />
+  </head>
+  <body>
+    <div class="navigation-bar-container">
+      <div class="navigation-bar">
+        <div>台北一日遊</div>
+        <div>預定行程</div>
+        <div>登入/註冊</div>
+      </div>
+    </div>
+    <div class="banner">
+      <div class="banner-content">
+        <div>輕鬆享受台北一日悠閒</div>
+        <div>探索每個角落，體驗城市的深度旅遊行程</div>
+        <div class="search">
+          <input id="search-bar" value="輸入景點名稱查詢" />
+          <div id="magnifier"></div>
+        </div>
+        <div id="category-list"></div>
+      </div>
+    </div>
+    <div class="wrapper">
+      <div id="attraction-container"></div>
+    </div>
+    <div class="footer"><div>COPYRIGHT © 2022 台北一日遊</div></div>
+    <script type="text/javascript" src={{url_for('static', filename='js/index.js')}}></script>
+  </body>
+</html>

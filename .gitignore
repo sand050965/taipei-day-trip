@@ -139,9 +139,11 @@ cython_debug/
 
 # VSCode stuff
 launch.json
+.vscode/
 
 # Mac stuff
 .DS_Store
 
 # SPEC
 *.pdf
+pdf/
