@@ -232,11 +232,11 @@
 
   #attraction-container {
     width: 90vw;
-    grid-template-columns: repeat(2, calc((90vw - 60px) / 2));
+    grid-template-columns: repeat(2, calc((90vw - 30px) / 2));
   }
 
   .attraction-image-name {
-    height: calc((197 / 270) * (90vw - 60px) / 2);
+    height: calc((197 / 270) * (90vw - 30px) / 2);
   }
 }
 
