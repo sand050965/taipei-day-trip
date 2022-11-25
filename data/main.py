@@ -21,15 +21,7 @@ if (conn.is_connected()):
     mycursor = conn.cursor()
     
 try:
-    module.insertMrtAndCat(mycursor, conn)
-
-    mrtResult = module.getAllMrt(mycursor)
-    catResult = module.getAllCat(mycursor)
-
-    mrtDict = module.turnMrtToDict(mrtResult)
-    catDict = module.turnCatToDict(catResult)
-
-    module.insertAttraction(mycursor, conn, mrtDict, catDict)
+    module.insertAttraction(mycursor, conn)
     conn.commit()
 
 except Exception as e:

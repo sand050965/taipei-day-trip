@@ -4,89 +4,32 @@ with open("data/taipei-attractions.json", "r") as jsonFile:
     data = json.load(jsonFile)
 
 
-def insertMrtAndCat(mycursor, conn):
-    addMrt(mycursor, data)
-    addCat(mycursor, data)
-
-
-def addMrt(mycursor, data):
-    mrtSet = set()
-    for i in range(data["result"]["count"]):
-        results = data["result"]["results"][i]
-        mrt = results["MRT"]
-        mrtSet.add(mrt)
-
-    mycursor.execute("INSERT INTO trip.mrt (mrt) VALUES (%s)", (None,))
-
-    for mrt in mrtSet:
-        if (mrt == None):
+def processImage(mycursor, id, urlList):
+    for url in urlList:
+        if (url[-4:].lower() != ".jpg" and url[-4:].lower() != ".png"):
             continue
-        mycursor.execute("INSERT INTO trip.mrt (mrt) VALUES (%s)", (mrt,))
-
-
-def addCat(mycursor, ata):
-    categorySet = set()
-    for i in range(data["result"]["count"]):
-        results = data["result"]["results"][i]
-        category = results["CAT"]
-        categorySet.add(category)
-
-    for cat in categorySet:
-        if (cat == None):
-            continue
+        url = "https" + url
         mycursor.execute(
-            "INSERT INTO trip.category (category) VALUES (%s)", (cat, ))
+            "INSERT INTO image (attraction_id, image_url) VALUES (%s, %s)", (id, url))
 
 
-def getAllMrt(mycursor):
-    mycursor.execute("SELECT * FROM trip.mrt")
-    mrts = mycursor.fetchall()
-    return mrts
-
-
-def getAllCat(mycursor):
-    mycursor.execute("SELECT * FROM trip.category")
-    categories = mycursor.fetchall()
-    return categories
-
-
-def turnMrtToDict(mrtResult):
-    mrtDict = dict()
-    for result in mrtResult:
-        mrtDict.update({result[1]: result[0]})
-    return mrtDict
-
-
-def turnCatToDict(catResult):
-    catDict = dict()
-    for result in catResult:
-        catDict.update({result[1]: result[0]})
-    return catDict
-
-
-def insertAttraction(mycursor, conn, mrtDict, catDict):
+def insertAttraction(mycursor, conn):
     for i in range(data["result"]["count"]):
         results = data["result"]["results"][i]
 
         images = results["file"]
         imageList = images.split("https")
         imageList.pop(0)
-
-        imageResultList = []
-        for url in imageList:
-            if (url[-4:].lower() != ".jpg" and url[-4:].lower() != ".png"):
-                continue
-            imageResultList.append("https" + url)
+        processImage(mycursor, i+1, imageList)
 
         name = results["name"]
-        category = catDict.get(results["CAT"])
+        category = results["CAT"]
         description = results["description"]
         address = results["address"]
         transport = results["direction"]
-        mrt = mrtDict.get(results["MRT"])
-        image = json.dumps(imageResultList)
+        mrt = results["MRT"]
         latitude = results["latitude"]
         longitude = results["longitude"]
 
-        mycursor.execute("INSERT INTO trip.attraction (attraction_name, category_id, image, description, address, transport, mrt_id, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                         (name, category, image, description, address, transport, mrt, latitude, longitude))
+        mycursor.execute("INSERT INTO attraction (attraction_name, category, description, address, transport, mrt, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                         (name, category, description, address, transport, mrt, latitude, longitude))
