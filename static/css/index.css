@@ -151,13 +151,13 @@
   width: 1200px;
   display: grid;
   grid-template-columns: repeat(4, 270px);
-  column-gap: 40px;
-  row-gap: 100px;
+  justify-content: center;
+  gap: 30px;
   font-size: 16px;
 }
 
 .attraction-item {
-  outline: 0.1px solid rgba(0, 0, 0, 0.5);
+  border: 1px solid #E8E8E8;
   border-radius: 3px;
 }
 
@@ -233,8 +233,6 @@
   #attraction-container {
     width: 90vw;
     grid-template-columns: repeat(2, calc((90vw - 60px) / 2));
-    justify-content: center;
-    column-gap: 60px;
   }
 
   .attraction-image-name {
@@ -267,6 +265,6 @@
   }
 
   .attraction-image-name {
-    height: calc((197 / 270) * 90vw);;
+    height: calc((197 / 270) * 90vw);
   }
 }
