@@ -108,7 +108,7 @@
   border-radius: 0 5px 5px 0;
 }
 
-#magnifier:hover{
+#magnifier:hover {
   cursor: pointer;
   opacity: 0.5;
 }
@@ -161,7 +161,7 @@
   border-radius: 3px;
 }
 
-.attraction-item:hover{
+.attraction-item:hover {
   cursor: pointer;
   opacity: 0.5;
 }
@@ -232,12 +232,13 @@
 
   #attraction-container {
     width: 90vw;
-    grid-template-columns: repeat(2, 1fr);
-    column-gap: 40px;
+    grid-template-columns: repeat(2, calc((90vw - 60px) / 2));
+    justify-content: center;
+    column-gap: 60px;
   }
 
-  .attraction-item {
-    width: calc((90vw - 40px) / 2);
+  .attraction-image-name {
+    height: calc((197 / 270) * (90vw - 60px) / 2);
   }
 }
 
@@ -262,10 +263,10 @@
   }
 
   #attraction-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 90vw;
   }
 
-  .attraction-item {
-    width: 90vw;
+  .attraction-image-name {
+    height: calc((197 / 270) * 90vw);;
   }
 }
