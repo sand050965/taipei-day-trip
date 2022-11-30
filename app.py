@@ -247,7 +247,7 @@ def getAttractions():
 
 
 @app.route("/api/attraction/<attractionId>", methods=["GET"])
-def getAttractionById(attractionId):   
+def getAttractionById(attractionId):
     if not re.match(r'^[+]?[1-9][0-9]*$', attractionId):
         return jsonify({
             "error": True,
@@ -255,17 +255,18 @@ def getAttractionById(attractionId):
         }), 400
 
     conn = connect_pool.get_connection()
-    
+
     if (conn.is_connected()):
         cursor = conn.cursor()
-    
+
     try:
         cursor.execute(
-            "select att.id, att.attraction_name, cat.category, att.description, att.address, att.transport, mrt.mrt, att.latitude, att.longitude, att.image " +
+            "select att.id, att.attraction_name, att.category, att.description, att.address, att.transport, att.mrt, att.latitude, att.longitude, group_concat(img.image_url) " +
             "from attraction att " +
-            "inner join category cat on att.category_id = cat.id " +
-            "inner join mrt mrt on att.mrt_id = mrt.id " +
-            "where att.id = %s", (attractionId, )
+            "inner join image img " +
+            "on att.id = img.attraction_id " +
+            "where att.id = %s"
+            "group by img.attraction_id", (attractionId, )
         )
         attraction = cursor.fetchone()
 
@@ -285,7 +286,7 @@ def getAttractionById(attractionId):
             "mrt": attraction[6],
             "lat": attraction[7],
             "lng": attraction[8],
-            "images": eval(str(attraction[9])[2:-1])
+            "images": (attraction[9].split(","))
         }
 
         response = jsonify({"data": dataSet})
@@ -311,7 +312,7 @@ def getCategories():
     try:
         cursor.execute("select category from attraction")
         categories = cursor.fetchall()
-        
+
         dataSet = set()
 
         for category in categories:
