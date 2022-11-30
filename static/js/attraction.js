@@ -1,3 +1,4 @@
+let url = "http://0.0.0.0:3000/";
 let attractionImage = document.querySelector("#attractionImage");
 let imageOrder = document.querySelector("#imageOrder");
 let currentImage = 0;
@@ -15,7 +16,7 @@ const radioboxList = [
 ];
 
 const loadAttractionById = () => {
-  let url = "http://0.0.0.0:3000/api/attraction/";
+  let apiUrl = url + "api/attraction/";
   let attractionLocation = window.location.href;
   let attractionIdIndex = attractionLocation.lastIndexOf("/");
   let attractionId = attractionLocation.substring(attractionIdIndex + 1);
@@ -29,8 +30,8 @@ const loadAttractionById = () => {
   let transport = document.querySelector("#transport");
 
   morning.click();
-  url += attractionId;
-  fetch(url)
+  apiUrl += attractionId;
+  fetch(apiUrl)
     .then((response) => {
       return response.json();
     })

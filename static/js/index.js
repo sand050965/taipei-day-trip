@@ -1,3 +1,4 @@
+let url = "http://0.0.0.0:3000/";
 let attractionContainer = document.querySelector("#attraction-container");
 let categoryList = document.querySelector("#category-list");
 let searchBar = document.querySelector("#search-bar");
@@ -20,17 +21,17 @@ const loadMore = () => {
 };
 
 const loadAttraction = async (page, keyword) => {
-  let url = "http://0.0.0.0:3000/api/attractions?page=" + page;
+  let apiUrl = url + "api/attractions?page=" + page;
 
   if (keyword != null && keyword != "") {
     url += "&keyword=" + keyword;
   }
 
-  let imageHref = "http://0.0.0.0:3000/attraction";
+  let imageHref = url + "attraction";
 
   isLoading = true;
 
-  const response = await fetch(url);
+  const response = await fetch(apiUrl);
   const jsonResult = await response.json();
 
   nextPage = jsonResult["nextPage"];
@@ -80,8 +81,8 @@ const loadCategory = async (e) => {
     keyword = null;
     isClickedSearchBar = true;
     if (categoryDivs.length == 0) {
-      let url = "http://0.0.0.0:3000/api/categories";
-      const response = await fetch(url);
+      let apiUrl = url + "api/categories";
+      const response = await fetch(apiUrl);
       const jsonResult = await response.json();
       for (let i = 0; i < jsonResult["data"].length; i++) {
         let categoryItem = document.createElement("div");
@@ -114,7 +115,7 @@ const categoryFillInputKeyword = (e) => {
   if (e.target.childNodes.length > 1) {
     return;
   }
-  
+
   keyword = e.target.textContent;
   searchBar.value = e.target.textContent;
   searchBar.style.color = "#000000";
