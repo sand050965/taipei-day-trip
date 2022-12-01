@@ -1,52 +1,4 @@
-@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap);
-
-* {
-  margin: 0;
-  font-family: "Noto Sans TC";
-  font-style: normal;
-}
-
-.navigation-bar-container {
-  height: 54px;
-  display: grid;
-  justify-items: center;
-  align-items: center;
-}
-
-.navigation-bar {
-  width: 1200px;
-  height: 34px;
-  display: grid;
-  grid-template-columns: auto 90px 90px;
-  align-items: center;
-}
-
-.navigation-bar > div:first-child {
-  width: 150px;
-  height: 34px;
-  font-weight: 700;
-  font-size: 30px;
-  line-height: 34px;
-  text-align: left;
-  color: #448899;
-}
-
-.navigation-bar > div:first-child ~ div {
-  height: 14px;
-  justify-self: end;
-  font-weight: 500;
-  font-size: 16px;
-  text-align: right;
-  line-height: 13px;
-}
-
-.navigation-bar div:nth-child(2) {
-  width: 64px;
-}
-
-.navigation-bar div:last-child {
-  width: 71px;
-}
+@import "page.css";
 
 .banner {
   width: 100vw;
@@ -91,7 +43,6 @@
 
 #search-bar {
   height: 100%;
-  border: 0;
   padding: 0 0 0 10px;
   border-radius: 5px 0 0 5px;
   font-size: 16px;
@@ -145,6 +96,7 @@
 .wrapper {
   display: grid;
   justify-items: center;
+  padding-bottom: 200px;
 }
 
 #attraction-container {
@@ -157,7 +109,7 @@
 }
 
 .attraction-item {
-  border: 1px solid #E8E8E8;
+  border: 1px solid #e8e8e8;
   border-radius: 3px;
 }
 
@@ -197,7 +149,6 @@
   color: #757575;
   padding: 10px;
   border-radius: 0 0 3px 3px;
-  font-weight: 500;
 }
 
 .attraction-info > div:first-child {
@@ -208,24 +159,7 @@
   justify-self: right;
 }
 
-.footer {
-  width: 100vw;
-  height: 104px;
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  background-color: #757575;
-  font-weight: 700;
-  color: #ffffff;
-  text-align: center;
-  margin-top: 100px;
-}
-
 @media (max-width: 1200px) {
-  .navigation-bar {
-    width: 90vw;
-  }
-
   .banner-content {
     width: 90vw;
   }
