@@ -21,7 +21,7 @@
         <div>輕鬆享受台北一日悠閒</div>
         <div>探索每個角落，體驗城市的深度旅遊行程</div>
         <div class="search">
-          <input id="search-bar" value="輸入景點名稱查詢" />
+          <input id="search-bar" placeholder="輸入景點名稱查詢" />
           <div id="magnifier"></div>
         </div>
         <div id="category-list"></div>
@@ -31,6 +31,6 @@
       <div id="attraction-container"></div>
     </div>
     <div class="footer"><div>COPYRIGHT © 2022 台北一日遊</div></div>
-    <script type="text/javascript" src={{url_for('static', filename='js/index.js')}}></script>
+    <script type="module" src={{url_for('static', filename='js/index.js')}}></script>
   </body>
 </html>

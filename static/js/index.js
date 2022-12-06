@@ -24,7 +24,7 @@ const loadAttraction = async (page, keyword) => {
   let apiUrl = url + "api/attractions?page=" + page;
 
   if (keyword != null && keyword != "") {
-    url += "&keyword=" + keyword;
+    apiUrl = apiUrl + "&keyword=" + keyword;
   }
 
   let imageHref = url + "attraction";
@@ -101,7 +101,6 @@ const closeCategory = (e) => {
   }
 
   if (keyword === null) {
-    searchBar.value = "輸入景點名稱查詢";
     searchBar.style.color = "#757575";
   }
 
@@ -122,14 +121,14 @@ const categoryFillInputKeyword = (e) => {
 };
 
 const inputFillInputKeyword = () => {
-  if (searchBar.value !== "" && searchBar.value !== "輸入景點名稱查詢") {
+  if (searchBar.value.trim() !== "") {
     keyword = searchBar.value;
     searchBar.style.color = "#000000";
   }
 };
 
 const searchByKeyword = () => {
-  if (searchBar.value === "" || searchBar.value === "輸入景點名稱查詢") {
+  if (searchBar.value.trim() === "") {
     keyword = null;
   }
 

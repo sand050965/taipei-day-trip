@@ -19,13 +19,14 @@
     <div class="wrapper">
       <div>
         <div class="image-and-info">
-          <div class="image">
-            <img id="attractionImage" />
+          <div class="images-container">
+            <div class="sliders"></div>
             <img id="leftArrow" class="arrow" src={{url_for('static',
-            filename='images/btn_leftArrow.png')}}/> <img id="rightArrow"
+            filename='images/btn_leftArrow.png')}}/> 
+            <img id="rightArrow"
             class="arrow" src={{url_for('static',
             filename='images/btn_rightArrow.png')}}/>
-            <div id="imageOrder"></div>
+            <div id="paginationDots"></div>
           </div>
           <div class="attraction-info">
             <div id="attractionName" class="title"></div>
