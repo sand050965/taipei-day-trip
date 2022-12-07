@@ -94,7 +94,7 @@ export default class UserController {
     let isUser = document.querySelector("#isUser");
     if (e.target.textContent === "點此登入") {
       this.view.renderSignIn();
-      this.clearInput();
+      this.view.clearInput();
       e.target.textContent = "點此註冊";
     } else if (e.target.textContent === "點此註冊") {
       this.view.rendersignUp();
