@@ -1,13 +1,4 @@
-@import "../page.css";
-
-@keyframes fadein {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
+@import "/static/css/header.css";
 
 .navigation-bar-container {
   border-bottom: 1px solid #e8e8e8;
