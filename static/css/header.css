@@ -1,0 +1,225 @@
+@import url(https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap);
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans TC";
+  font-style: normal;
+  font-size: 16px;
+}
+
+html {
+  height: 100vh;
+}
+
+body {
+  position: relative;
+  min-height: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+
+input {
+  border: none;
+}
+
+.title {
+  font-weight: 700;
+  color: #666666;
+}
+
+.content {
+  font-weight: 500;
+  color: #666666;
+}
+
+.navigation-bar-container {
+  height: 54px;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+.navigation-bar {
+  width: 1200px;
+  height: 34px;
+  display: grid;
+  grid-template-columns: auto 90px 90px;
+  align-items: center;
+}
+
+#redirectToHome {
+  width: 200px;
+  height: 34px;
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 34px;
+  text-align: left;
+  color: #448899;
+  cursor: pointer;
+}
+
+#redirectToHome:hover {
+  color: #5fb1c8;
+}
+
+.navigation-bar > div:first-child ~ div {
+  height: 14px;
+  justify-self: end;
+  font-weight: 500;
+  text-align: center;
+  line-height: 13px;
+}
+
+.navigation-bar > div:first-child ~ div:hover {
+  text-decoration: underline;
+  border-radius: 5px 5px 5px 5px;
+  cursor: pointer;
+}
+
+.navigation-bar div:nth-child(2) {
+  width: 64px;
+}
+
+.navigation-bar div:last-child {
+  width: 71px;
+}
+
+#outlayer {
+  display: none;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 998;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.pop-up-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 80px;
+}
+
+#form {
+  display: relative;
+  justify-self: center;
+  width: 340px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: 0px 4px 60px #aaa;
+  padding-bottom: 15px;
+}
+
+.fade-in {
+  animation: fadein 0.5s ease-in-out;
+}
+
+.pop-up-top {
+  position: relative;
+  top: 0;
+  min-height: 10px;
+  min-width: 340px;
+  background: linear-gradient(270deg, #337788 0%, #66aabb 100%);
+  border-radius: 6px 6px 0 0;
+}
+
+#close {
+  position: relative;
+  left: 313px;
+  top: 17px;
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.form-wrapper {
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  gap: 10px;
+  justify-content: center;
+}
+
+.form-wrapper div input {
+  width: 310px;
+}
+
+.form-wrapper div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#popUpTitle {
+  height: 27px;
+  font-size: 24px;
+  margin-top: 10px;
+}
+
+.form-wrapper input {
+  height: 47px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 15px;
+}
+
+.user-name-container {
+  display: none;
+}
+
+#signButton {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  height: 47px;
+  background-color: #489;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+  font-weight: 400;
+  font-size: 19px;
+}
+
+.signChangeRemind {
+  font-size: 16px;
+}
+
+#signChange:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+#message {
+  display: none;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  height: 104px;
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  background-color: #757575;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+}
+
+@media (max-width: 1200px) {
+  .navigation-bar {
+    width: 90vw;
+  }
+}

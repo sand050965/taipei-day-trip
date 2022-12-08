@@ -5,27 +5,43 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Taipei Trip 台北一日遊</title>
-    <link rel="stylesheet" href={{url_for('static',
-    filename='css/attraction.css')}}/>
+    <link rel="stylesheet" href={{url_for('static', filename='css/attraction.css')}}/>
   </head>
   <body>
+    <div id="outlayer">
+      <div class="pop-up-container">
+        <div id="form">
+          <div class="pop-up-top"></div>
+          <div id="close"><img src="/static/images/icon_close.png"/></div>
+          <div class="form-wrapper">
+            <div id="popUpTitle" class="title">登入會員帳號</div>
+            <div class="user-name"><input id="username" placeholder="輸入姓名"/></div>
+            <div><input id="email" placeholder="輸入電子信箱"/></div>
+            <div><input type="password" id="password" placeholder="輸入密碼"/></div>
+            <div id="signButton">登入帳戶</div>
+            <div id="message"></div>
+            <div class="signChangeRemind content"><span id="isUser">還沒有帳戶？</span><span id="signChange">點此註冊</span></div>
+          </div>
+        </div>
+      </div>
+    </div> 
     <div class="navigation-bar-container">
       <div class="navigation-bar">
-        <div>台北一日遊</div>
-        <div>預定行程</div>
-        <div>登入/註冊</div>
+        <div><a id="redirectToHome" href="http://0.0.0.0:3000/">台北一日遊</a></div>
+         <div id="bookingSchedule" class="content">預定行程</div>
+        <div id="userAuth" class="content"></div>
       </div>
     </div>
     <div class="wrapper">
       <div>
         <div class="image-and-info">
-          <div class="image">
-            <img id="attractionImage" />
+          <div class="images-container">
+            <div class="sliders"></div>
             <img id="leftArrow" class="arrow" src={{url_for('static',
-            filename='images/btn_leftArrow.png')}}/> <img id="rightArrow"
-            class="arrow" src={{url_for('static',
+            filename='images/btn_leftArrow.png')}}/> 
+            <img id="rightArrow" class="arrow" src={{url_for('static',
             filename='images/btn_rightArrow.png')}}/>
-            <div id="imageOrder"></div>
+            <div id="paginationDots"></div>
           </div>
           <div class="attraction-info">
             <div id="attractionName" class="title"></div>
@@ -67,7 +83,7 @@
       </div>
     </div>
     <div class="footer"><div>COPYRIGHT © 2022 台北一日遊</div></div>
-    <script type="text/javascript" src={{url_for('static',
+    <script type="module" src={{url_for('static',
     filename='js/attraction.js')}}></script>
   </body>
 </html>
