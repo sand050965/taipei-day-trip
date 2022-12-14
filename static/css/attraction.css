@@ -1,4 +1,22 @@
-@import "/static/css/header.css";
+@import "/static/css/base.css";
+
+@keyframes slideLeft {
+  0% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(-5px);
+  }
+}
+
+@keyframes slideRight {
+  0% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(5px);
+  }
+}
 
 .navigation-bar-container {
   border-bottom: 1px solid #e8e8e8;
@@ -13,6 +31,16 @@
 
 .wrapper > div {
   width: 1200px;
+}
+
+.mask-on{
+  position: fixed;
+  z-index: 4;
+  background-color: #ffffff;
+  opacity: 0.8;
+  min-width: 1100vw;
+  min-height: 100%;
+  overflow: hidden;
 }
 
 .image-and-info {
@@ -49,18 +77,28 @@
   bottom: calc(50% - 10px);
   z-index: 3;
   opacity: 0.75;
-}
-
-.arrow:hover {
+  border-radius: 50%;
   cursor: pointer;
 }
 
-#leftArrow {
+.arrow:hover {
+  opacity: 0.6;
+}
+
+.left {
   left: 10px;
 }
 
-#rightArrow {
+.left:hover {
+  animation: slideLeft 1s linear infinite;
+}
+
+.right {
   right: 10px;
+}
+
+.right:hover {
+  animation: slideRight 1s linear infinite;
 }
 
 #paginationDots {

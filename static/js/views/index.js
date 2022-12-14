@@ -1,54 +1,95 @@
 export default class IndexView {
-  renderAttractions = (jsonResult, imageHref) => {
-    let attractionContainer = document.querySelector("#attraction-container");
+  constructor() {
+    // this.imageList = [];
+    this.currentGroupCount = 0;
+  }
 
-    for (let i = 0; i < jsonResult["data"].length; i++) {
-      let attractionItemLink = document.createElement("a");
-      attractionItemLink.href = imageHref + "/" + jsonResult["data"][i]["id"];
+  renderAttractions = (jsonResult) => {
+    const attractionContainer = document.querySelector("#attraction-container");
+    this.currentGroupCount = jsonResult.data.length;
 
-      let attractionItem = document.createElement("div");
+    if (jsonResult.data.length === 0) {
+      this.renderResultNotFound(true);
+      return;
+    }
+
+    for (const attractionData of jsonResult.data) {
+      const attractionItemLink = document.createElement("a");
+      attractionItemLink.href = `/attraction/${attractionData.id}`;
+      attractionItemLink.id = `attraction_${attractionData.id}`;
+      attractionItemLink.classList.add("none");
+
+      const attractionItem = document.createElement("div");
       attractionItem.className = "attraction-item";
-      let attractionImageAndName = document.createElement("div");
-      attractionImageAndName.className = "attraction-image-name";
+      const attractionImageAndName = document.createElement("div");
+      attractionImageAndName.classList.add("attraction-image-name");
 
-      let attractionImage = document.createElement("img");
-      attractionImage.setAttribute("src", jsonResult["data"][i]["images"][0]);
+      const attractionImage = document.createElement("img");
+      attractionImage.setAttribute("src", attractionData.images[0]);
+      attractionImage.id = `image_${attractionData.id}`;
+      attractionImage.setAttribute("name", "attraction_image");
       attractionImageAndName.appendChild(attractionImage);
 
-      let attractionName = document.createElement("div");
-      attractionName.textContent = jsonResult["data"][i]["name"];
+      const attractionName = document.createElement("div");
+      attractionName.textContent = attractionData.name;
       attractionImageAndName.appendChild(attractionName);
       attractionItem.appendChild(attractionImageAndName);
 
-      let attractionInfo = document.createElement("div");
-      let attractionMrt = document.createElement("div");
-      let attractionCategory = document.createElement("div");
-      attractionMrt.textContent = jsonResult["data"][i]["mrt"];
-      attractionCategory.textContent = jsonResult["data"][i]["category"];
-      attractionInfo.className = "attraction-info content";
+      const attractionInfo = document.createElement("div");
+      const attractionMrt = document.createElement("div");
+      const attractionCategory = document.createElement("div");
+      attractionMrt.textContent = attractionData.mrt;
+      attractionCategory.textContent = attractionData.category;
+      attractionInfo.classList.add("attraction-info");
+      attractionInfo.classList.add("content");
       attractionInfo.appendChild(attractionMrt);
       attractionInfo.appendChild(attractionCategory);
       attractionItem.appendChild(attractionInfo);
       attractionItemLink.appendChild(attractionItem);
+
       attractionContainer.appendChild(attractionItemLink);
     }
   };
 
+  renderLoading = () => {
+    const count = document.querySelector("#count");
+    count.classList.remove("loaded");
+    count.classList.add("loading");
+    count.innerHTML = "Loading...";
+    document.querySelector("#semiCircle").classList.remove("none");
+    document.querySelector("#loader").classList.remove("none");
+  };
+
+  showContent = (start, end) => {
+    for (let i = start; i <= end; i++) {
+      document.querySelector(`#attraction_${i}`).classList.remove("none");
+    }
+    document.querySelector("#loader").classList.add("none");
+  };
+
   renderCategory = (jsonResult) => {
-    let categoryList = document.querySelector("#category-list");
-    for (let i = 0; i < jsonResult["data"].length; i++) {
-      let categoryItem = document.createElement("div");
-      categoryItem.textContent = jsonResult["data"][i];
+    const categoryList = document.querySelector("#category-list");
+    for (let i = 0; i < jsonResult.data.length; i++) {
+      const categoryItem = document.createElement("div");
+      categoryItem.textContent = jsonResult.data[i];
       categoryList.appendChild(categoryItem);
       categoryItem.className = "category-item";
     }
   };
 
   showCategory = () => {
+    const mask = document.querySelector("#mask");
+    mask.classList.remove("none");
+    mask.classList.add("mask");
     document.querySelector("#category-list").style.display = "grid";
+    document.body.style.overflow = "hidden";
   };
 
   hideCategory = () => {
+    const mask = document.querySelector("#mask");
+    mask.classList.add("none");
+    mask.classList.remove("mask");
+    document.body.style.overflow = "";
     document.querySelector("#category-list").style.display = "none";
   };
 
@@ -57,6 +98,14 @@ export default class IndexView {
   };
 
   clearAttraction = () => {
+    this.renderResultNotFound(false);
     document.querySelector("#attraction-container").innerHTML = "";
+  };
+
+  renderResultNotFound = (isNotFound) => {
+    const pageNotFound = document.querySelector("#pageNotFound");
+    isNotFound
+      ? pageNotFound.classList.remove("none")
+      : pageNotFound.classList.add("none");
   };
 }

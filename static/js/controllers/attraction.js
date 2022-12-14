@@ -2,29 +2,47 @@ import AttractionModel from "/static/js/models/attraction.js";
 import AttractionView from "/static/js/views/attraction.js";
 
 export default class AttractionController {
-  constructor(url) {
+  constructor() {
     this.model = new AttractionModel();
     this.view = new AttractionView();
-    this.url = url;
     this.currentImage = 0;
     this.maxImage = 0;
     this.imageList = [];
   }
 
   init = async () => {
-    let apiUrl = this.url + "api/attraction/";
-    let attractionLocation = window.location.href;
-    let attractionIdIndex = attractionLocation.lastIndexOf("/");
-    let attractionId = attractionLocation.substring(attractionIdIndex + 1);
-
+    this.view.renderLoading();
+    let url = window.location.href;
+    let attractionId = url.split("/")[4];
     document.querySelector("#morning").click();
-    apiUrl += attractionId;
-    await this.model.init(apiUrl);
+    await this.model.init(`/api/attraction/${attractionId}`);
     this.view.renderAttraction(this.model.attractionResult);
-    this.imageList = this.model.attractionResult["data"]["images"];
+    this.imageList = this.model.attractionResult.data.images;
     this.maxImage = this.imageList.length - 1;
     this.view.renderImage(this.imageList);
     this.view.renderPaginationDotChange(this.currentImage);
+    this.preloadImage();
+  };
+
+  preloadImage = () => {
+    let attractionImages = document.querySelectorAll(
+      '[name="attraction_image"]'
+    );
+
+    let loadedCount = 0;
+    Promise.all(
+      Array.from(attractionImages)
+        .filter((img) => !img.complete)
+        .map(
+          (img) =>
+            new Promise((resolve) => {
+              loadedCount++;
+              img.onload = img.onerror = resolve;
+            })
+        )
+    ).then(() => {
+      this.view.showContent();
+    });
   };
 
   checkedTime = (e) => {

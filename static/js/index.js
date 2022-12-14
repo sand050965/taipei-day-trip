@@ -1,51 +1,18 @@
-import UserController from "/static/js/controllers/user.js";
-import indexController from "/static/js/controllers/index.js";
-let url = "http://0.0.0.0:3000/";
-let controller = new indexController(url);
-let userController = new UserController(url);
-
-/* User Auth */
-window.addEventListener("load", userController.init, false);
-
-document
-  .querySelector("#userAuth")
-  .addEventListener("click", userController.doUserAuth, false);
-
-document
-  .querySelector("#outlayer")
-  .addEventListener("click", userController.clearMessageAndInput, false);
-
-document
-  .querySelector("#close")
-  .addEventListener("click", userController.cloesForm, false);
-
-document
-  .querySelector("#signButton")
-  .addEventListener("click", userController.doSign, false);
-
-document
-  .querySelector("#signChange")
-  .addEventListener("click", userController.doSignChange, false);
+import IndexController from "/static/js/controllers/index.js";
+const controller = new IndexController();
+const categoryList = document.querySelector("#category-list");
+const searchBar = document.querySelector("#search-bar");
+const magnifier = document.querySelector("#magnifier");
 
 /* index */
-window.addEventListener("load", controller.init(0, controller.keyword));
+window.addEventListener("load", controller.init);
 
 window.addEventListener("scroll", controller.loadMore, false);
 
 window.addEventListener("click", controller.closeCategory, true);
 
-document
-  .querySelector("#category-list")
-  .addEventListener("click", controller.categoryFillInputKeyword, false);
+magnifier.addEventListener("mousedown", controller.searchByKeyword, false);
 
-document
-  .querySelector("#search-bar")
-  .addEventListener("click", controller.loadCategory, false);
+categoryList.addEventListener("click", controller.categoryFillInput, false);
 
-document
-  .querySelector("#search-bar")
-  .addEventListener("change", controller.inputFillInputKeyword, false);
-
-document
-  .querySelector("#magnifier")
-  .addEventListener("click", controller.searchByKeyword, false);
+searchBar.addEventListener("click", controller.loadCategory, false);
