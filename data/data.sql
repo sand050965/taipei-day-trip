@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `attraction`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `attraction` (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '景點編號',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '景點編號',
   `attraction_name` varchar(100) NOT NULL COMMENT '景點名稱',
   `category` varchar(50) NOT NULL COMMENT '景點分類編號',
   `description` longtext NOT NULL COMMENT '景點描述',
@@ -32,7 +32,8 @@ CREATE TABLE `attraction` (
   `mrt` varchar(50) DEFAULT NULL COMMENT '捷運站編號',
   `latitude` double NOT NULL COMMENT '經度',
   `longitude` double NOT NULL COMMENT '緯度',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `category_name_index` (`category`,`attraction_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='景點資訊表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -54,14 +55,15 @@ DROP TABLE IF EXISTS `booking`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `booking` (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '預定行程編號',
-  `attraction_id` bigint NOT NULL COMMENT '景點編號',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '預定行程編號',
+  `user_id` int NOT NULL COMMENT '會員編號',
+  `attraction_id` int NOT NULL COMMENT '景點編號',
   `date` date NOT NULL COMMENT '日期',
   `time` varchar(15) NOT NULL COMMENT '時段',
-  `price` bigint NOT NULL COMMENT '價格',
-  `user_id` bigint NOT NULL COMMENT '會員編號',
-  `is_paid` varchar(1) NOT NULL COMMENT '是否付款下單',
-  PRIMARY KEY (`id`)
+  `price` int NOT NULL COMMENT '價格',
+  PRIMARY KEY (`id`),
+  KEY `user_id_index` (`user_id`),
+  CONSTRAINT `booking` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='預定行程資料表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -85,7 +87,9 @@ CREATE TABLE `image` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '圖片ID',
   `attraction_id` int NOT NULL COMMENT '景點ID',
   `image_url` varchar(500) NOT NULL COMMENT '圖片URL',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `image` (`attraction_id`),
+  CONSTRAINT `image` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=329 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -107,9 +111,9 @@ DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
-  `id` bigint NOT NULL COMMENT '訂單編號',
-  `booking_id` bigint NOT NULL COMMENT '預定行程編號',
-  `user_id` bigint NOT NULL COMMENT '會員編號',
+  `id` int NOT NULL COMMENT '訂單編號',
+  `booking_id` int NOT NULL COMMENT '預定行程編號',
+  `user_id` int NOT NULL COMMENT '會員編號',
   `contact_name` varchar(255) NOT NULL,
   `contact_email` varchar(255) NOT NULL,
   `contact_phone` varchar(45) NOT NULL,
@@ -134,13 +138,15 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '會員編號',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '會員編號',
   `name` varchar(255) NOT NULL COMMENT '會員姓名',
   `email` varchar(255) NOT NULL COMMENT '會員電子信箱',
   `password` varchar(255) NOT NULL COMMENT '會員密碼',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='會員資料表';
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `email_index` (`email`),
+  KEY `email_password_index` (`email`,`password`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='會員資料表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +155,6 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'彭彭彭','ply@ply.com','12345678');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -162,4 +167,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-11-24 23:02:30
+-- Dump completed on 2022-12-18 13:44:22

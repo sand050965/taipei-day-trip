@@ -1,0 +1,189 @@
+nav {
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.booking-container {
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  /* height: calc(100vh - 154px); */
+}
+
+.booking-wrapper {
+  display: grid;
+  grid-template-rows: auto;
+  width: 1200px;
+}
+
+/* booking attraction */
+.booking {
+  padding: 0 100px 30px 100px;
+}
+
+.booking-title {
+  font-size: 19px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  font-size: 19px;
+  margin: 40px 0 20px 0;
+}
+
+.booking-content {
+  position: relative;
+  padding: 20px 0 10px 0;
+}
+
+.no-booking{
+  margin-top: 40px;
+}
+
+.show-booking {
+  display: grid;
+  grid-template-columns: 266px auto;
+  justify-items: flex-start;
+  align-items: center;
+  gap: 20px;
+}
+
+.attraction-image {
+  width: 266px;
+  height: 200px;
+}
+
+.attraction-image img {
+  width: 100%;
+  height: 100%;
+}
+
+.booking-info {
+  height: 100%;
+}
+
+.booking-attraction-name {
+  padding-bottom: 20px;
+}
+
+.booking-attraction-name,
+.booking-attraction-name span {
+  color: #448899;
+}
+
+.booking-attraction-info {
+  padding: 7px 0;
+}
+
+.delete {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.delete:hover {
+  background-color: rgba(230, 230, 230, 3);
+  border-radius: 5px;
+}
+
+/* contact info */
+.contact-info {
+  margin-bottom: 10px;
+}
+
+.booking-required-info input {
+  width: 200px;
+  height: 38px;
+  border: 1px solid #e8e8e8;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+.info-input {
+  padding-bottom: 20px;
+}
+
+/* credit card info */
+.credit-card input {
+  padding-left: 10px;
+}
+
+/* booking-confirm */
+.booking-confirm div {
+  margin: 40px 0 10px 0;
+}
+
+.booking-confirm > div:first-child {
+  text-align: right;
+}
+
+input[type="button"] {
+  padding: 15px 20px;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 16px;
+  background: #448899;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="button"]:hover {
+  background-color: #2f5d69;
+}
+
+/* media query */
+@media (max-width: 900px) {
+  .booking-container {
+    width: 100vw;
+  }
+
+  .booking-wrapper {
+    width: 100vw;
+  }
+
+  /* booking attraction */
+  .show-booking {
+    display: block;
+  }
+  
+  .booking-title {
+    padding: 0 10px;
+  }
+  
+  .no-booking{
+    padding: 0 10px;
+  }
+
+  .booking {
+    padding: 5px;
+  }
+
+  .attraction-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .booking-info {
+    padding: 30px 0 80px 0;
+  }
+
+  .delete {
+    top: calc(100% - 50px);
+    bottom: 0;
+  }
+
+  /* contact info */
+  .booking-required-info {
+    padding: 0 10px;
+  }
+
+  .contact-remind {
+    padding: 5px 10px 40px 10px;
+  }
+
+  /* booking-confirm */
+  .booking-confirm{
+    padding: 0 5px 50px 0;
+  }
+}
