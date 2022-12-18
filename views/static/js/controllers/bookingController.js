@@ -25,6 +25,14 @@ export default class BookingController {
   };
 
   createBooking = async (e) => {
+    await this.userController.init();
+    await this.userController.doUserAuth(e);
+
+    this.userData = this.userController.userData;
+    if (document.querySelector("#modal").classList.contains("popup")) {
+      return;
+    }
+
     const date = document.querySelector("#date").value.trim();
     let validateResult = dateValidate(date);
     if (!validateResult.result) {
@@ -40,13 +48,6 @@ export default class BookingController {
       ? "morning"
       : "afternoon";
     const price = document.querySelector("#dollar").textContent;
-
-    await this.userController.init();
-    await this.userController.doUserAuth(e);
-    this.userData = this.userController.userData;
-    if (document.querySelector("#modal").classList.contains("popup")) {
-      return;
-    }
 
     const requestObject = {
       method: "POST",
