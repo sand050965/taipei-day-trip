@@ -1,6 +1,6 @@
 import BookingModel from "../models/bookingModel.js";
 import BookingView from "../views/bookingView.js";
-import UserController from "../controllers/UserAuthController.js";
+import UserAuthController from "../controllers/UserAuthController.js";
 import UserAuthView from "../views/userAuthView.js";
 import { dateValidate } from "../utils/validatorUtil.js";
 
@@ -8,7 +8,7 @@ export default class BookingController {
   constructor() {
     this.model = new BookingModel();
     this.view = new BookingView();
-    this.userController = new UserController();
+    this.userController = new UserAuthController();
     this.userView = new UserAuthView();
     this.userData;
   }

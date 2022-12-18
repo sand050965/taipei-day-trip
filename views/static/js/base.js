@@ -1,4 +1,4 @@
-import UserAuthController from "./controllers/userAuthController.js";
+import UserAuthController from "../../../views/static/js/controllers/userAuthController.js";
 import BookingController from "./controllers/bookingController.js";
 const userController = new UserAuthController();
 const bookingController = new BookingController();
