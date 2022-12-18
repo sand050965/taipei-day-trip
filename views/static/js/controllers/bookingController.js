@@ -1,8 +1,8 @@
-import BookingModel from "/static/js/models/bookingModel.js";
-import BookingView from "/static/js/views/bookingView.js";
-import UserController from "/static/js/controllers/UserAuthController.js";
-import UserAuthView from "/static/js/views/userAuthView.js";
-import { dateValidate } from "/static/js/utils/validatorUtil.js";
+import BookingModel from "../models/bookingModel.js";
+import BookingView from "../views/bookingView.js";
+import UserController from "../controllers/UserAuthController.js";
+import UserAuthView from "../views/userAuthView.js";
+import { dateValidate } from "../utils/validatorUtil.js";
 
 export default class BookingController {
   constructor() {

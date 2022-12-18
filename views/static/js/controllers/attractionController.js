@@ -1,5 +1,5 @@
-import AttractionModel from "/static/js/models/attractionModel.js";
-import AttractionView from "/static/js/views/attractionView.js";
+import AttractionModel from "../models/attractionModel.js";
+import AttractionView from "../views/attractionView.js";
 
 export default class AttractionController {
   constructor() {

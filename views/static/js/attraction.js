@@ -1,5 +1,5 @@
-import AttractionController from "/static/js/controllers/attractionController.js";
-import BookingController from "/static/js/controllers/bookingController.js";
+import AttractionController from "./controllers/attractionController.js";
+import BookingController from "./controllers/bookingController.js";
 const controller = new AttractionController();
 const bookingController = new BookingController();
 const booking = document.querySelector("#booking");

@@ -1,5 +1,5 @@
-import IndexModel from "/static/js/models/indexModel.js";
-import IndexView from "/static/js/views/indexView.js";
+import IndexModel from "../models/indexModel.js";
+import IndexView from "../views/indexView.js";
 
 export default class IndexController {
   constructor() {

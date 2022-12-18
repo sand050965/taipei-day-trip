@@ -1,4 +1,4 @@
-import BookingController from "/static/js/controllers/bookingController.js";
+import BookingController from "./controllers/bookingController.js";
 const controller = new BookingController();
 const onDelete = document.querySelector("#delete");
 

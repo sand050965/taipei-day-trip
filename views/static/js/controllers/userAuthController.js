@@ -1,5 +1,5 @@
-import UserAuthModel from "/static/js/models/userAuthModel.js";
-import UserAuthView from "/static/js/views/userAuthView.js";
+import UserAuthModel from "../models/userAuthModel.js";
+import UserAuthView from "../views/userAuthView.js";
 
 import {
   nameValidate,

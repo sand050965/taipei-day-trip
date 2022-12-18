@@ -1,5 +1,5 @@
-import UserAuthController from "/static/js/controllers/userAuthController.js";
-import BookingController from "/static/js/controllers/bookingController.js";
+import UserAuthController from "./controllers/userAuthController.js";
+import BookingController from "./controllers/bookingController.js";
 const userController = new UserAuthController();
 const bookingController = new BookingController();
 const userAuth = document.querySelector("#userAuth");

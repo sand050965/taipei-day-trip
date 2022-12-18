@@ -1,4 +1,4 @@
-import IndexController from "/static/js/controllers/indexController.js";
+import IndexController from "./controllers/indexController.js";
 const controller = new IndexController();
 const categoryList = document.querySelector("#category-list");
 const searchBar = document.querySelector("#search-bar");
