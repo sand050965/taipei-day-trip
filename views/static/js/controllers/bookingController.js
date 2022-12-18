@@ -1,6 +1,6 @@
 import BookingModel from "../models/bookingModel.js";
 import BookingView from "../views/bookingView.js";
-import UserAuthController from "../controllers/UserAuthController.js";
+import UserAuthController from "./UserAuthController.js";
 import UserAuthView from "../views/userAuthView.js";
 import { dateValidate } from "../utils/validatorUtil.js";
 
