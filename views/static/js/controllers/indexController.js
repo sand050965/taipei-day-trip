@@ -15,13 +15,14 @@ export default class IndexController {
     this.nextPage = null;
   }
 
-  init = async () => {
-    let apiUrl = "";
+  /* Event Handler Function */
+  // =================================================================
 
+  init = async () => {
     if (this.keyword != null && this.keyword != "") {
-      apiUrl = `/api/attractions?page=${this.page}&keyword=${this.keyword}`;
+      const apiUrl = `/api/attractions?page=${this.page}&keyword=${this.keyword}`;
     } else {
-      apiUrl = `/api/attractions?page=${this.page}`;
+      const apiUrl = `/api/attractions?page=${this.page}`;
     }
 
     this.isLoading = true;
@@ -32,9 +33,10 @@ export default class IndexController {
     this.anchorCount = this.page * 12 + 1;
     this.currentGroupCount = this.view.currentGroupCount;
     this.totalCount += this.view.currentGroupCount;
-    this.preloadImage();
-    this.isLoading = false;
+    this.preloadImage(this.anchorCount, this.totalCount);
   };
+
+  // =================================================================
 
   loadMore = () => {
     if (this.nextPage != null) {
@@ -50,24 +52,7 @@ export default class IndexController {
     }
   };
 
-  preloadImage = () => {
-    let attractionImages = [];
-    for (let i = this.anchorCount; i <= this.currentGroupCount; i++) {
-      attractionImages.push(document.querySelector(`#image_${i}`));
-    }
-    
-    Promise.all(
-      Array.from(attractionImages)
-        .filter((img) => !img.complete)
-        .map((img) => {
-          return new Promise((resolve) => {
-            img.onload = img.onerror = resolve;
-          });
-        })
-    ).then(() => {
-      this.view.showContent(this.anchorCount, this.totalCount);
-    });
-  };
+  // =================================================================
 
   closeCategory = (e) => {
     if (e.target.id === "search-input" || e.target.id === "category-list")
@@ -78,11 +63,15 @@ export default class IndexController {
     }
   };
 
+  // =================================================================
+
   categoryFillInput = (e) => {
     if (e.target.childNodes.length > 1) return;
     this.keyword = e.target.textContent;
     this.view.renderSerchBar(e.target.textContent);
   };
+
+  // =================================================================
 
   loadCategory = async () => {
     const categoryList = document.querySelector("#category-list");
@@ -97,6 +86,8 @@ export default class IndexController {
     }
   };
 
+  // =================================================================
+
   searchByKeyword = () => {
     this.view.clearAttraction();
     this.page = 0;
@@ -106,5 +97,31 @@ export default class IndexController {
       return;
     }
     this.init();
+  };
+
+  /* Private Function */
+  // =================================================================
+
+  preloadImage = async (anchorCount, totalCount) => {
+    const attractionItemsArray = [];
+    const promiseArray = [];
+
+    for (let i = anchorCount; i <= totalCount; i++) {
+      promiseArray.push(
+        new Promise((resolve) => {
+          document.querySelector(`#image_${i}`).onload = () => {
+            resolve();
+          };
+        })
+      );
+      attractionItemsArray.push(document.querySelector(`#attraction_${i}`));
+    }
+
+    await Promise.all(promiseArray).then(() => {
+      setTimeout(() => {
+        this.view.showContent(attractionItemsArray);
+        this.isLoading = false;
+      }, 1000);
+    });
   };
 }

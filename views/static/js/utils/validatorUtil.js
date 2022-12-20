@@ -11,6 +11,8 @@ const nameValidate = (username) => {
   return { result: result, message: message };
 };
 
+// =================================================================
+
 const emailValidate = (email) => {
   const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
   let result = true;
@@ -27,6 +29,8 @@ const emailValidate = (email) => {
   }
   return { result: result, message: message };
 };
+
+// =================================================================
 
 const passwordValidate = (password) => {
   const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/;
@@ -45,6 +49,8 @@ const passwordValidate = (password) => {
   }
   return { result: result, message: message };
 };
+
+// =================================================================
 
 const dateValidate = (date) => {
   const regex = /^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/;

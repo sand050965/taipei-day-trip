@@ -21,44 +21,54 @@
             class="arrow right" src={{ url_for('static',
             filename='images/btn_rightArrow.png') }}/>
             <div id="paginationDots"></div>
+          </div>
+          <div class="attraction-info">
+            <div id="attractionName" class="title"></div>
+            <div id="attractionCtegoryAndMrt" class="content"></div>
+            <div class="booking-info">
+              <div class="title booking-items">訂購導覽行程</div>
+              <div class="content booking-items">以此景點為中心的一日行程，帶您探索城市角落故事</div>
+              <div class="title booking-items">
+                選擇日期：
+                <input type="date" id="date" class="correct-date" />
+              </div>
+              <div id="time" class="title booking-items">
+                選擇時間：
+                <div id="morning" class="radiobox"></div>
+                <div class="morning-afternoon">上半天</div>
+                <div id="afternoon" class="radiobox"></div>
+                <div class="morning-afternoon">下半天</div>
+              </div>
+              <div id="charge" class="title booking-items">
+                導覽費用：<span class="content">新台幣 <span id="dollar"></span> 元</span>
+              </div>
+              <div id="booking">開始預約行程</div>
+            </div>
+          </div>
         </div>
-        <div class="attraction-info">
-          <div id="attractionName" class="title"></div>
-          <div id="attractionCtegoryAndMrt" class="content"></div>
-          <div class="booking-info">
-            <div class="title booking-items">訂購導覽行程</div>
-            <div class="content booking-items">以此景點為中心的一日行程，帶您探索城市角落故事</div>
-            <div class="title booking-items">
-              選擇日期：
-              <input type="date" id="date" />
-            </div>
-            <div id="time" class="title booking-items">
-              選擇時間：
-              <div id="morning" class="radiobox"></div>
-              <div class="morning-afternoon">上半天</div>
-              <div id="afternoon" class="radiobox"></div>
-              <div class="morning-afternoon">下半天</div>
-            </div>
-            <div id="charge" class="title booking-items">
-              導覽費用：<span class="content">新台幣 <span id="dollar"></span> 元</span>
-            </div>
-            <div id="booking">開始預約行程</div>
+        <div class="content-wrapper">
+          <div id="description" class="content"></div>
+          <div class="container">
+            <div class="title">景點地址：</div>
+            <div id="address" class="content"></div>
+          </div>
+          <div class="container">
+            <div class="title">交通方式：</div>
+            <div id="transport" class="content"></div>
+          </div>
+          <div class="container">
+            <iframe id="map"
+                    width="400"
+                    height="300"
+                    frameborder="0"
+                    scrolling="no"
+                    marginheight="0"
+                    marginwidth="0">
+            </iframe>
           </div>
         </div>
       </div>
-      <div class="content-wrapper">
-        <div id="description" class="content"></div>
-        <div class="container">
-          <div class="title">景點地址：</div>
-          <div id="address" class="content"></div>
-        </div>
-        <div class="container">
-          <div class="title">交通方式：</div>
-          <div id="transport" class="content"></div>
-        </div>
-      </div>
     </div>
-  </div>
     {% block script %}
       <script type="module" src={{ url_for("static", filename="js/attraction.js") }}></script>
     {% endblock script %}

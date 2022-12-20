@@ -1,18 +1,43 @@
+from utils.validatorUtil import ValidatorUtil
+from utils.requestUtil import RequestUtil
+
+
 class AttractionModel:
 
-    def getAttractionByKeyword(cursor, limitStart, keyword):
+    def getAttractions(cursor, request):
+        args = RequestUtil.get_request_args(request)
+        page = args.get("page")
+        ValidatorUtil.validate_page(page)
+
+        limitStart = int(page) * 12
+        keyword = args.get("keyword")
+        result = dict()
+        result["page"] = page
+
+        if (keyword != None):
+            result["data"] = AttractionModel.getAttractionByKeyword(
+                cursor, keyword, limitStart)
+        else:
+            result["data"] = AttractionModel.getAttractionByPage(
+                cursor, limitStart)
+
+        return result
+
+############################################################
+
+    def getAttractionByKeyword(cursor, keyword, limitStart):
         cursor.execute(
             """
             SELECT
-                att.id, 
-                att.attraction_name, 
-                att.category, 
+                att.id,
+                att.attraction_name,
+                att.category,
                 att.description,
-                att.address, 
-                att.transport, 
-                att.mrt, 
-                att.latitude, 
-                att.longitude, 
+                att.address,
+                att.transport,
+                att.mrt,
+                att.latitude,
+                att.longitude,
                 group_concat(img.image_url) as images
             FROM attraction att
             INNER JOIN image img
@@ -23,6 +48,7 @@ class AttractionModel:
             LIMIT %s, %s
             """, (keyword, f"%{keyword}%", limitStart, 13)
         )
+
         return cursor.fetchall()
 
 ############################################################
@@ -54,6 +80,8 @@ class AttractionModel:
 ############################################################
 
     def getAttractionById(cursor, attractionId):
+        ValidatorUtil.validate_attractionId(attractionId)
+
         cursor.execute(
             """
             SELECT 
@@ -74,8 +102,7 @@ class AttractionModel:
             GROUP BY img.attraction_id
             """, (attractionId, )
         )
+
         result = cursor.fetchone()
-        if result == None:
-            return None
-        else:
-            return dict(zip(cursor.column_names, result))
+        ValidatorUtil.validate_attraction(result)
+        return result

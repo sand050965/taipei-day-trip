@@ -1,3 +1,12 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes slideLeft {
   0% {
     transform: translateX(5px);
@@ -34,7 +43,6 @@ nav {
   position: absolute;
   z-index: 4;
   background-color: #ffffff;
-  opacity: 0.8;
   min-width: 100%;
   min-height: 100%;
 }
@@ -84,7 +92,7 @@ nav {
 }
 
 .fade-in-and-out {
-  animation: fadein 1s ease-in-out;
+  animation: fadeIn 1s ease-in-out;
 }
 
 .attraction-image {
@@ -169,7 +177,14 @@ nav {
   color: #000000;
   padding: 5px 10px;
   margin-left: 5px;
-  cursor: pointer;
+}
+
+.correct-date:focus {
+  border: solid 2px #448899;
+}
+
+.error-date {
+  border: solid 1px #ff0000;
 }
 
 #time {
@@ -191,7 +206,7 @@ nav {
 }
 
 .checked {
-  background-color: #448899;
+  background-color: #489;
 }
 
 .morning-afternoon {
@@ -212,7 +227,7 @@ nav {
   font-weight: 400;
   font-size: 19px;
   color: #ffffff;
-  background-color: #448899;
+  background-color: #489;
   padding: 15px 20px;
   border-radius: 5px;
   cursor: pointer;
@@ -242,6 +257,12 @@ nav {
 .container > .content {
   font-weight: 400;
   line-height: 23px;
+}
+
+iframe {
+  margin-top: 50px;
+  border-radius: 10px;
+  border: solid 1px #e8e8e8;
 }
 
 @media (max-width: 1200px) {

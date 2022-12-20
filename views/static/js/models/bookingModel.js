@@ -5,11 +5,15 @@ export default class BookingModel {
     this.deleteResult = {};
   }
 
+  // =================================================================
+
   init = async (url) => {
     const response = await fetch(url);
     const result = await response.json();
     this.bookingResult = result;
   };
+
+  // =================================================================
 
   createDeleteBooking = async (url, requestObject) => {
     const response = await fetch(url, requestObject);

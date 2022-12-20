@@ -1,15 +1,19 @@
-import jwt
-from flask import jsonify, current_app
+from utils.requestUtil import RequestUtil
+from utils.validatorUtil import ValidatorUtil
 
 
 class UserModel:
 
-    def postUser(cursor, request):
-
-        data = request.get_json()
+    def insertUser(cursor, request):
+        data = RequestUtil.get_request_data(request)
         name = data["name"]
+        ValidatorUtil.validate_name(name, True)
+
         email = data["email"]
+        ValidatorUtil.validate_email(email, True)
+
         password = data["password"]
+        ValidatorUtil.validate_password(password)
 
         cursor.execute(
             """
@@ -20,13 +24,12 @@ class UserModel:
             ) 
             VALUES (%s, %s, %s)
             """, (name, email, password))
-        return True
 
 ############################################################
 
-    def getUserByEmail(cursor, token):
-        email = jwt.decode(
-            token, current_app.config['SECRET_KEY'], algorithms="HS256").get("email")
+    def getUserByEmail(cursor, request):
+        email = RequestUtil.get_token(request).get("email")
+        ValidatorUtil.validate_email(email, True)
 
         cursor.execute(
             """
@@ -39,14 +42,18 @@ class UserModel:
             """, (email, ))
 
         result = cursor.fetchone()
-        if result == None:
-            return None
-        else:
-            return dict(zip(cursor.column_names, result))
+        ValidatorUtil.validate_user(result)
+        return result
 
 ############################################################
 
-    def putUser(cursor, email, password):
+    def getUserIdByEmailPassword(cursor, request):
+        data = RequestUtil.get_request_data(request)
+        email = data["email"]
+        ValidatorUtil.validate_email(email, True)
+       
+        password = data["password"]
+        ValidatorUtil.validate_password(password)
 
         cursor.execute(
             """
@@ -55,9 +62,8 @@ class UserModel:
             WHERE email = %s 
             AND password = %s
             """, (email, password))
-        
+
         result = cursor.fetchone()
-        if result == None:
-            return None
-        else:
-            return dict(zip(cursor.column_names, result))
+        ValidatorUtil.validate_user(result)
+        result["email"] = email
+        return result

@@ -15,7 +15,7 @@ const inputs = [username, email, password];
 const passwordTriggers = [showPassword, hidePassword];
 const bookingSchedule = document.querySelector("#bookingSchedule");
 
-/* User Auth */
+/* User Auth Event Listeners */
 window.addEventListener("load", userController.init, false);
 
 userAuth.addEventListener("click", userController.doUserAuth, false);
@@ -35,5 +35,5 @@ inputs.forEach((input) => {
 
 signButton.addEventListener("click", userController.doSign, false);
 
-/* booking */
+/* Booking Event Listeners */
 bookingSchedule.addEventListener("click", bookingController.getBooking, false);

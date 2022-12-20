@@ -26,6 +26,8 @@ export default class BookingView {
     }
   };
 
+  // =================================================================
+
   renderNoBooking = () => {
     const bookingContent = document.querySelector("#bookingContent");
     const footer = document.querySelector("footer");
@@ -44,6 +46,8 @@ export default class BookingView {
     document.querySelector("#delete").classList.add("none");
     document.querySelector("#bookingConfirm").classList.add("none");
   };
+
+  // =================================================================
 
   reset = () => {
     const bookingContent = document.querySelector("#bookingContent");
@@ -64,6 +68,8 @@ export default class BookingView {
     document.querySelector("#bookingConfirm").classList.remove("none");
   };
 
+  // =================================================================
+
   clearAllInputs = () => {
     document.querySelector("#contactName").value = "";
     document.querySelector("#contactMail").value = "";
@@ -71,25 +77,5 @@ export default class BookingView {
     document.querySelector("#cardNumber").value = "";
     document.querySelector("#invalidDate").value = "";
     document.querySelector("#CVV").value = "";
-  };
-
-  renderErrorMessage = (errorMessage) => {
-    const title = "預約行程錯誤";
-    const message = errorMessage;
-    const buttonValue = "確認";
-    const modalTitle = document.querySelector("#modalTitle");
-    const successMessage = document.querySelector("#signMessage");
-
-    modalTitle.textContent = title;
-    modalTitle.classList.remove("success");
-    modalTitle.classList.add("error");
-    signMessage.textContent = message;
-    signMessage.classList.remove("none");
-    document.querySelector("#errorMessage").classList.add("none");
-    document.querySelector("#usernameContainer").classList.add("none");
-    document.querySelector("#emailContainer").classList.add("none");
-    document.querySelector("#passwordContainer").classList.add("none");
-    document.querySelector("#signChangeRemind").classList.add("none");
-    document.querySelector("#signButton").value = buttonValue;
   };
 }

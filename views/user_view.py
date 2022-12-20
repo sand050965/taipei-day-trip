@@ -1,15 +1,10 @@
-import jwt
-from flask import jsonify, current_app
+from flask import jsonify
+from utils.responseUtil import ResponseUtil
 
 
 class UserView:
-    def renderIsUser():
+    def renderSuccess():
         return jsonify({"ok": True})
-
-############################################################
-
-    def renderNotUser():
-        return jsonify({"data": None})
 
 ############################################################
 
@@ -18,6 +13,11 @@ class UserView:
             "error": True,
             "message": message
         })
+
+############################################################
+
+    def renderGetNoUser():
+        return jsonify({"data": None})
 
 ############################################################
 
@@ -35,14 +35,15 @@ class UserView:
 
 ############################################################
 
-    def renderPutUser(email, user_id):
-        response = UserView.renderIsUser()
-        token = jwt.encode(
-            {"email": email, "user_id": user_id}, current_app.config['SECRET_KEY'], algorithm="HS256")
+    def renderGetUserIdByEmailPassword(result):
+        email = result["email"]
+        user_id = result["id"]
+        payloadData = {"email": email, "user_id": user_id}
+        response = UserView.renderSuccess()
+        return ResponseUtil.set_token(response, payloadData)
 
-        response.set_cookie(
-            key="token",
-            value=token,
-            max_age=604800
-        )
-        return response
+############################################################
+
+    def renderDeleteUser():
+        response = UserView.renderSuccess()
+        return ResponseUtil.delete_token(response)

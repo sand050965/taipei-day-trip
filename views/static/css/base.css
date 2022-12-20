@@ -427,10 +427,6 @@ footer {
   color: #333;
 }
 
-.loaded {
-  color: green;
-}
-
 /* media query */
 @media (max-width: 1200px) {
   nav .navigation-bar {

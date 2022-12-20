@@ -16,7 +16,7 @@ export default class IndexView {
       const attractionItemLink = document.createElement("a");
       attractionItemLink.href = `/attraction/${attractionData.id}`;
       attractionItemLink.id = `attraction_${attractionData.id}`;
-      attractionItemLink.classList.add("visiblity-hidden");
+      attractionItemLink.classList.add("none");
 
       const attractionItem = document.createElement("div");
       attractionItem.className = "attraction-item";
@@ -50,6 +50,8 @@ export default class IndexView {
     }
   };
 
+  // =================================================================
+
   renderLoading = () => {
     const count = document.querySelector("#count");
     count.classList.remove("loaded");
@@ -59,14 +61,16 @@ export default class IndexView {
     document.querySelector("#loader").classList.remove("none");
   };
 
-  showContent = (start, end) => {
+  // =================================================================
+
+  showContent = (attractionItemsArray) => {
     document.querySelector("#loader").classList.add("none");
-    for (let i = start; i <= end; i++) {
-      document
-        .querySelector(`#attraction_${i}`)
-        .classList.remove("visiblity-hidden");
+    for (const item of attractionItemsArray) {
+      item.classList.remove("none");
     }
   };
+
+  // =================================================================
 
   renderCategory = (jsonResult) => {
     const categoryList = document.querySelector("#category-list");
@@ -78,6 +82,8 @@ export default class IndexView {
     }
   };
 
+  // =================================================================
+
   showCategory = () => {
     const mask = document.querySelector("#mask");
     mask.classList.remove("none");
@@ -85,6 +91,8 @@ export default class IndexView {
     document.querySelector("#category-list").style.display = "grid";
     document.body.style.overflow = "hidden";
   };
+
+  // =================================================================
 
   hideCategory = () => {
     const mask = document.querySelector("#mask");
@@ -94,14 +102,20 @@ export default class IndexView {
     document.querySelector("#category-list").style.display = "none";
   };
 
+  // =================================================================
+
   renderSerchBar = (inputText) => {
     document.querySelector("#search-bar").value = inputText;
   };
+
+  // =================================================================
 
   clearAttraction = () => {
     this.renderResultNotFound(false);
     document.querySelector("#attraction-container").innerHTML = "";
   };
+
+  // =================================================================
 
   renderResultNotFound = (isNotFound) => {
     const pageNotFound = document.querySelector("#pageNotFound");

@@ -1,76 +1,137 @@
 import AttractionModel from "../models/attractionModel.js";
 import AttractionView from "../views/attractionView.js";
+import UserAuthView from "../views/userAuthView.js";
+import { dateValidate } from "../utils/validatorUtil.js";
 
 export default class AttractionController {
   constructor() {
     this.model = new AttractionModel();
     this.view = new AttractionView();
+    this.userView = new UserAuthView();
     this.currentImage = 0;
     this.maxImage = 0;
-    this.imageList = [];
+    this.imagesSrcArray = [];
   }
 
+  /* Event Handler Function */
+  // =================================================================
+
   init = async () => {
+    const url = window.location.href;
+    const attractionId = url.split("/")[4];
     this.view.renderLoading();
-    let url = window.location.href;
-    let attractionId = url.split("/")[4];
-    document.querySelector("#morning").click();
     await this.model.init(`/api/attraction/${attractionId}`);
     this.view.renderAttraction(this.model.attractionResult);
-    this.imageList = this.model.attractionResult.data.images;
-    this.maxImage = this.imageList.length - 1;
-    this.view.renderImage(this.imageList);
+    this.imagesSrcArray = this.model.attractionResult.data.images;
+    this.maxImage = this.imagesSrcArray.length - 1;
+    this.view.renderImage(this.imagesSrcArray);
     this.view.renderPaginationDotChange(this.currentImage);
     this.preloadImage();
   };
 
-  preloadImage = () => {
-    let attractionImages = document.querySelectorAll(
+  // =================================================================
+
+  checkedTime = (e) => {
+    switch (e.target.id) {
+      case "morning":
+        this.view.renderTimeAndDollar("checked", "unchecked", "2000");
+        break;
+      case "afternoon":
+        this.view.renderTimeAndDollar("unchecked", "checked", "2500");
+        break;
+    }
+  };
+
+  // =================================================================
+
+  changeImage = (e) => {
+    this.currentImage = this.countImageNumber(
+      e.target.id,
+      this.currentImage,
+      this.maxImage
+    );
+    this.view.imageScroll(this.currentImage);
+    this.view.renderPaginationDotChange(this.currentImage);
+  };
+
+  // =================================================================
+
+  resetInput = () => {
+    this.view.resetInput();
+  };
+
+  /* Private Function */
+  // =================================================================
+
+  preloadImage = async () => {
+    const promiseArray = [];
+    const attractionImagesArray = document.querySelectorAll(
       '[name="attraction_image"]'
     );
 
-    let loadedCount = 0;
-    Promise.all(
-      Array.from(attractionImages)
-        .filter((img) => !img.complete)
-        .map(
-          (img) =>
-            new Promise((resolve) => {
-              loadedCount++;
-              img.onload = img.onerror = resolve;
-            })
-        )
-    ).then(() => {
-      this.view.showContent();
+    for (const image of attractionImagesArray) {
+      promiseArray.push(
+        new Promise((resolve) => {
+          image.onload = () => {
+            resolve();
+          };
+        })
+      );
+    }
+
+    await Promise.all(promiseArray).then(() => {
+      setTimeout(() => {
+        this.view.showContent();
+      }, 1000);
     });
   };
 
-  checkedTime = (e) => {
-    if (e.target.id === "morning") {
-      this.view.renderTimeAndDollar("checked", "unchecked", "2000");
-    } else if (e.target.id === "afternoon") {
-      this.view.renderTimeAndDollar("unchecked", "checked", "2500");
+  // =================================================================
+
+  validateDate = () => {
+    const date = document.querySelector("#date").value.trim();
+    const validateResult = dateValidate(date);
+    if (!validateResult.result) {
+      this.userView.renderModal();
+      this.view.renderErrorMessage(validateResult.message);
+      this.view.renderErrorDate(true);
+      return false;
+    }
+    return true;
+  };
+
+  reValidateDate = (e) => {
+    const validateResult = dateValidate(e.target.value.trim());
+    if (validateResult.result) {
+      this.view.renderErrorDate(false);
     }
   };
 
-  changeImage = (e) => {
-    let imageNumber = parseInt(e.target.id.replace("image", ""));
-    if (e.target.id === "leftArrow") {
-      if (this.currentImage === 0) {
-        this.currentImage = this.maxImage;
-      } else {
-        this.currentImage--;
-      }
-    } else if (e.target.id === "rightArrow") {
-      if (this.currentImage === this.maxImage) {
-        this.currentImage = 0;
-      } else {
-        this.currentImage++;
-      }
-    } else {
-      this.currentImage = imageNumber;
+  // =================================================================
+
+  countImageNumber = (id, count, max) => {
+    const imageNumber = parseInt(id.replace("image", ""));
+    switch (id) {
+      case "leftArrow":
+        if (count === 0) {
+          count = max;
+        } else {
+          count--;
+        }
+        break;
+
+      case "rightArrow":
+        if (count === max) {
+          count = 0;
+        } else {
+          count++;
+        }
+        break;
+
+      default:
+        count = imageNumber;
+        break;
     }
-    this.view.imageScroll(this.currentImage);
-    this.view.renderPaginationDotChange(this.currentImage);
+    return count;
   };
 }
