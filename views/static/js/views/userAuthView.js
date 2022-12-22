@@ -41,18 +41,21 @@ export default class UserAuthView {
   // =================================================================
 
   renderSuccessMessage = (signType) => {
+    let title;
+    let message;
+    let buttonValue;
     const modalTitle = document.querySelector("#modalTitle");
     const signMessage = document.querySelector("#signMessage");
     if (signType) {
-      const title = "登入成功";
-      const message =
+      title = "登入成功";
+      message =
         "歡迎回來歡迎回來！您已成功登入會員，點擊「確定」返回先前頁面";
-      const buttonValue = "確定";
+      buttonValue = "確定";
     } else {
-      const title = "恭喜您，註冊成功!";
-      const message =
+      title = "恭喜您，註冊成功!";
+      message =
         "請點擊「繼續登入」，並輸入電子信箱及密碼進行登入，以進入會員頁面";
-      const buttonValue = "繼續登入...";
+      buttonValue = "繼續登入...";
     }
 
     modalTitle.textContent = title;

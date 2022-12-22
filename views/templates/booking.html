@@ -3,8 +3,7 @@
   <link rel="stylesheet" href={{
     url_for('static', filename='css/booking.css') }} />
   {% endblock link %}
-  {% block
-    main %}
+  {% block main %}
     <div class="booking-container">
       <div class="booking-wrapper">
         <div id="bookingAttraction" class="booking bottom-line">
@@ -60,19 +59,17 @@
         <div id="bookingCreditCard" class="booking bottom-line none">
           <div class="booking-title title">信用卡付款資訊</div>
           <div class="booking-required-info credit-card">
-            <div class="info-input content">
+            <div class="info-input content left-center">
               <span>卡片號碼：</span>
-              <input id="cardNumber"
-                     placeholder="**** **** **** ****"
-                     class="correct-input"/>
+              <div id="card-number" class="tpfield card-correct-input"></div>
             </div>
-            <div class="info-input content">
-              <span id="invalidDate">過期時間：</span>
-              <input placeholder="MM/YY" class="correct-input"/>
+            <div class="info-input content left-center">
+              <span>過期時間：</span>
+              <div id="card-expiration-date" class="tpfield card-correct-input"></div>
             </div>
-            <div class="info-input content">
-              <span id="CVV">驗證密碼：</span>
-              <input placeholder="CVV" class="correct-input"/>
+            <div class="info-input content left-center">
+              <span>驗證密碼：</span>
+              <div id="card-ccv" class="tpfield card-correct-input"></div>
             </div>
           </div>
         </div>
@@ -82,14 +79,14 @@
               總價：新台幣<span id="price"></span>元
             </div>
             <div>
-              <input type="button" value="確認訂購並付款" />
+              <input type="button" value="確認訂購並付款" id="payButton" />
             </div>
           </div>
         </div>
       </div>
     </div>
-    {% block script %}
-      <script type="module" src={{ url_for("static", filename="js/booking.js") }}>
-      </script>
-    {% endblock script %}
   {% endblock main %}
+  {% block script %}
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+    <script type="module" src={{ url_for("static", filename="js/booking.js") }}></script>
+  {% endblock script %}

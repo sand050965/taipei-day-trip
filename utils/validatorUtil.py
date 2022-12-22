@@ -1,6 +1,5 @@
 import re
 from jwt import InvalidSignatureError
-from mysql.connector import IntegrityError
 
 
 class ValidatorUtil:
@@ -44,14 +43,22 @@ class ValidatorUtil:
         if (password == "" or not re.match(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$', password)):
             raise ValueError("密碼輸入有誤")
 
+    def validate_phone(phone):
+        if (phone == "" or not re.match(r'^09\d{8}$', phone)):
+            raise ValueError("手機號碼輸入有誤")
+
     def validate_date(date):
         if (date == "" or not re.match(r'^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$', date)):
-            raise ValueError("日期輸入有誤")
+            raise ValueError("日期有誤")
 
     def validate_time(time):
         if (time == ""):
-            raise ValueError("時間輸入有誤")
+            raise ValueError("時間有誤")
 
     def validate_price(price):
-        if (price != "2000" and price != "2500"):
-            raise ValueError("時間輸入有誤")
+        if (price != 2000 and price != 2500):
+            raise ValueError("價格有誤")
+
+    def validate_orderNumber(orderNumber):
+        if (orderNumber == ""):
+            raise ValueError("訂單編號有誤")

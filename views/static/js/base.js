@@ -28,10 +28,10 @@ passwordTriggers.forEach((trigger) => {
   trigger.addEventListener("mousedown", userController.togglePassword, false);
 });
 
-inputs.forEach((input) => {
+for (const input of inputs) {
   input.addEventListener("change", userController.doValidate, false);
   input.addEventListener("keyup", userController.reValidate, false);
-});
+}
 
 signButton.addEventListener("click", userController.doSign, false);
 

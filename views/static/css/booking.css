@@ -2,6 +2,10 @@ nav {
   border-bottom: 1px solid #e8e8e8;
 }
 
+.correct-input {
+  border: 1px solid #e8e8e8e8;
+}
+
 .correct-input:focus {
   border: solid 2px #448899;
 }
@@ -98,20 +102,22 @@ nav {
   margin-bottom: 10px;
 }
 
-.booking-required-info input {
-  width: 200px;
-  height: 38px;
-  border: 1px solid #e8e8e8;
-  border-radius: 5px;
-  padding-left: 10px;
-}
-
 .info-input {
   padding-bottom: 20px;
 }
 
+.booking-required-info input {
+  width: 200px;
+  height: 38px;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
 /* credit card info */
-.credit-card input {
+.tpfield {
+  width: 200px;
+  height: 38px;
+  border-radius: 5px;
   padding-left: 10px;
 }
 

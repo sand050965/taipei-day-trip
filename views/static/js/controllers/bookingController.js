@@ -4,6 +4,11 @@ import UserAuthController from "./userAuthController.js";
 import UserAuthView from "../views/userAuthView.js";
 import AttractionController from "../controllers/attractionController.js";
 import AttractionView from "../views/attractionView.js";
+import {
+  nameValidate,
+  emailValidate,
+  phoneValidate,
+} from "../utils/validatorUtil.js";
 
 export default class BookingController {
   constructor() {
@@ -14,6 +19,7 @@ export default class BookingController {
     this.attractionController = new AttractionController();
     this.attractoinView = new AttractionView();
     this.userData;
+    this.bookingData;
   }
 
   /* Event Handler Function */
@@ -27,7 +33,9 @@ export default class BookingController {
     }
 
     await this.model.init("/api/booking");
+    this.bookingData = this.model.bookingResult.data;
     this.view.renderBooking(this.model.bookingResult.data, this.userData);
+    this.view.renderTapPay();
   };
 
   // =================================================================
@@ -41,21 +49,7 @@ export default class BookingController {
       return;
     }
 
-    const requestObject = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: this.userData.id,
-        attractionId: window.location.href.split("/")[4],
-        date: document.querySelector("#date").value.trim(),
-        time: document.querySelector("#morning").classList.contains("checked")
-          ? "morning"
-          : "afternoon",
-        price: document.querySelector("#dollar").textContent,
-      }),
-    };
-
-    await this.model.createDeleteBooking("/api/booking", requestObject);
+    await this.model.createBooking("/api/booking", this.userData);
     if (this.model.createResult.ok) {
       window.location = "/booking";
     }
@@ -73,15 +67,50 @@ export default class BookingController {
   // =================================================================
 
   deleteBooking = async () => {
-    const requestObject = {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id: this.userData.id }),
-    };
-    await this.model.createDeleteBooking("/api/booking", requestObject);
+    await this.model.deleteBooking("/api/booking");
     if (this.model.deleteResult.ok) {
       window.location = "/booking";
     }
+  };
+
+  // =================================================================
+
+  doPayOrder = async (e) => {
+    e.preventDefault();
+
+    // 取得 TapPay Fields 的 status
+    const tappayStatus = TPDirect.card.getTappayFieldsStatus();
+
+    let errorMessage = this.validateInputs();
+
+    // 確認是否可以 getPrime
+    if (tappayStatus.canGetPrime === false) {
+      errorMessage += "請輸入完整信用卡資訊";
+    }
+
+    if (errorMessage != "") {
+      this.view.renderErrorMessage(errorMessage);
+      this.userView.renderModal();
+      return;
+    }
+
+    // Get prime
+    await this.model.doPay(
+      "/api/orders",
+      this.bookingData
+    );
+  };
+
+  // =================================================================
+
+  revalidate = (e) => {
+    if (!e.target.classList.contains("error-input")) {
+      return;
+    }
+    const id = e.target.id;
+    const value = document.querySelector(`#${id}`).value.trim();
+    const revalidateResult = this.revalidateInput(id, value);
+    this.view.renderCorrectInput(id, revalidateResult);
   };
 
   /* Private Function */
@@ -96,5 +125,42 @@ export default class BookingController {
       return false;
     }
     return true;
+  };
+
+  // =================================================================
+
+  validateInputs = () => {
+    const name = document.querySelector("#contactName").value.trim();
+    const nameValidateResult = nameValidate(name);
+
+    const email = document.querySelector("#contactMail").value.trim();
+    const emailValidateResult = emailValidate(email);
+
+    const phone = document.querySelector("#contactPhone").value.trim();
+    const phoneValidateResult = phoneValidate(phone);
+
+    return this.view.renderErrorInput(
+      nameValidateResult,
+      emailValidateResult,
+      phoneValidateResult
+    );
+  };
+
+  // =================================================================
+
+  revalidateInput = (id, value) => {
+    let revalidateResult;
+    switch (id) {
+      case "contactName":
+        revalidateResult = nameValidate(value);
+        break;
+      case "contactMail":
+        revalidateResult = emailValidate(value);
+        break;
+      case "contactPhone":
+        revalidateResult = phoneValidate(value);
+        break;
+    }
+    return revalidateResult;
   };
 }

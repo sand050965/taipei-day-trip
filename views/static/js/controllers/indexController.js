@@ -19,10 +19,11 @@ export default class IndexController {
   // =================================================================
 
   init = async () => {
+    let apiUrl;
     if (this.keyword != null && this.keyword != "") {
-      const apiUrl = `/api/attractions?page=${this.page}&keyword=${this.keyword}`;
+      apiUrl = `/api/attractions?page=${this.page}&keyword=${this.keyword}`;
     } else {
-      const apiUrl = `/api/attractions?page=${this.page}`;
+      apiUrl = `/api/attractions?page=${this.page}`;
     }
 
     this.isLoading = true;

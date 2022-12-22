@@ -1,6 +1,5 @@
 import uuid
 from flask import *
-from routes.attraction_route import attraction_api
 from utils.dbUtil import DBUtil
 
 

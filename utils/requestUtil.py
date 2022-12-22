@@ -17,6 +17,3 @@ class RequestUtil:
     def get_request_args(request):
         args = request.args
         return args
-
-    def encode_password(password):
-        pass

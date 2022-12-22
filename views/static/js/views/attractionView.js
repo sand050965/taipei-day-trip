@@ -100,15 +100,14 @@ export default class AttractionView {
 
   renderErrorMessage = (errorMessage) => {
     const title = "預約行程錯誤";
-    const message = errorMessage;
     const buttonValue = "確認";
     const modalTitle = document.querySelector("#modalTitle");
-    const successMessage = document.querySelector("#signMessage");
+    const signMessage = document.querySelector("#signMessage");
 
     modalTitle.textContent = title;
     modalTitle.classList.remove("success");
     modalTitle.classList.add("error");
-    signMessage.textContent = message;
+    signMessage.textContent = errorMessage;
     signMessage.classList.remove("none");
     document.querySelector("#errorMessage").classList.add("none");
     document.querySelector("#usernameContainer").classList.add("none");

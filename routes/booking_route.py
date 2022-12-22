@@ -1,12 +1,10 @@
-import jwt
 from flask import *
 from jwt import DecodeError, InvalidSignatureError
 from mysql.connector import IntegrityError
+from utils.dbUtil import DBUtil
 from models.user_model import UserModel
 from models.booking_model import BookingModel as model
 from views.booking_view import BookingView as view
-from utils.dbUtil import DBUtil
-from utils.requestUtil import RequestUtil
 
 booking_api = Blueprint("booking_api", __name__)
 

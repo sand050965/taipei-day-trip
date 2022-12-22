@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block link %}
+    <link rel="stylesheet" href={{
+        url_for('static', filename='css/thankyou.css') }} />
+    {% endblock link %}
+    {% block main %}
+        <div class="order-resimage-containerult-container">
+            <div class="order-result-wrapper">
+                <div class="center">
+                    <img id="successImage" src={{ url_for("static", filename="images/success_icon.png")}} class="none"/>
+                    <img id="failedImage" src={{ url_for("static", filename="images/failed_icon.png")}} class="none"/>
+                </div>
+                <div class="center">
+                    <div>
+                        <h3 id="orderTitle" class="title">謝謝您！您的行程已預定成功</h3>
+                        <div class="order-id content">
+                            訂單編號：<span id="ordeId" class="order-id content"></span>
+                        </div>
+                        <div id="remider" class="reminder content">我們將盡快處理您的行程，我們的客服人員將盡快與您聯繫，敬請耐心等候，謝謝！</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock main %}
+    {% block script %}
+        <script type="module" src={{ url_for("static", filename="js/thankyou.js") }}></script>
+    {% endblock script %}

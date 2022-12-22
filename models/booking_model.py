@@ -1,3 +1,4 @@
+from flask import current_app
 from utils.requestUtil import RequestUtil
 from utils.validatorUtil import ValidatorUtil
 
@@ -35,9 +36,9 @@ class BookingModel:
     def insertUpdateBooking(cursor, request, result):
         token = RequestUtil.get_token(request)
         user_id = token.get("user_id")
-
+        
         data = RequestUtil.get_request_data(request)
-        attractionId = data["attractionId"]
+        attractionId = str(data["attractionId"])
         ValidatorUtil.validate_attractionId(attractionId)
 
         date = data["date"]
@@ -85,16 +86,13 @@ class BookingModel:
 ############################################################
 
     def deleteBooking(cursor, request):
-        data = RequestUtil.get_request_data(request)
-        user_id = data["user_id"]
-
         token = RequestUtil.get_token(request)
         token_UserId = token.get("user_id")
-
+        user_id = current_app.config["USER_ID"]
         ValidatorUtil.validate_tokenUserId(user_id, token_UserId)
 
         cursor.execute(
             """
             DELETE FROM booking
             WHERE user_id = %s
-            """, (user_id, ))
+            """, (token_UserId, ))

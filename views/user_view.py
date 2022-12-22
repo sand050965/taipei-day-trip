@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import current_app, jsonify
 from utils.responseUtil import ResponseUtil
 
 
@@ -23,6 +23,7 @@ class UserView:
 
     def renderGetUserByEmail(result):
         if result != None:
+            current_app.config["USER_ID"] = result["id"]
             return jsonify({
                 "data": {
                     "id": result["id"],

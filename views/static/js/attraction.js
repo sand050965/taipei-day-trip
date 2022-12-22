@@ -18,13 +18,13 @@ const radioboxList = [
 /* Attraction Event Listeners */
 window.addEventListener("load", controller.init, false);
 
-radioboxList.forEach((radioBox) => {
+for (const radioBox of radioboxList) {
   radioBox.addEventListener("click", controller.checkedTime, false);
-});
+}
 
-arrowList.forEach((arrow) => {
+for (const arrow of arrowList) {
   arrow.addEventListener("click", controller.changeImage, false);
-});
+}
 
 paginationDots.addEventListener("click", controller.changeImage, false);
 

@@ -1,39 +1,63 @@
 from flask import *
-from models.order_model import Order as model
+from jwt import InvalidSignatureError
+from mysql.connector import IntegrityError
+from utils.dbUtil import DBUtil
+from models.order_model import OrderModel as model
+from views.order_view import OrderView as view
 
 order_api = Blueprint("order_api", __name__)
 
-@app.route("/api/orders", methods=["GET"])
+
+@order_api.route("/api/orders", methods=["POST"])
 def getOrders():
-    conn = current_app.config["COONECT_POOL"].get_connection()
-    if (conn.is_connected()):
-        cursor = conn.cursor()
+    conn = DBUtil.get_connect()
+    cursor = DBUtil.get_cursor(conn)
+
     try:
-        model.get()
+        result = model.insertOrder(cursor, request)
+        conn.commit()
+        return view.renderNewOrder(result), 200
+
+    except InvalidSignatureError as ISErr:
+        print(ISErr.args)
+        conn.rollback()
+        return view.renderError("未登入系統，拒絕存取"), 403
+    
+    except ValueError as VErr:
+        print(VErr.args)
+        conn.rollback()
+        return view.renderError("訂單建立失敗，輸入不正確或其他原因"), 400
+
+    except IntegrityError as IErr:
+        print(IErr)
+        conn.rollback()
+        return view.renderError("訂單建立失敗，輸入不正確或其他原因"), 400
+
     except Exception as e:
         print(e)
-        return jsonify({
-            "error": True,
-            "message": "伺服器內部錯誤"
-        }), 500
+        conn.rollback()
+        return view.renderError("伺服器內部錯誤"), 500
+
     finally:
         cursor.close()
         conn.close()
 
+############################################################
 
-@app.route("/api/order/<orderNumber>", methods=["POST"])
+
+@order_api.route("/api/order/<orderNumber>", methods=["GET"])
 def getOrder(orderNumber):
-    conn = current_app.config["COONECT_POOL"].get_connection()
-    if (conn.is_connected()):
-        cursor = conn.cursor()
+    conn = DBUtil.get_connect()
+    cursor = DBUtil.get_cursor(conn)
+
     try:
-        model.post()
+        order = model.getOrderByOrderId(cursor, orderNumber)
+        return view.renderGetOrderByOrderId(order), 200
+    
     except Exception as e:
         print(e)
-        return jsonify({
-            "error": True,
-            "message": "伺服器內部錯誤"
-        }), 500
+        return view.renderError("未登入系統，拒絕存取"), 403
+
     finally:
         cursor.close()
         conn.close()
