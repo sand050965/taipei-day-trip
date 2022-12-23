@@ -1,6 +1,14 @@
+from flask import current_app
+from utils.requestUtil import RequestUtil
+from utils.validatorUtil import ValidatorUtil
+
+
 class BookingModel:
 
-    def getBooking(cursor, user_id):
+    def getBooking(cursor, request):
+        token = RequestUtil.get_token(request)
+        user_id = token.get("user_id")
+
         cursor.execute(
             """
             SELECT 
@@ -20,24 +28,39 @@ class BookingModel:
             ORDER BY img.id
             LIMIT 1
             """, (user_id, ))
-        result = cursor.fetchone()
-        if result == None:
-            return None
-        else:
-            return dict(zip(cursor.column_names, result))
+
+        return cursor.fetchone()
 
 ############################################################
 
-    def postBooking(cursor, isNew, user_id, request):
+    def insertUpdateBooking(cursor, request, result):
+        token = RequestUtil.get_token(request)
+        user_id = token.get("user_id")
+        
+        data = RequestUtil.get_request_data(request)
+        attractionId = str(data["attractionId"])
+        ValidatorUtil.validate_attractionId(attractionId)
 
-        data = request.get_json()
-        attractionId = data["attractionId"]
         date = data["date"]
-        time = data["time"]
-        price = data["price"]
+        ValidatorUtil.validate_date(date)
 
-        if isNew:
-            sql = """
+        time = data["time"]
+        ValidatorUtil.validate_time(time)
+
+        price = data["price"]
+        ValidatorUtil.validate_price(price)
+
+        if (result == None):
+            BookingModel.insertBooking(
+                cursor, user_id, attractionId, date, time, price)
+        else:
+            BookingModel.updateBooking(
+                cursor, attractionId, date, time, price, user_id)
+
+############################################################
+
+    def insertBooking(cursor, user_id, attractionId, date, time, price):
+        cursor.execute("""
                 INSERT INTO booking (
                     user_id,
                     attraction_id,
@@ -46,28 +69,30 @@ class BookingModel:
                     price
                 )
                 VALUES (%s, %s, %s, %s, %s)
-                """
-            cursor.execute(sql, (user_id, attractionId, date, time, price))
+                """, (user_id, attractionId, date, time, price))
 
-        else:
-            sql = """
+############################################################
+
+    def updateBooking(cursor, attractionId, date, time, price, user_id):
+        cursor.execute("""
                 UPDATE booking 
                 SET attraction_id = %s,
                     date = %s,
                     time = %s,
                     price = %s
                 WHERE user_id = %s
-                """
-            cursor.execute(sql, (attractionId, date, time, price, user_id))
-
-        return True
+                """, (attractionId, date, time, price, user_id))
 
 ############################################################
 
-    def deleteBooking(cursor, user_id):
+    def deleteBooking(cursor, request):
+        token = RequestUtil.get_token(request)
+        token_UserId = token.get("user_id")
+        user_id = current_app.config["USER_ID"]
+        ValidatorUtil.validate_tokenUserId(user_id, token_UserId)
+
         cursor.execute(
             """
             DELETE FROM booking
             WHERE user_id = %s
-            """, (user_id, ))
-        return True
+            """, (token_UserId, ))

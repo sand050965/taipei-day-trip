@@ -14,6 +14,9 @@ export default class UserAuthController {
     this.userData;
   }
 
+  /* Event Handler Function */
+  // =================================================================
+
   init = async () => {
     await this.model.init("/api/user/auth");
     this.userData = this.model.userData.data;
@@ -21,6 +24,8 @@ export default class UserAuthController {
       ? this.view.renderUserAuth("登入/註冊")
       : this.view.renderUserAuth("登出系統");
   };
+
+  // =================================================================
 
   doUserAuth = (e) => {
     if (e.target.textContent === "登出系統") {
@@ -33,6 +38,8 @@ export default class UserAuthController {
     }
   };
 
+  // =================================================================
+
   closeModal = () => {
     this.view.close();
     if (document.querySelector("#modalTitle").textContent === "登入成功") {
@@ -40,10 +47,14 @@ export default class UserAuthController {
     }
   };
 
+  // =================================================================
+
   doValidate = (e) => {
     this.validator(e.target.id, e.target.value.trim());
-    this.buttonControll();
+    this.view.renderButton();
   };
+
+  // =================================================================
 
   reValidate = (e) => {
     if (
@@ -53,8 +64,83 @@ export default class UserAuthController {
     ) {
       this.validator(e.target.id, e.target.value.trim());
     }
-    this.buttonControll();
+    this.view.renderButton();
   };
+
+  // =================================================================
+
+  togglePassword = (e) => {
+    const isShow = e.target.id === "showPassword" ? true : false;
+    this.view.togglePassword(isShow);
+  };
+
+  // =================================================================
+
+  doSign = async (e) => {
+    const name = document.querySelector("#username").value.trim();
+    const email = document.querySelector("#email").value.trim();
+    const password = document.querySelector("#password").value.trim();
+
+    switch (e.target.value) {
+      case "登入帳戶":
+        this.validator("email", email);
+        this.validator("password", password);
+        if (!this.view.renderButton()) return;
+
+        await this.model.signIn("/api/user/auth", email, password);
+
+        this.model.signInResult.ok
+          ? this.view.renderSuccessMessage(true)
+          : this.view.renderErrorMessage("登入失敗，電子郵件或密碼錯誤");
+        break;
+
+      case "註冊新帳戶":
+        this.validator("username", name);
+        this.validator("email", email);
+        this.validator("password", password);
+        if (!this.view.renderButton()) return;
+
+        await this.model.signUp("/api/user", name, email, password);
+
+        this.model.signUpResult.ok
+          ? this.view.renderSuccessMessage(false)
+          : this.view.renderErrorMessage(this.model.signUpResult.message);
+        break;
+
+      case "確定":
+        window.location = window.location;
+        break;
+
+      case "繼續登入...":
+        this.view.renderModal();
+        this.view.renderSignIn();
+        break;
+
+      default:
+        this.view.close();
+        break;
+    }
+  };
+
+  // =================================================================
+
+  doSignChange = (e) => {
+    switch (e.target.textContent) {
+      case "點此登入":
+        this.view.renderSignIn();
+        e.target.textContent = "點此註冊";
+        break;
+
+      case "點此註冊":
+        this.view.rendersignUp();
+        e.target.textContent = "點此登入";
+        break;
+    }
+    this.view.reset();
+  };
+
+  /* Private Function */
+  // =================================================================
 
   validator = (id, value) => {
     let validateResult;
@@ -74,105 +160,5 @@ export default class UserAuthController {
       validateResult.result,
       validateResult.message
     );
-  };
-
-  buttonControll = () => {
-    let buttonFlag = false;
-    const usernameMessage = document.querySelector("#usernameMessage");
-    const emailMessage = document.querySelector("#emailMessage");
-    const passwordMessage = document.querySelector("#passwordMessage");
-    if (
-      usernameMessage.classList.contains("show-message") ||
-      emailMessage.classList.contains("show-message") ||
-      passwordMessage.classList.contains("show-message")
-    ) {
-      buttonFlag = true;
-    }
-    this.view.renderButton(buttonFlag);
-    return buttonFlag;
-  };
-
-  togglePassword = (e) => {
-    const isShow = e.target.id === "showPassword" ? true : false;
-    this.view.togglePassword(isShow);
-  };
-
-  doSign = async (e) => {
-    const name = document.querySelector("#username").value.trim();
-    const email = document.querySelector("#email").value.trim();
-    const password = document.querySelector("#password").value.trim();
-
-    let requestObject;
-
-    switch (e.target.value) {
-      case "登入帳戶":
-        this.validator("email", email);
-        this.validator("password", password);
-        if (this.buttonControll()) return;
-
-        requestObject = {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email, password: password }),
-        };
-
-        await this.model.signIn("/api/user/auth", requestObject);
-
-        this.model.signInResult.ok
-          ? this.view.renderSuccessMessage(true)
-          : this.view.renderErrorMessage("登入失敗，電子郵件或密碼錯誤");
-        break;
-
-      case "註冊新帳戶":
-        this.validator("username", name);
-        this.validator("email", email);
-        this.validator("password", password);
-        if (this.buttonControll()) return;
-
-        requestObject = {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: name,
-            email: email,
-            password: password,
-          }),
-        };
-
-        await this.model.signUp("/api/user", requestObject);
-
-        this.model.signUpResult.ok
-          ? this.view.renderSuccessMessage(false)
-          : this.view.renderErrorMessage(this.model.signUpResult.message);
-        break;
-
-      case "確定":
-        window.location = window.location;
-        break;
-
-      case "繼續登入...":
-        this.view.renderModal();
-        this.view.renderSignIn();
-        break;
-        
-      case "確認":
-        this.view.close();
-        break;
-    }
-  };
-
-  doSignChange = (e) => {
-    switch (e.target.textContent) {
-      case "點此登入":
-        this.view.renderSignIn();
-        e.target.textContent = "點此註冊";
-        break;
-
-      case "點此註冊":
-        this.view.rendersignUp();
-        e.target.textContent = "點此登入";
-        break;
-    }
-    this.view.renderButton(false);
   };
 }

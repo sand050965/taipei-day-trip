@@ -1,14 +1,13 @@
-from flask import *
-from routes.attraction_route import attraction_api
-from data.data_connect import Database
 import uuid
+from flask import *
+from utils.dbUtil import DBUtil
 
 
 def create_app():
     app = Flask(__name__, template_folder='./views/templates/',
                 static_folder='./views/static/')
 
-    connect_pool = Database.get_db()
+    connect_pool = DBUtil.get_db()
 
     app.config["COONECT_POOL"] = connect_pool
     app.config["JSON_AS_ASCII"] = False

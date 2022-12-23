@@ -4,8 +4,11 @@ const categoryList = document.querySelector("#category-list");
 const searchBar = document.querySelector("#search-bar");
 const magnifier = document.querySelector("#magnifier");
 
-/* index */
-window.addEventListener("load", controller.init);
+
+
+/* Index Event Listeners */
+
+window.addEventListener("load", controller.init, false);
 
 window.addEventListener("scroll", controller.loadMore, false);
 

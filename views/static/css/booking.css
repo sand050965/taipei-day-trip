@@ -2,11 +2,22 @@ nav {
   border-bottom: 1px solid #e8e8e8;
 }
 
+.correct-input {
+  border: 1px solid #e8e8e8e8;
+}
+
+.correct-input:focus {
+  border: solid 2px #448899;
+}
+
+.error-input {
+  border: solid 1px #ff0000;
+}
+
 .booking-container {
   display: flex;
   justify-content: center;
   align-items: top;
-  /* height: calc(100vh - 154px); */
 }
 
 .booking-wrapper {
@@ -34,7 +45,7 @@ nav {
   padding: 20px 0 10px 0;
 }
 
-.no-booking{
+.no-booking {
   margin-top: 40px;
 }
 
@@ -91,21 +102,24 @@ nav {
   margin-bottom: 10px;
 }
 
-.booking-required-info input {
-  width: 200px;
-  height: 38px;
-  border: 1px solid #e8e8e8;
-  border-radius: 5px;
-  padding-left: 10px;
-}
-
 .info-input {
   padding-bottom: 20px;
 }
 
-/* credit card info */
-.credit-card input {
+.booking-required-info input {
+  width: 200px;
+  height: 38px;
+  border-radius: 5px;
   padding-left: 10px;
+}
+
+/* credit card info */
+.tpfield {
+  width: 200px;
+  height: 38px;
+  border-radius: 5px;
+  padding-left: 10px;
+  border: 1px solid #e8e8e8e8;
 }
 
 /* booking-confirm */
@@ -146,12 +160,12 @@ input[type="button"]:hover {
   .show-booking {
     display: block;
   }
-  
+
   .booking-title {
     padding: 0 10px;
   }
-  
-  .no-booking{
+
+  .no-booking {
     padding: 0 10px;
   }
 
@@ -183,7 +197,7 @@ input[type="button"]:hover {
   }
 
   /* booking-confirm */
-  .booking-confirm{
+  .booking-confirm {
     padding: 0 5px 50px 0;
   }
 }

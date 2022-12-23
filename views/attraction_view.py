@@ -3,33 +3,29 @@ from flask import jsonify
 
 class AttractionView:
 
-    def renderGetAttractionByPageKeyword(attractions, page):
+    def renderGetAttractionByPageKeyword(attractions):
         dataList = []
-
-        if (len(attractions) != 0):
-
-            for i in range(len(attractions)):
-
-                if i == 12:
-                    break
-
-                dataList.append({
-                    "id": attractions[i]["id"],
-                    "name": attractions[i]["attraction_name"],
-                    "category": attractions[i]["category"],
-                    "description": attractions[i]["description"],
-                    "address": attractions[i]["address"],
-                    "transport": attractions[i]["transport"],
-                    "mrt": attractions[i]["mrt"],
-                    "lat": attractions[i]["latitude"],
-                    "lng": attractions[i]["longitude"],
-                    "images": (attractions[i]["images"].split(","))
-                })
-
         nextPage = None
+        page = int(attractions["page"])
+        attractionsData = attractions["data"]
+        
+        for i in range(len(attractionsData)):
+            if i == 12:
+                nextPage = page + 1
+                break
 
-        if (len(attractions) == 13):
-            nextPage = page + 1
+            dataList.append({
+                "id": attractionsData[i]["id"],
+                "name": attractionsData[i]["attraction_name"],
+                "category": attractionsData[i]["category"],
+                "description": attractionsData[i]["description"],
+                "address": attractionsData[i]["address"],
+                "transport": attractionsData[i]["transport"],
+                "mrt": attractionsData[i]["mrt"],
+                "lat": attractionsData[i]["latitude"],
+                "lng": attractionsData[i]["longitude"],
+                "images": (attractionsData[i]["images"].split(","))
+            })
 
         return jsonify({
             "nextPage": nextPage,
@@ -39,13 +35,6 @@ class AttractionView:
 ############################################################
 
     def renderGetAttractionById(attraction):
-
-        if (attraction == None):
-            return jsonify({
-                "error": True,
-                "message": "景點編號不正確"
-            }), 400
-
         dataSet = {
             "id": attraction["id"],
             "name": attraction["attraction_name"],

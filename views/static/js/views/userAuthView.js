@@ -3,6 +3,8 @@ export default class UserAuthView {
     document.querySelector("#userAuth").textContent = textValue;
   };
 
+  // =================================================================
+
   renderModal = () => {
     const modalContainer = document.querySelector("#modalContainer");
     const modal = document.querySelector("#modal");
@@ -14,6 +16,8 @@ export default class UserAuthView {
     this.clearMessage();
   };
 
+  // =================================================================
+
   renderSignIn = () => {
     this.reset();
     document.querySelector("#usernameContainer").classList.add("none");
@@ -22,6 +26,8 @@ export default class UserAuthView {
     document.querySelector("#isUser").textContent = "還沒有帳戶？";
     document.querySelector("#signChange").textContent = "點此註冊";
   };
+
+  // =================================================================
 
   rendersignUp = () => {
     this.reset();
@@ -32,6 +38,8 @@ export default class UserAuthView {
     document.querySelector("#signChange").textContent = "點此登入";
   };
 
+  // =================================================================
+
   renderSuccessMessage = (signType) => {
     let title;
     let message;
@@ -40,7 +48,8 @@ export default class UserAuthView {
     const signMessage = document.querySelector("#signMessage");
     if (signType) {
       title = "登入成功";
-      message = "歡迎回來歡迎回來！您已成功登入會員，點擊「確定」返回先前頁面";
+      message =
+        "歡迎回來歡迎回來！您已成功登入會員，點擊「確定」返回先前頁面";
       buttonValue = "確定";
     } else {
       title = "恭喜您，註冊成功!";
@@ -62,6 +71,8 @@ export default class UserAuthView {
     document.querySelector("#signButton").value = buttonValue;
   };
 
+  // =================================================================
+
   renderErrorInputMessage = (id, isSuccess, message) => {
     const inputDom = document.querySelector(`#${id}`);
     const messageDom = document.querySelector(`#${id}Message`);
@@ -79,24 +90,37 @@ export default class UserAuthView {
     }
   };
 
+  // =================================================================
+
   renderErrorMessage = (message) => {
     const signMessage = document.querySelector("#errorMessage");
     signMessage.textContent = message;
     signMessage.classList.remove("none");
   };
 
-  renderButton = (buttonFlag) => {
+  renderButton = () => {
+    const usernameMessage = document.querySelector("#usernameMessage");
+    const emailMessage = document.querySelector("#emailMessage");
+    const passwordMessage = document.querySelector("#passwordMessage");
     const button = document.querySelector("#signButton");
-    if (buttonFlag) {
+    if (
+      usernameMessage.classList.contains("show-message") ||
+      emailMessage.classList.contains("show-message") ||
+      passwordMessage.classList.contains("show-message")
+    ) {
       button.classList.remove("button-able");
       button.classList.add("button-disabled");
       button.disabled = true;
+      return false;
     } else {
       button.classList.add("button-able");
       button.classList.remove("button-disabled");
       button.disabled = false;
+      return true;
     }
   };
+
+  // =================================================================
 
   togglePassword = (isShow) => {
     const showPassword = document.querySelector("#showPassword");
@@ -113,11 +137,15 @@ export default class UserAuthView {
     }
   };
 
+  // =================================================================
+
   clearAllInput = () => {
     document.querySelector("#username").value = "";
     document.querySelector("#email").value = "";
     document.querySelector("#password").value = "";
   };
+
+  // =================================================================
 
   clearMessage = (messageDomIds) => {
     messageDomIds?.forEach((id) => {
@@ -127,6 +155,8 @@ export default class UserAuthView {
     });
     document.querySelector("#errorMessage").classList.add("none");
   };
+
+  // =================================================================
 
   close = () => {
     const modalContainer = document.querySelector("#modalContainer");
@@ -138,10 +168,12 @@ export default class UserAuthView {
     document.body.style.overflow = "";
   };
 
+  // =================================================================
+
   reset = () => {
     this.clearAllInput();
     this.clearMessage(["username", "email", "password"]);
-    const modalTitle=document.querySelector("#modalTitle");
+    const modalTitle = document.querySelector("#modalTitle");
     const username = document.querySelector("#username");
     const email = document.querySelector("#email");
     const password = document.querySelector("#password");

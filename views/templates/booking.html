@@ -3,8 +3,7 @@
   <link rel="stylesheet" href={{
     url_for('static', filename='css/booking.css') }} />
   {% endblock link %}
-  {% block
-    main %}
+  {% block main %}
     <div class="booking-container">
       <div class="booking-wrapper">
         <div id="bookingAttraction" class="booking bottom-line">
@@ -44,15 +43,15 @@
           <div class="booking-required-info">
             <div class="info-input content">
               <span>聯絡姓名：</span>
-              <input type="text" id="contactName"/>
+              <input type="text" id="contactName" class="correct-input"/>
             </div>
             <div class="info-input content">
               <span>聯絡信箱：</span>
-              <input type="email" id="contactMail"/>
+              <input type="email" id="contactMail" class="correct-input"/>
             </div>
             <div class="info-input content">
               <span>手機號碼：</span>
-              <input type="tel" id="contactPhone"/>
+              <input type="tel" id="contactPhone" class="correct-input"/>
             </div>
           </div>
           <div class="contact-remind title">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式</div>
@@ -60,17 +59,17 @@
         <div id="bookingCreditCard" class="booking bottom-line none">
           <div class="booking-title title">信用卡付款資訊</div>
           <div class="booking-required-info credit-card">
-            <div class="info-input content">
+            <div class="info-input content left-center">
               <span>卡片號碼：</span>
-              <input id="cardNumber" placeholder="**** **** **** ****" />
+              <div id="card-number" class="tpfield card-correct-input"></div>
             </div>
-            <div class="info-input content">
-              <span id="invalidDate">過期時間：</span>
-              <input placeholder="MM/YY" />
+            <div class="info-input content left-center">
+              <span>過期時間：</span>
+              <div id="card-expiration-date" class="tpfield card-correct-input"></div>
             </div>
-            <div class="info-input content">
-              <span id="CVV">驗證密碼：</span>
-              <input placeholder="CVV" />
+            <div class="info-input content left-center">
+              <span>驗證密碼：</span>
+              <div id="card-ccv" class="tpfield card-correct-input"></div>
             </div>
           </div>
         </div>
@@ -80,14 +79,14 @@
               總價：新台幣<span id="price"></span>元
             </div>
             <div>
-              <input type="button" value="確認訂購並付款" />
+              <input type="button" value="確認訂購並付款" id="payButton" />
             </div>
           </div>
         </div>
       </div>
     </div>
-    {% block script %}
-      <script type="module" src={{ url_for("static", filename="js/booking.js") }}>
-      </script>
-    {% endblock script %}
   {% endblock main %}
+  {% block script %}
+    <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+    <script type="module" src={{ url_for("static", filename="js/booking.js") }}></script>
+  {% endblock script %}

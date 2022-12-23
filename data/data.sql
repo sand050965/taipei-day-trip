@@ -7,7 +7,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -63,8 +63,10 @@ CREATE TABLE `booking` (
   `price` int NOT NULL COMMENT '價格',
   PRIMARY KEY (`id`),
   KEY `user_id_index` (`user_id`),
-  CONSTRAINT `booking` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='預定行程資料表';
+  KEY `fk_booking_attraction_id` (`attraction_id`),
+  CONSTRAINT `fk_booking_attraction_id` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_booking_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='預定行程資料表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,8 +90,8 @@ CREATE TABLE `image` (
   `attraction_id` int NOT NULL COMMENT '景點ID',
   `image_url` varchar(500) NOT NULL COMMENT '圖片URL',
   PRIMARY KEY (`id`),
-  KEY `image` (`attraction_id`),
-  CONSTRAINT `image` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`id`) ON DELETE CASCADE
+  KEY `fk_attraction_id` (`attraction_id`),
+  CONSTRAINT `fk_image_attraction_id` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=329 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -111,14 +113,26 @@ DROP TABLE IF EXISTS `orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `orders` (
-  `id` int NOT NULL COMMENT '訂單編號',
-  `booking_id` int NOT NULL COMMENT '預定行程編號',
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '資料編號',
+  `order_id` varchar(255) NOT NULL COMMENT '訂單編號',
+  `attraction_id` int NOT NULL COMMENT '行程編號',
+  `price` int NOT NULL COMMENT '價格',
+  `date` date NOT NULL COMMENT '日期',
+  `time` varchar(45) NOT NULL COMMENT '時段',
   `user_id` int NOT NULL COMMENT '會員編號',
-  `contact_name` varchar(255) NOT NULL,
-  `contact_email` varchar(255) NOT NULL,
-  `contact_phone` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='訂單資料表';
+  `contact_name` varchar(225) NOT NULL COMMENT '聯絡人姓名',
+  `contact_email` varchar(255) NOT NULL COMMENT '聯絡人電子信箱',
+  `contact_phone` varchar(45) NOT NULL COMMENT '聯絡人手機',
+  `status` int NOT NULL COMMENT '付款狀態',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `order_id_UNIQUE` (`order_id`),
+  KEY `order_id_index` (`order_id`),
+  KEY `attraction_id` (`attraction_id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`id`),
+  CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='訂單資料表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -127,7 +141,37 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
+INSERT INTO `orders` VALUES (7,'20221222221447-1',8,2500,'2022-12-31','afternoon',1,'test','test@gmail.com','0958954776',0),(8,'20221222222406-1',11,2500,'2022-12-29','afternoon',1,'test','test@gmail.com','0911111111',0),(9,'20221222222745-1',7,2000,'2022-12-29','morning',1,'test','test@gmail.com','0958954776',0),(10,'20221222231629-1',3,2000,'2022-12-30','morning',1,'test','test@gmail.com','0958954776',0);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `payment`
+--
+
+DROP TABLE IF EXISTS `payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `payment` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '資料編號',
+  `order_id` varchar(255) NOT NULL COMMENT '訂單編號',
+  `paid_time` datetime NOT NULL COMMENT '付款時間',
+  `message` varchar(500) NOT NULL COMMENT '付款記錄資訊',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `order_id` (`order_id`),
+  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `payment`
+--
+
+LOCK TABLES `payment` WRITE;
+/*!40000 ALTER TABLE `payment` DISABLE KEYS */;
+INSERT INTO `payment` VALUES (1,'20221222221447-1','2022-12-22 22:14:47','Success'),(2,'20221222222406-1','2022-12-22 22:24:06','Success'),(3,'20221222222745-1','2022-12-22 22:27:45','Success'),(4,'20221222231629-1','2022-12-22 23:16:29','Success');
+/*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -146,7 +190,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `email_index` (`email`),
   KEY `email_password_index` (`email`,`password`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='會員資料表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='會員資料表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,6 +199,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'test','test@gmail.com','@Qwe13579'),(2,'彭彭彭','plyply@ply.com','12345678'),(4,'彭彭彭','ply@ply.com','12345678'),(6,'test2','test@outlook.com','@Qwe13579');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -167,4 +212,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-18 13:44:22
+-- Dump completed on 2022-12-23  0:10:34

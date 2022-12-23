@@ -26,6 +26,8 @@ export default class BookingView {
     }
   };
 
+  // =================================================================
+
   renderNoBooking = () => {
     const bookingContent = document.querySelector("#bookingContent");
     const footer = document.querySelector("footer");
@@ -44,6 +46,132 @@ export default class BookingView {
     document.querySelector("#delete").classList.add("none");
     document.querySelector("#bookingConfirm").classList.add("none");
   };
+
+  // =================================================================
+
+  renderTapPay = () => {
+    TPDirect.setupSDK(
+      126875,
+      "app_rMoZVbJvU6CKP0R90QvAPk0NJmTPxVh2ljZL73XivyCvX9z0BhHU6VSAVofe",
+      "sandbox"
+    );
+
+    TPDirect.card.setup({
+      fields: {
+        number: {
+          element: "#card-number",
+          placeholder: "**** **** **** ****",
+        },
+        expirationDate: {
+          element: "#card-expiration-date",
+          placeholder: "MM / YY",
+        },
+        ccv: {
+          element: "#card-ccv",
+          placeholder: "ccv",
+        },
+      },
+      styles: {
+        input: {
+          color: "gray",
+        },
+        "input.ccv": {
+          "font-size": "16px",
+        },
+        "input.expiration-date": {
+          "font-size": "16px",
+        },
+        "input.card-number": {
+          "font-size": "16px",
+        },
+        ".valid": {
+          color: "green",
+        },
+        ".invalid": {
+          color: "red",
+        },
+        // Media queries
+        "@media screen and (max-width: 400px)": {
+          input: {
+            color: "orange",
+          },
+        },
+        // isMaskCreditCardNumber: true,
+        // maskCreditCardNumberRange: {
+        //   beginIndex: 6,
+        //   endIndex: 11,
+        // },
+      },
+    });
+  };
+
+  // =================================================================
+
+  renderErrorInput = (
+    nameValidateResult,
+    emailValidateResult,
+    phoneValidateResult
+  ) => {
+    let errorMessage = "";
+    if (!nameValidateResult.result) {
+      document.querySelector("#contactName").classList.remove("correct-input");
+      document.querySelector("#contactName").classList.add("error-input");
+      errorMessage += nameValidateResult.message + "\n";
+    }
+
+    if (!emailValidateResult.result) {
+      document.querySelector("#contactMail").classList.remove("correct-input");
+      document.querySelector("#contactMail").classList.add("error-input");
+      errorMessage += emailValidateResult.message + "\n";
+    }
+
+    if (!phoneValidateResult.result) {
+      document.querySelector("#contactPhone").classList.remove("correct-input");
+      document.querySelector("#contactPhone").classList.add("error-input");
+      errorMessage += phoneValidateResult.message + "\n";
+    }
+
+    return errorMessage;
+  };
+
+  // =================================================================
+
+  renderErrorMessage = (errorMessage) => {
+    const title = "請完整填入所有資訊";
+    const buttonValue = "確認";
+    const modalTitle = document.querySelector("#modalTitle");
+    const signMessage = document.querySelector("#signMessage");
+
+    modalTitle.textContent = title;
+    modalTitle.classList.remove("success");
+    modalTitle.classList.add("error");
+    signMessage.innerText = errorMessage;
+    signMessage.classList.remove("none");
+    document.querySelector("#errorMessage").classList.add("none");
+    document.querySelector("#usernameContainer").classList.add("none");
+    document.querySelector("#emailContainer").classList.add("none");
+    document.querySelector("#passwordContainer").classList.add("none");
+    document.querySelector("#signChangeRemind").classList.add("none");
+    document.querySelector("#signButton").value = buttonValue;
+  };
+
+  // =================================================================
+
+  renderCorrectInput = (inputId, revalidateResult) => {
+    if (!revalidateResult.result) return;
+
+    if (inputId.substring(0, 5) === "card") {
+      document.querySelector(`#${inputId}`).classList.add("card-correct-input");
+      document
+        .querySelector(`#${inputId}`)
+        .classList.remove("card-error-input");
+    } else {
+      document.querySelector(`#${inputId}`).classList.add("correct-input");
+      document.querySelector(`#${inputId}`).classList.remove("error-input");
+    }
+  };
+
+  // =================================================================
 
   reset = () => {
     const bookingContent = document.querySelector("#bookingContent");
@@ -64,32 +192,14 @@ export default class BookingView {
     document.querySelector("#bookingConfirm").classList.remove("none");
   };
 
+  // =================================================================
+
   clearAllInputs = () => {
     document.querySelector("#contactName").value = "";
     document.querySelector("#contactMail").value = "";
     document.querySelector("#contactPhone").value = "";
-    document.querySelector("#cardNumber").value = "";
-    document.querySelector("#invalidDate").value = "";
-    document.querySelector("#CVV").value = "";
-  };
-
-  renderErrorMessage = (errorMessage) => {
-    const title = "預約行程錯誤";
-    const message = errorMessage;
-    const buttonValue = "確認";
-    const modalTitle = document.querySelector("#modalTitle");
-    const successMessage = document.querySelector("#signMessage");
-
-    modalTitle.textContent = title;
-    modalTitle.classList.remove("success");
-    modalTitle.classList.add("error");
-    signMessage.textContent = message;
-    signMessage.classList.remove("none");
-    document.querySelector("#errorMessage").classList.add("none");
-    document.querySelector("#usernameContainer").classList.add("none");
-    document.querySelector("#emailContainer").classList.add("none");
-    document.querySelector("#passwordContainer").classList.add("none");
-    document.querySelector("#signChangeRemind").classList.add("none");
-    document.querySelector("#signButton").value = buttonValue;
+    document.querySelector("#card-number").value = "";
+    document.querySelector("#card-expiration-date").value = "";
+    document.querySelector("#card-ccv").value = "";
   };
 }

@@ -1,11 +1,13 @@
 export default class AttractionModels {
   constructor() {
-    this.attractionResult={};
+    this.attractionResult = {};
   }
+
+  // =================================================================
 
   init = async (url) => {
     const response = await fetch(url);
     const result = await response.json();
-    this.attractionResult=result;
+    this.attractionResult = result;
   };
 }
