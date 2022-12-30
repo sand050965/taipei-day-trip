@@ -1,97 +1,113 @@
-import BookingModel from "../models/bookingModel.js";
-import BookingView from "../views/bookingView.js";
+import CartModel from "../models/cartModel.js";
+import CartView from "../views/cartView.js";
 import UserAuthController from "./userAuthController.js";
 import UserAuthView from "../views/userAuthView.js";
-import AttractionController from "../controllers/attractionController.js";
-import AttractionView from "../views/attractionView.js";
 import {
   nameValidate,
   emailValidate,
   phoneValidate,
 } from "../utils/validatorUtil.js";
 
-export default class BookingController {
+export default class CartController {
   constructor() {
-    this.model = new BookingModel();
-    this.view = new BookingView();
+    this.model = new CartModel();
+    this.view = new CartView();
     this.userController = new UserAuthController();
     this.userView = new UserAuthView();
-    this.attractionController = new AttractionController();
-    this.attractoinView = new AttractionView();
     this.userData;
-    this.bookingData;
+    this.checkedBookingIdList = [];
   }
 
-  /* Event Handler Function */
   // =================================================================
 
   init = async (e) => {
-    await this.userController.init();
-    this.userData = this.userController.userData;
-    if (this.userData === null) {
-      window.location = "/";
+    if (!(await this.checkUserAuth(e))) {
+      return;
+    }
+    await this.model.getAllBookings("/api/bookings");
+    this.view.renderInit(this.model.cartResult);
+
+    const bookingItemsInputs = document.querySelectorAll(
+      'input[name="booking_item"]'
+    );
+
+    const bookingDelete = document.querySelectorAll('[name="delete_booking"]');
+
+    for (const input of bookingItemsInputs) {
+      input.addEventListener("change", this.chageInputStatus, false);
     }
 
-    const bookingId = window.location.href.split("/")[4];
+    for (const deleteItem of bookingDelete) {
+      deleteItem.addEventListener("click", this.deleteBookingById, false);
+    }
 
-    await this.model.init(`/api/booking/${bookingId}`);
-    this.bookingData = this.model.bookingResult.data;
-    this.view.renderBooking(this.model.bookingResult.data, this.userData);
     this.view.renderTapPay();
   };
 
   // =================================================================
 
-  createBooking = async (e) => {
-    if (!(await this.checkUserAuth(e))) {
-      return;
-    }
+  chageInputStatus = () => {
+    this.view.renderCountSelect();
+    this.view.renderSelectPrice(this.model.cartResult);
+  };
 
-    if (!this.attractionController.validateDate()) {
-      return;
-    }
+  // =================================================================
 
-    await this.model.createBooking("/api/booking", this.userData);
-    if (this.model.createResult.ok) {
-      window.location = `/booking/${this.model.createResult.book_id}`;
+  selectAll = (e) => {
+    if (e.target.checked) {
+      this.view.renderSelectAll(true);
     } else {
-      this.view.renderErrorMessage(this.model.createResult.message);
+      this.view.renderSelectAll(false);
     }
+    this.view.renderSelectPrice(this.model.cartResult);
   };
 
   // =================================================================
 
-  addToCart = async (e) => {
+  deleteBookingById = async (e) => {
+    const bookingItemId = e.target.id;
+    const bookingId = bookingItemId.replace("booking_", "");
+    await this.model.deleteBookingById("/api/booking", bookingId);
+    this.init(e);
+  };
+
+  // =================================================================
+
+  deleteBookings = async (e) => {
+    let idArrays = [];
+    this.checkSelected(idArrays);
+    await this.model.deleteBookings("/api/bookings", idArrays);
+    this.init(e);
+  };
+
+  // =================================================================
+
+  directToCheckOut = async (e) => {
     if (!(await this.checkUserAuth(e))) {
       return;
     }
 
-    if (!this.attractionController.validateDate()) {
+    window.location = "/api/cartcheckout";
+  };
+
+  // =================================================================
+
+  goCheckout = async (e) => {
+    if (!(await this.checkUserAuth(e))) {
       return;
     }
 
-    this.attractoinView.addedCartDone(true);
-
-    await this.model.createBooking("/api/booking", this.userData);
-    this.view.renderErrorMessage(this.model.createResult.message);
-    this.userController.getCartCount();
-    setTimeout(() => {
-      this.attractoinView.addedCartDone(false);
-    }, 1000);
+    this.checkSelected(this.checkedBookingIdList);
+    this.view.renderCartCheckOut(
+      this.userData,
+      this.model.cartResult,
+      this.checkedBookingIdList
+    );
   };
 
   // =================================================================
 
-  deleteBookingById = async () => {
-    await this.model.deleteBookingById("/api/booking");
-    if (this.model.deleteResult.ok) {
-      history.back();
-    }
-  };
-
-  // =================================================================
-
-  doPayOrder = async (e) => {
+  doCheckout = async (e) => {
     e.preventDefault();
 
     // 取得 TapPay Fields 的 status
@@ -111,7 +127,26 @@ export default class BookingController {
     }
 
     // Get prime
-    await this.model.doPay("/api/orders", this.bookingData);
+    await this.model.doCheckout(
+      "/api/orders",
+      this.model.cartResult,
+      this.checkedBookingIdList
+    );
+  };
+
+  /* Private Function */
+  // =================================================================
+  checkSelected = (idArrays) => {
+    idArrays.length = 0;
+    const bookingItemsInputs = document.querySelectorAll(
+      'input[name="booking_item"]'
+    );
+
+    for (const input of bookingItemsInputs) {
+      if (input.checked) {
+        idArrays.push(parseInt(input.value));
+      }
+    }
   };
 
   // =================================================================
@@ -126,7 +161,6 @@ export default class BookingController {
     this.view.renderCorrectInput(id, revalidateResult);
   };
 
-  /* Private Function */
   // =================================================================
 
   checkUserAuth = async (e) => {

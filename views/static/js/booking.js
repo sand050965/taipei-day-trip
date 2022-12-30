@@ -7,7 +7,7 @@ const inputs = document.querySelectorAll("input");
 /* Booking Event Listeners */
 window.addEventListener("load", controller.init, false);
 
-onDelete.addEventListener("click", controller.deleteBooking, false);
+onDelete.addEventListener("click", controller.deleteBookingById, false);
 
 payButton.addEventListener("click", controller.doPayOrder, false);
 

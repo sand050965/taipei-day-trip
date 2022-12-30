@@ -137,4 +137,17 @@ export default class AttractionView {
     this.renderTimeAndDollar("checked", "unchecked", "2000");
     this.renderErrorDate(false);
   };
+
+  // =================================================================
+
+  addedCartDone = (isAdded) => {
+    const addedCartModal = document.querySelector("#addedCartModal");
+    if (isAdded) {
+      addedCartModal.classList.remove("none");
+      addedCartModal.classList.add("added-cart-popup");
+    } else {
+      addedCartModal.classList.remove("added-cart-popup");
+      addedCartModal.classList.add("none");
+    }
+  };
 }

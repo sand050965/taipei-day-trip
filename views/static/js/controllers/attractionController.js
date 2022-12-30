@@ -11,6 +11,7 @@ export default class AttractionController {
     this.currentImage = 0;
     this.maxImage = 0;
     this.imagesSrcArray = [];
+    this.clientWidth;
   }
 
   /* Event Handler Function */
@@ -52,6 +53,15 @@ export default class AttractionController {
     );
     this.view.imageScroll(this.currentImage);
     this.view.renderPaginationDotChange(this.currentImage);
+  };
+
+  // =================================================================
+
+  resizeCaresoul = (e) => {
+    const clientWidth = document.documentElement.clientWidth;
+    const sliders = document.querySelector(".sliders");
+    sliders.scrollLeft = this.clientWidth - clientWidth;
+    this.clientWidth = clientWidth;
   };
 
   // =================================================================
@@ -99,6 +109,8 @@ export default class AttractionController {
     }
     return true;
   };
+
+  // =================================================================
 
   reValidateDate = (e) => {
     const validateResult = dateValidate(e.target.value.trim());

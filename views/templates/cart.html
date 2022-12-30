@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block link %}
+    <link rel="stylesheet" href={{
+        url_for('static', filename='css/cart.css') }} />
+    {% endblock link %}
+    {% block main %}
+        <div>
+            <div id="cartBooking" class="cart-booking">
+                <div class="cart-title title">購物車</div>
+                <div id="noBooking" class="content none">
+                    <img src={{ url_for("static", filename="images/empty_cart_icon.png") }}/>
+                    <div>目前購物車內沒有任何待預定的行程</div>
+                </div>
+                <div id="bookingContent" class="booking-content"></div>
+                <div id="bookingConfirm" class="top-border none">
+                    <div class="checkCancelAll">
+                        <div>
+                            <input type="checkbox" id="selectAll"/>
+                        </div>
+                        <div class="select-all content center">
+                            全選(<span id="totalSelect"></span>)
+                        </div>
+                        <div id="seperator" class="content">|</div>
+                        <div id="deleteSelect" class="cancel-select content center">刪除已選項目</div>
+                    </div>
+                    <div class="booking-confirm">
+                        <div class="title">
+                            總價：新台幣<span id="price"></span>元
+                        </div>
+                        <div>
+                            <input type="button" value="前往結帳" id="goCheckoutButton" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="checkout" class="checkout none">
+                <div id="checkoutContact" class="checkout-contact">
+                    <div class="checkout-title title bottom-line">您的聯絡資訊</div>
+                    <div class="checkout-required-info">
+                        <div class="info-input content">
+                            <span>聯絡姓名：</span>
+                            <input type="text" id="contactName" name="info" class="correct-input"/>
+                        </div>
+                        <div class="info-input content">
+                            <span>聯絡信箱：</span>
+                            <input type="email" id="contactMail" name="info" class="correct-input"/>
+                        </div>
+                        <div class="info-input content">
+                            <span>手機號碼：</span>
+                            <input type="tel" id="contactPhone" name="info" class="correct-input" maxlength="10"/>
+                        </div>
+                    </div>
+                    <div class="contact-remind title">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式</div>
+                </div>
+                <div id="checkoutCreditCard" class="checkout-credit-card">
+                    <div class="checkout-title title top-line bottom-line">信用卡付款資訊</div>
+                    <div class="checkout-required-info credit-card">
+                        <div class="info-input content left-center">
+                            <span>卡片號碼：</span>
+                            <div id="card-number" class="tpfield card-correct-input"></div>
+                        </div>
+                        <div class="info-input content left-center">
+                            <span>過期時間：</span>
+                            <div id="card-expiration-date" class="tpfield card-correct-input"></div>
+                        </div>
+                        <div class="info-input content left-center">
+                            <span>驗證密碼：</span>
+                            <div id="card-ccv" class="tpfield card-correct-input"></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="checkoutConfirm" class="checkout-confirm-container">
+                    <div class="checkout-confirm">
+                        <div class="checkout-price title">
+                            總價：新台幣<span id="price"></span>元
+                        </div>
+                        <div>
+                            <input type="button" value="確認訂購並付款" id="payButton" />
+                        </div>
+                    </div>
+                </div>
+                <div class="checkout-list-title title">
+                    您好，<span id="userName"></span>，待預定的行程如下：
+                </div>
+                <div id="checkoutContent" class="checkout-content"></div>
+            </div>
+        </div>
+    {% endblock main %}
+    {% block script %}
+        <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
+        <script type="module" src={{ url_for("static", filename="js/cart.js") }}></script>
+    {% endblock script %}

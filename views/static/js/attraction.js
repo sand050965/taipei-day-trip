@@ -2,8 +2,9 @@ import AttractionController from "./controllers/attractionController.js";
 import BookingController from "./controllers/bookingController.js";
 const controller = new AttractionController();
 const bookingController = new BookingController();
-const bookingSchedule = document.querySelector("#bookingSchedule");
+const cart = document.querySelector("#cart");
 const date = document.querySelector("#date");
+const addToCart = document.querySelector("#addToCart");
 const booking = document.querySelector("#booking");
 const paginationDots = document.querySelector("#paginationDots");
 const arrowList = [
@@ -18,6 +19,8 @@ const radioboxList = [
 /* Attraction Event Listeners */
 window.addEventListener("load", controller.init, false);
 
+window.addEventListener("resize", controller.resizeCaresoul, false);
+
 for (const radioBox of radioboxList) {
   radioBox.addEventListener("click", controller.checkedTime, false);
 }
@@ -30,6 +33,8 @@ paginationDots.addEventListener("click", controller.changeImage, false);
 
 date.addEventListener("keyup", controller.reValidateDate, false);
 
-bookingSchedule.addEventListener("click", controller.resetInput, false);
+date.addEventListener("change", controller.reValidateDate, false);
+
+addToCart.addEventListener("click", bookingController.addToCart, false);
 
 booking.addEventListener("click", bookingController.createBooking, false);

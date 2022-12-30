@@ -1,5 +1,7 @@
 import UserAuthModel from "../models/userAuthModel.js";
 import UserAuthView from "../views/userAuthView.js";
+import CartModel from "../models/cartModel.js";
+import CartView from "../views/cartView.js";
 
 import {
   nameValidate,
@@ -8,21 +10,24 @@ import {
 } from "/static/js/utils/validatorUtil.js";
 
 export default class UserAuthController {
-  constructor(url) {
+  constructor() {
     this.model = new UserAuthModel();
     this.view = new UserAuthView();
+    this.cartModel = new CartModel();
+    this.cartView = new CartView();
     this.userData;
   }
 
   /* Event Handler Function */
   // =================================================================
 
-  init = async () => {
+  init = async (e) => {
     await this.model.init("/api/user/auth");
     this.userData = this.model.userData.data;
     this.userData === null
       ? this.view.renderUserAuth("登入/註冊")
       : this.view.renderUserAuth("登出系統");
+    this.getCartCount();
   };
 
   // =================================================================
@@ -36,6 +41,26 @@ export default class UserAuthController {
       this.view.renderModal();
       this.view.renderSignIn();
     }
+  };
+
+  // =================================================================
+
+  getToCart = async (e) => {
+    await this.init();
+    await this.doUserAuth(e);
+
+    if (document.querySelector("#modal").classList.contains("popup")) {
+      return;
+    }
+    
+    window.location = "/cart";
+  };
+
+  // =================================================================
+
+  getCartCount = async () => {
+    await this.cartModel.getAllBookings("/api/bookings");
+    this.cartView.renderCartCount(this.cartModel.cartResult);
   };
 
   // =================================================================

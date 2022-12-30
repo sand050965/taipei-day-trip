@@ -42,34 +42,40 @@
               <div id="charge" class="title booking-items">
                 導覽費用：<span class="content">新台幣 <span id="dollar"></span> 元</span>
               </div>
-              <div id="booking">開始預約行程</div>
+              <div class="buttons">
+                <div id="addToCart">加入購物車</div>
+                <div id="booking">開始預約行程</div>
+              </div>
+              <div id="addedCartModal" class="added-cart none">
+                <img src={{ url_for('static', filename='images/success_icon.png') }}/>
+                <div class="title">商品已成功加入購物車</div>
+              </div>
+            </div>
+          </div>
+          <div class="content-wrapper">
+            <div id="description" class="content"></div>
+            <div class="container">
+              <div class="title">景點地址：</div>
+              <div id="address" class="content"></div>
+            </div>
+            <div class="container">
+              <div class="title">交通方式：</div>
+              <div id="transport" class="content"></div>
+            </div>
+            <div class="container">
+              <iframe id="map"
+                      width="400"
+                      height="300"
+                      frameborder="0"
+                      scrolling="no"
+                      marginheight="0"
+                      marginwidth="0">
+              </iframe>
             </div>
           </div>
         </div>
-        <div class="content-wrapper">
-          <div id="description" class="content"></div>
-          <div class="container">
-            <div class="title">景點地址：</div>
-            <div id="address" class="content"></div>
-          </div>
-          <div class="container">
-            <div class="title">交通方式：</div>
-            <div id="transport" class="content"></div>
-          </div>
-          <div class="container">
-            <iframe id="map"
-                    width="400"
-                    height="300"
-                    frameborder="0"
-                    scrolling="no"
-                    marginheight="0"
-                    marginwidth="0">
-            </iframe>
-          </div>
-        </div>
       </div>
-    </div>
-    {% block script %}
-      <script type="module" src={{ url_for("static", filename="js/attraction.js") }}></script>
-    {% endblock script %}
-  {% endblock main %}
+      {% block script %}
+        <script type="module" src={{ url_for("static", filename="js/attraction.js") }}></script>
+      {% endblock script %}
+    {% endblock main %}

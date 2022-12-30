@@ -26,6 +26,10 @@ class ValidatorUtil:
     def validate_tokenUserId(user_id, token_UserId):
         if (user_id != token_UserId):
             raise InvalidSignatureError
+    
+    def validate_bookingId(bookingId):
+        if not re.match(r'^[+]?[1-9][0-9]*$', bookingId):
+            raise ValueError("預定id輸入有誤")
 
     def validate_name(name, isUserAuth):
         if (name == ""):

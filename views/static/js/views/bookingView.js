@@ -96,11 +96,6 @@ export default class BookingView {
             color: "orange",
           },
         },
-        // isMaskCreditCardNumber: true,
-        // maskCreditCardNumberRange: {
-        //   beginIndex: 6,
-        //   endIndex: 11,
-        // },
       },
     });
   };

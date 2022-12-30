@@ -15,11 +15,6 @@ class OrderModel:
         user_id = current_app.config["USER_ID"]
         ValidatorUtil.validate_tokenUserId(user_id, token_UserId)
 
-        ValidatorUtil.validate_attractionId(
-            str(data["order"]["trip"]["attraction"]["id"]))
-        ValidatorUtil.validate_price(data["order"]["price"])
-        ValidatorUtil.validate_date(data["order"]["trip"]["date"])
-        ValidatorUtil.validate_time(data["order"]["trip"]["time"])
         ValidatorUtil.validate_name(data["order"]["contact"]["name"], False)
         ValidatorUtil.validate_email(data["order"]["contact"]["email"], False)
         ValidatorUtil.validate_phone(data["order"]["contact"]["phone"])
@@ -29,10 +24,33 @@ class OrderModel:
         order_datetime = now.strftime("%Y%m%d%H%M%S")
         order_id = order_datetime+"-"+str(user_id)
 
-        cursor.execute(
+        executeData = []
+        for tripAttraction in data["order"]["trip"]:
+            ValidatorUtil.validate_attractionId(
+                str(tripAttraction["attraction"]["id"]))
+
+            ValidatorUtil.validate_price(tripAttraction["price"])
+            ValidatorUtil.validate_date(tripAttraction["date"])
+            ValidatorUtil.validate_time(tripAttraction["time"])
+
+            parameters = (order_id,
+                          data["order"]["totalPrice"],
+                          tripAttraction["attraction"]["id"],
+                          tripAttraction["price"],
+                          tripAttraction["date"],
+                          tripAttraction["time"],
+                          user_id,
+                          data["order"]["contact"]["name"],
+                          data["order"]["contact"]["email"],
+                          data["order"]["contact"]["phone"],
+                          0)
+            executeData.append(parameters)
+
+        cursor.executemany(
             """
             INSERT INTO trip.orders (
                 order_id,
+                total_price,
                 attraction_id,
                 price,
                 date,
@@ -43,25 +61,14 @@ class OrderModel:
                 contact_phone,
                 status
             )
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """,
-            (order_id,
-             data["order"]["trip"]["attraction"]["id"],
-             data["order"]["price"],
-             data["order"]["trip"]["date"],
-             data["order"]["trip"]["time"],
-             user_id,
-             data["order"]["contact"]["name"],
-             data["order"]["contact"]["email"],
-             data["order"]["contact"]["phone"],
-             0)
-        )
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, executeData)
 
         TapPayResult = OrderModel.postTapPay(data)
 
         OrderModel.insertPayment(cursor, order_id, db_datetime, TapPayResult)
 
-        BookingModel.deleteBooking(cursor, request)
+        OrderModel.deleteBookings(cursor, user_id, data["bookingId"])
 
         message = "付款失敗"
         if (TapPayResult["status"] == 0):
@@ -85,7 +92,7 @@ class OrderModel:
             "merchant_id": os.getenv("MERCHANT_ID"),
             "currency": "TWD",
             "details": data["order"]["contact"]["name"]+"'s order",
-            "amount": data["order"]["price"],
+            "amount": data["order"]["totalPrice"],
             "cardholder": {
                 "phone_number": data["order"]["contact"]["phone"],
                 "name": data["order"]["contact"]["name"],
@@ -118,6 +125,22 @@ class OrderModel:
                 SET status = %s
                 WHERE order_id = %s
                 """, (TapPayResult["status"], order_id))
+        
+    ############################################################
+
+    def deleteBookings(cursor, user_id, bookingIds):
+        executeData = []
+
+        for bookingId in bookingIds:
+            parameters = (user_id, bookingId)
+            executeData.append(parameters)
+
+        cursor.executemany(
+            """
+            DELETE FROM booking
+            WHERE user_id = %s
+            AND id = %s
+            """, executeData)
 
     ############################################################
 

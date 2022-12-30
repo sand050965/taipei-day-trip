@@ -1,87 +1,88 @@
-export default class BookingModel {
+export default class CartModel {
   constructor() {
-    this.bookingResult = {};
-    this.createResult = {};
-    this.deleteResult = {};
-    this.paymentResult = {};
+    this.cartResult = {};
+    this.deleteByIdResult = {};
+    this.deletResult = {};
   }
 
   // =================================================================
 
-  init = async (url) => {
-    const response = await fetch(url);
-    const result = await response.json();
-    this.bookingResult = result;
-  };
-
-  // =================================================================
-
-  createBooking = async (url, userData) => {
+  getAllBookings = async (url) => {
     const requestObject = {
-      method: "POST",
+      method: "GET",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user_id: userData.id,
-        attractionId: parseInt(window.location.href.split("/")[4]),
-        date: document.querySelector("#date").value.trim(),
-        time: document.querySelector("#morning").classList.contains("checked")
-          ? "morning"
-          : "afternoon",
-        price: parseInt(document.querySelector("#dollar").textContent),
-      }),
     };
     const response = await fetch(url, requestObject);
     const result = await response.json();
-    this.createResult = result;
+    this.cartResult = result;
   };
 
   // =================================================================
 
-  deleteBookingById = async (url) => {
+  deleteBookingById = async (url, id) => {
     const requestObject = {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ booking_id: this.bookingResult.data.bookingId }),
+      body: JSON.stringify({ booking_id: id }),
     };
     const response = await fetch(url, requestObject);
     const result = await response.json();
-    this.deleteResult = result;
+    this.deleteByIdResult = result;
   };
 
   // =================================================================
 
-  doPay = async (url, bookingData) => {
+  deleteBookings = async (url, ids) => {
+    const requestObject = {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ booking_ids: ids }),
+    };
+    const response = await fetch(url, requestObject);
+    const result = await response.json();
+    this.deleteByIdResult = result;
+  };
+
+  // =================================================================
+
+  doCheckout = async (url, bookingData, checkedBookingIdList) => {
     await TPDirect.card.getPrime((result) => {
       this.prime = result.card.prime;
-      this.doOrder(url, bookingData);
+      this.doOrder(url, bookingData, checkedBookingIdList);
     });
   };
 
   // =================================================================
 
-  doOrder = async (url, bookingData) => {
+  doOrder = async (url, bookingData, checkedBookingIdList) => {
+    let tripArray = [];
+
+    for (const data of bookingData.data) {
+      if (checkedBookingIdList.includes(data.bookingId)) {
+        tripArray.push({
+          attraction: data.attraction,
+          date: data.date,
+          time: data.time,
+          price: data.price,
+        });
+      }
+    }
+
     const requestObject = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         prime: this.prime,
-        bookingId: [bookingData.bookingId],
         order: {
-          totalPrice: parseInt(bookingData.price),
-          trip: [
-            {
-              attraction: bookingData.attraction,
-              date: bookingData.date,
-              time: bookingData.time,
-              price: parseInt(bookingData.price),
-            },
-          ],
+          totalPrice: parseInt(document.querySelector("#price").textContent),
+          trip: tripArray,
           contact: {
             name: document.querySelector("#contactName").value.trim(),
             email: document.querySelector("#contactMail").value.trim(),
             phone: document.querySelector("#contactPhone").value.trim(),
           },
         },
+        bookingId: checkedBookingIdList,
       }),
     };
     const response = await fetch(url, requestObject);

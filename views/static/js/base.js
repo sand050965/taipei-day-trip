@@ -1,7 +1,6 @@
 import UserAuthController from "./controllers/userAuthController.js";
-import BookingController from "./controllers/bookingController.js";
-const userController = new UserAuthController();
-const bookingController = new BookingController();
+import CartController from "./controllers/userAuthController.js";
+const controller = new UserAuthController();
 const userAuth = document.querySelector("#userAuth");
 const closeIcon = document.querySelector("#closeIcon");
 const username = document.querySelector("#username");
@@ -13,27 +12,26 @@ const signButton = document.querySelector("#signButton");
 const signChange = document.querySelector("#signChange");
 const inputs = [username, email, password];
 const passwordTriggers = [showPassword, hidePassword];
-const bookingSchedule = document.querySelector("#bookingSchedule");
+const cart = document.querySelector("#cart");
 
 /* User Auth Event Listeners */
-window.addEventListener("load", userController.init, false);
+window.addEventListener("load", controller.init, false);
 
-userAuth.addEventListener("click", userController.doUserAuth, false);
+userAuth.addEventListener("click", controller.doUserAuth, false);
 
-closeIcon.addEventListener("click", userController.closeModal, false);
+closeIcon.addEventListener("click", controller.closeModal, false);
 
-signChange.addEventListener("mousedown", userController.doSignChange, true);
+signChange.addEventListener("mousedown", controller.doSignChange, true);
 
 passwordTriggers.forEach((trigger) => {
-  trigger.addEventListener("mousedown", userController.togglePassword, false);
+  trigger.addEventListener("mousedown", controller.togglePassword, false);
 });
 
 for (const input of inputs) {
-  input.addEventListener("change", userController.doValidate, false);
-  input.addEventListener("keyup", userController.reValidate, false);
+  input.addEventListener("change", controller.doValidate, false);
+  input.addEventListener("keyup", controller.reValidate, false);
 }
 
-signButton.addEventListener("click", userController.doSign, false);
+signButton.addEventListener("click", controller.doSign, false);
 
-/* Booking Event Listeners */
-bookingSchedule.addEventListener("click", bookingController.getBooking, false);
+cart.addEventListener("click", controller.getToCart, false);

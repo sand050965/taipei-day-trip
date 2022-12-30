@@ -17,7 +17,10 @@
         <div>
           <a id="redirectToHome" href="/">台北一日遊</a>
         </div>
-        <div id="bookingSchedule" class="content center">預定行程</div>
+        <div id="cart" class="content left-center">
+          <img src={{ url_for('static', filename='images/cart_icon.png') }}/>
+          <span id="cartCount" class="cart-count center"></span>
+        </div>
         <div id="userAuth" class="content center"></div>
       </div>
     </nav>

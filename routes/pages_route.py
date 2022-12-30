@@ -13,9 +13,19 @@ def attraction(id):
     return render_template("attraction.html")
 
 
-@pages.route("/booking")
-def booking():
+@pages.route("/booking/<id>")
+def booking(id):
     return render_template("booking.html")
+
+
+@pages.route("/cart")
+def cart():
+    return render_template("cart.html")
+
+
+@pages.route("/cartcheckout")
+def cartCheckout():
+    return render_template("cartcheckout.html")
 
 
 @pages.route("/thankyou")

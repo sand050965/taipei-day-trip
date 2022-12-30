@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block link %}
   <link rel="stylesheet" href={{
-    url_for('static', filename='css/booking.css') }} />
+    url_for('static', filename='css/cartcheckout.css') }} />
   {% endblock link %}
   {% block main %}
     <div class="booking-container">
@@ -39,7 +39,7 @@
           </div>
         </div>
         <div id="bookingContact" class="booking bottom-line none">
-          <div class="booking-title title">您的聯絡資訊：</div>
+          <div class="booking-title title">您的聯絡資訊</div>
           <div class="booking-required-info">
             <div class="info-input content">
               <span>聯絡姓名：</span>
@@ -51,7 +51,7 @@
             </div>
             <div class="info-input content">
               <span>手機號碼：</span>
-              <input type="tel" id="contactPhone" class="correct-input" maxlength="10"/>
+              <input type="tel" id="contactPhone" class="correct-input"/>
             </div>
           </div>
           <div class="contact-remind title">請保持手機暢通，準時到達，導覽人員將用手機與您聯繫，務必留下正確的聯絡方式</div>
@@ -88,5 +88,5 @@
   {% endblock main %}
   {% block script %}
     <script src="https://js.tappaysdk.com/sdk/tpdirect/v5.14.0"></script>
-    <script type="module" src={{ url_for("static", filename="js/booking.js") }}></script>
+    <script type="module" src={{ url_for("static", filename="js/cart.js") }}></script>
   {% endblock script %}

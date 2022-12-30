@@ -1,6 +1,6 @@
 img {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
 }
 
 h3 {
@@ -33,6 +33,17 @@ h3 {
   margin-top: 30px;
 }
 
+.member-center,
+.history-order {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.member-center:hover,
+.history-order:hover {
+  color: #b2aeae;
+}
+
 @media (max-width: 1000px) {
   img {
     width: 200px;
@@ -46,7 +57,7 @@ h3 {
   .order-id {
     font-size: 30px;
   }
-  
+
   .reminder {
     font-size: 20px;
   }
