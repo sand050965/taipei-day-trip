@@ -181,37 +181,44 @@ nav .navigation-bar {
   top: 54px;
   right: calc((100vw - 1200px) / 2);
   width: 200px;
-  height: 150px;
   z-index: 998;
   background: #fff;
   border-radius: 5px;
   -webkit-transition: 0.25s;
   -webkit-box-shadow: 0 2px 20px rgb(0 0 0 / 15%);
   box-shadow: 0 2px 20px rgb(0 0 0 / 15%);
+  height: 0;
+  transition: height 200ms;
 }
 
-.user-bubble a,
-.user-auth {
-  font-size: 19px;
+.increase-height {
+  height: 140px;
+}
+
+.show-user-bubble-content {
+  font-size: 19;
   padding: 10px;
-  cursor: pointer;
   color: #666;
 }
 
-.user-basic {
+.user-bubble-top {
   border-radius: 5px 5px 0 0;
 }
 
+.user-bubble-bottom {
+  border-radius: 0 0 5px 5px;
+}
+
 .user-bubble div:hover {
+  cursor: pointer;
   background-color: #e8e8e8;
 }
 
-.user-auth {
-  position: absolute;
-  bottom: 0;
-  width: calc(100% - 20px);
-  border-radius: 0 0 5px 5px;
-  border-top: 1px solid #ccc;
+.show-user-auth {
+  font-weight: 700;
+  color: #489;
+  border-top: 2px solid #ccc;
+  margin-top: 10px;
 }
 
 /* modal */
@@ -508,7 +515,7 @@ footer {
 /* media query */
 @media (max-width: 1200px) {
   nav .navigation-bar {
-    width: 100vw;
+    width: 95vw;
   }
 
   .user-bubble {

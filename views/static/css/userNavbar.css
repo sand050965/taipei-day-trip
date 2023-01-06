@@ -11,26 +11,34 @@ main {
 }
 
 .side-menu {
-  position: fixed;
+  position: absolute;
   top: 54px;
   right: 0px;
   z-index: 999;
+  width: 0;
+  transition: width 250ms;
 }
 
 .side-mask {
-  position: fixed;
+  position: absolute;
   top: 54px;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 998;
   min-width: 100vw;
-  min-height: 100vh;
+  height: calc(100vh - 24px);
 }
 
 .side-user-navbar {
   background-color: #fff;
+  height: calc(100vh - 24px);
+}
+
+.increase-side-navbar-width {
   width: 250px;
-  height: 100vh;
-  padding: 20px;
+}
+
+.side-user-account-avatar-outlayer {
+  background-color: rgb(103, 177, 195);
 }
 
 .side-user-account-avatar-container {
@@ -38,6 +46,8 @@ main {
   grid-template-columns: 70px auto;
   justify-content: flex-start;
   align-items: center;
+  padding: 20px;
+  cursor: pointer;
 }
 
 .side-user-account-avatar {
@@ -45,6 +55,25 @@ main {
   height: 30px;
   border: 2px solid #666;
   border-radius: 50%;
+  padding: 1px;
+}
+
+.side-user-account-name {
+  font-size: 30px;
+  color: #fff;
+}
+
+.side-navbar-item div {
+  padding: 20px;
+}
+
+.side-navbar-item div:hover {
+  cursor: pointer;
+  background-color: #d6d6d6;
+}
+
+.side-navbar-item a {
+  font-size: 20px;
 }
 
 .user-account-container {
@@ -93,7 +122,6 @@ main {
 .navbar-item a {
   font-size: 25px;
   padding: 10px 0;
-  cursor: pointer;
 }
 
 .navbar-item > :first-child {
@@ -102,6 +130,7 @@ main {
 }
 
 .navbar-item div:hover {
+  cursor: pointer;
   background-color: #d6d6d6;
 }
 

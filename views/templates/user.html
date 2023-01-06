@@ -5,15 +5,21 @@
   {% endblock link %}
   {% block
     main %}
-    <div id="sideMenu" class="side-menu none">
-      <div class="side-user-navbar">
-        <div class="side-user-account-avatar-container">
-          <img id="sideUserAccountAvatar" class="side-user-account-avatar" src={{ url_for("static", filename="images/icon_avatar.png") }}/>
-          <div id="sideUserAccountName" class="user-account-name content center"></div>
+    <div id="sideMenu" class="side-menu">
+      <div id="sideUserNavbar" class="side-user-navbar">
+        <div id="sideUserAccount" class="side-user-account-avatar-outlayer none">
+          <a class="side-user-account-avatar-container" href="/user">
+            <img id="sideUserAccountAvatar" class="side-user-account-avatar" src={{ url_for("static", filename="images/icon_avatar.png") }}/>
+            <div id="sideUserAccountName" class="side-user-account-name content center"></div>
+          </a>
         </div>
-        <div class="navbar-item">
-          <div class="content center">帳號設定</div>
-          <div class="content center">訂單管理</div>
+        <div id="sideNavbarItem" class="side-navbar-item none">
+          <div>
+            <a class="content" href="/user">帳號設定</a>
+          </div>
+          <div>
+            <a class="content" href="/orders">訂單管理</a>
+          </div>
         </div>
       </div>
     </div>
@@ -36,11 +42,11 @@
       <div class="user-account-info">
         <div class="account-title title">帳號設定</div>
         <div type="text" class="user-info user-info-grid content">
-          <div>會員姓名：</div>
+          <div class="left-center">會員姓名：</div>
           <input id="inputName" class="input-name"/>
         </div>
         <div class="user-info user-info-grid content">
-          <div>性別：</div>
+          <div class="left-center">性別：</div>
           <select class="select-sex">
             <option id="noSelect" value="">
               -請選擇-
@@ -54,15 +60,15 @@
           </select>
         </div>
         <div class="user-info user-info-grid content">
-          <div>出生日期：</div>
+          <div class="left-center">出生日期：</div>
           <input id="inputBirthday" type="date" class="input-birthday"/>
         </div>
         <div type="tel" class="user-info user-info-grid content">
-          <div>行動電話：</div>
+          <div class="left-center">行動電話：</div>
           <input id="inputPhone" class="input-phone"/>
         </div>
         <div type="email" class="user-info user-info-grid content">
-          <div>email：</div>
+          <div class="left-center">email：</div>
           <input id="inputEmail" class="input-email"/>
         </div>
         <input id="saveButton" type="button" value="儲存" class="save-button title"/>

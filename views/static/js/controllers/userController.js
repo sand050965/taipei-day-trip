@@ -32,8 +32,19 @@ export default class UserController {
 
   // =================================================================
 
-  saveUserInfo = () => {
+  saveUserInfo = () => {};
 
+  // =================================================================
+
+  showSideMenu = () => {
+    this.view.renderSideMenu();
+  };
+
+  // =================================================================
+  closeSideMenu = (e) => {
+    const sidemenuArray = ["menuContainer", "menu"];
+    if (sidemenuArray.includes(e.target.id)) return;
+    this.view.closeSideMenu();
   };
 
   /* Private Function */

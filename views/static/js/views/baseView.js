@@ -42,18 +42,47 @@ export default class BaseView {
 
   renderUserService = () => {
     const userBubble = document.querySelector("#userBubble");
-    if (userBubble.classList.contains("none")) {
-      userBubble.classList.remove("none");
+    const userAccount = document.querySelector("#userAccount");
+    const userOrder = document.querySelector("#userOrder");
+    const userAuth = document.querySelector("#userAuth");
+    if (!userBubble.classList.contains("increase-height")) {
+      userBubble.classList.add("increase-height");
+      userAccount.classList.add("show-user-bubble-content");
+      userOrder.classList.add("show-user-bubble-content");
+      userAuth.classList.add("show-user-bubble-content");
+      userAuth.classList.add("show-user-auth");
+      userAccount.classList.remove("none");
+      userOrder.classList.remove("none");
+      userAuth.classList.remove("none");
     } else {
-      userBubble.classList.add("none");
+      userBubble.classList.remove("increase-height");
+      userAccount.classList.remove("show-user-bubble-content");
+      userOrder.classList.remove("show-user-bubble-content");
+      userAuth.classList.remove("show-user-bubble-content");
+      userAuth.classList.remove("show-user-auth");
+      userAccount.classList.add("none");
+      userOrder.classList.add("none");
+      userAuth.classList.add("none");
     }
   };
 
   // =================================================================
 
   renderCloseUserService = () => {
-    if (!userBubble.classList.contains("none")) {
-      userBubble.classList.add("none");
+    const userBubble = document.querySelector("#userBubble");
+    const userAccount = document.querySelector("#userAccount");
+    const userOrder = document.querySelector("#userOrder");
+    const userAuth = document.querySelector("#userAuth");
+    if (userBubble.classList.contains("increase-height")) {
+      console.log("aa");
+      userBubble.classList.remove("increase-height");
+      userAccount.classList.remove("show-user-bubble-content");
+      userOrder.classList.remove("show-user-bubble-content");
+      userAuth.classList.remove("show-user-bubble-content");
+      userAuth.classList.remove("show-user-auth");
+      userAccount.classList.add("none");
+      userOrder.classList.add("none");
+      userAuth.classList.add("none");
     }
   };
 
@@ -109,13 +138,15 @@ export default class BaseView {
   };
 
   // =================================================================
-
+  
   renderErrorMessage = (message) => {
     const signMessage = document.querySelector("#errorMessage");
     signMessage.textContent = message;
     signMessage.classList.remove("none");
   };
-
+  
+  // =================================================================
+  
   renderButton = () => {
     const usernameMessage = document.querySelector("#usernameMessage");
     const emailMessage = document.querySelector("#emailMessage");

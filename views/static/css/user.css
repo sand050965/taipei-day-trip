@@ -23,12 +23,8 @@ input[type="button"]:hover {
 }
 
 select {
-  padding: 0 10px;
-}
-
-select:focus {
-  accent-color: #489;
-  border: 2px solid #489;
+  height: 40px;
+  padding: 5px 10px;
 }
 
 .navbar-item div:first-child {
@@ -42,6 +38,8 @@ select:focus {
 .user-account-info {
   position: relative;
   padding: 10px 20px;
+  border-radius: 5px;
+  height: 650px;
 }
 
 .account-title {
