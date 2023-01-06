@@ -48,3 +48,20 @@ class UserView:
     def renderDeleteUser():
         response = UserView.renderSuccess()
         return ResponseUtil.delete_token(response)
+
+############################################################
+
+    def renderGetUserInfo(result):
+        if result == None:
+            return jsonify({"data": None})
+
+        return jsonify({
+            "data": {
+                "id": result["id"],
+                "name": result["name"],
+                "email": result["email"],
+                "sex": result["sex"],
+                "birthday": result["birthday"],
+                "phone": result["phone"],
+            }
+        })

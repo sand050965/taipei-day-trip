@@ -1,7 +1,7 @@
 import CartModel from "../models/cartModel.js";
 import CartView from "../views/cartView.js";
-import UserAuthController from "./userAuthController.js";
-import UserAuthView from "../views/userAuthView.js";
+import BaseController from "./baseController.js";
+import BaseView from "../views/baseView.js";
 import {
   nameValidate,
   emailValidate,
@@ -12,16 +12,16 @@ export default class CartController {
   constructor() {
     this.model = new CartModel();
     this.view = new CartView();
-    this.userController = new UserAuthController();
-    this.userView = new UserAuthView();
+    this.baseController = new BaseController();
+    this.baseView = new BaseView();
     this.userData;
     this.checkedBookingIdList = [];
   }
 
   // =================================================================
 
-  init = async (e) => {
-    if (!(await this.checkUserAuth(e))) {
+  init = async () => {
+    if (!(await this.checkUserAuth())) {
       return;
     }
     await this.model.getAllBookings("/api/bookings");
@@ -64,26 +64,26 @@ export default class CartController {
 
   // =================================================================
 
-  deleteBookingById = async (e) => {
+  deleteBookingById = async () => {
     const bookingItemId = e.target.id;
     const bookingId = bookingItemId.replace("booking_", "");
     await this.model.deleteBookingById("/api/booking", bookingId);
-    this.init(e);
+    this.init();
   };
 
   // =================================================================
 
-  deleteBookings = async (e) => {
+  deleteBookings = async () => {
     let idArrays = [];
     this.checkSelected(idArrays);
     await this.model.deleteBookings("/api/bookings", idArrays);
-    this.init(e);
+    this.init();
   };
 
   // =================================================================
 
-  directToCheckOut = async (e) => {
-    if (!(await this.checkUserAuth(e))) {
+  directToCheckOut = async () => {
+    if (!(await this.checkUserAuth())) {
       return;
     }
 
@@ -92,8 +92,8 @@ export default class CartController {
 
   // =================================================================
 
-  goCheckout = async (e) => {
-    if (!(await this.checkUserAuth(e))) {
+  goCheckout = async () => {
+    if (!(await this.checkUserAuth())) {
       return;
     }
 
@@ -122,7 +122,7 @@ export default class CartController {
 
     if (errorMessage != "") {
       this.view.renderErrorMessage(errorMessage);
-      this.userView.renderModal();
+      this.baseView.renderModal();
       return;
     }
 
@@ -163,10 +163,10 @@ export default class CartController {
 
   // =================================================================
 
-  checkUserAuth = async (e) => {
-    await this.userController.init();
-    await this.userController.doUserAuth(e);
-    this.userData = this.userController.userData;
+  checkUserAuth = async () => {
+    await this.baseController.init();
+    await this.baseController.doUserAuthCheck();
+    this.userData = this.baseController.userData;
 
     if (document.querySelector("#modal").classList.contains("popup")) {
       return false;

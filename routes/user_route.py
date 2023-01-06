@@ -86,3 +86,46 @@ def doUserAuth():
             finally:
                 cursor.close()
                 conn.close()
+
+############################################################
+
+
+@user_api.route("/api/user/info", methods=["GET", "POST"])
+def getUserInfo():
+    conn = DBUtil.get_connect()
+    cursor = DBUtil.get_cursor(conn)
+
+    match request.method:
+        
+        case "GET":
+            try:
+                result = model.getUserInfo(cursor, request)
+                return view.renderGetUserInfo(result), 200
+            
+            except Exception as e:
+                print(e)
+                return view.renderError("伺服器內部錯誤"), 500
+
+            finally:
+                cursor.close()
+                conn.close()
+
+        case "POST":
+            try:
+                model.updateUserInfo(cursor, request)
+                conn.commit()
+                return view.renderSuccess(), 200
+
+            except ValueError as VErr:
+                print(VErr)
+                conn.rollback()
+                return view.renderError("修改會員資料失敗，輸入錯誤資料或其他原因"), 400
+
+            except Exception as e:
+                print(e)
+                conn.rollback()
+                return view.renderError("伺服器內部錯誤"), 500
+
+            finally:
+                cursor.close()
+                conn.close()

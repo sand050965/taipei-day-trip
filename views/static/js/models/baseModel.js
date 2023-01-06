@@ -1,4 +1,4 @@
-export default class UserAuthModel {
+export default class BaseModel {
   constructor() {
     this.userData = [];
     this.signInResult = {};

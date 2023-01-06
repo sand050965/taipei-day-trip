@@ -1,13 +1,13 @@
 import AttractionModel from "../models/attractionModel.js";
 import AttractionView from "../views/attractionView.js";
-import UserAuthView from "../views/userAuthView.js";
+import BaseView from "../views/baseView.js";
 import { dateValidate } from "../utils/validatorUtil.js";
 
 export default class AttractionController {
   constructor() {
     this.model = new AttractionModel();
     this.view = new AttractionView();
-    this.userView = new UserAuthView();
+    this.baseView = new BaseView();
     this.currentImage = 0;
     this.maxImage = 0;
     this.imagesSrcArray = [];
@@ -102,7 +102,7 @@ export default class AttractionController {
     const date = document.querySelector("#date").value.trim();
     const validateResult = dateValidate(date);
     if (!validateResult.result) {
-      this.userView.renderModal();
+      this.baseView.renderModal();
       this.view.renderErrorMessage(validateResult.message);
       this.view.renderErrorDate(true);
       return false;

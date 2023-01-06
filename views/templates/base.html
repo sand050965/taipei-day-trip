@@ -21,9 +21,19 @@
           <img src={{ url_for('static', filename='images/cart_icon.png') }}/>
           <span id="cartCount" class="cart-count center"></span>
         </div>
-        <div id="userAuth" class="content center"></div>
+        <div id="avatarContainer" class="content center">
+          <img id="avatar" class="avatar" src={{ url_for("static", filename="images/icon_avatar.png") }}/>
+        </div>
+        <div id="menuContainer" class="content center">
+          <img id="menu" class="menu" src={{ url_for("static", filename="images/icon_menu.png") }}/>
+        </div>
       </div>
     </nav>
+    <div id="userBubble" class="user-bubble none">
+      <div id="userAccount" class="user-basic center"><a href="/user">帳號設定</a></div>
+      <div id="userOrder" class="center"><a href="/orders">訂單管理</a></div>
+      <div id="userAuth" class="user-auth content center">登入/註冊</div>
+    </div>
     <div id="modalContainer" class="modal-container center-top">
       <div id="modal" class="modal">
         <div class="modal-border"></div>

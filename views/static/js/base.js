@@ -1,6 +1,6 @@
-import UserAuthController from "./controllers/userAuthController.js";
-import CartController from "./controllers/userAuthController.js";
+import UserAuthController from "./controllers/baseController.js";
 const controller = new UserAuthController();
+const avatarContainer = document.querySelector("#avatarContainer");
 const userAuth = document.querySelector("#userAuth");
 const closeIcon = document.querySelector("#closeIcon");
 const username = document.querySelector("#username");
@@ -17,7 +17,11 @@ const cart = document.querySelector("#cart");
 /* User Auth Event Listeners */
 window.addEventListener("load", controller.init, false);
 
-userAuth.addEventListener("click", controller.doUserAuth, false);
+window.addEventListener("click", controller.closeUserService, false);
+
+avatarContainer.addEventListener("click", controller.doUserAuth, false);
+
+userAuth.addEventListener("click", controller.doSignOut, false);
 
 closeIcon.addEventListener("click", controller.closeModal, false);
 

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block link %}
+  <link rel="stylesheet" href={{
+    url_for('static', filename='css/orders.css') }} />
+  {% endblock link %}
+  {% block
+    main %}
+    <div id="sideMenu" class="side-menu none">
+      <div class="side-user-navbar">
+        <div class="side-user-account-avatar-container">
+          <img id="userAccountAvatar" class="side-user-account-avatar" src={{ url_for("static", filename="images/icon_avatar.png") }}/>
+          <div id="userAccountName" class="user-account-name content center">xxx</div>
+        </div>
+        <div class="navbar-item">
+          <div class="content center">帳號設定</div>
+          <div class="content center">訂單管理</div>
+        </div>
+      </div>
+    </div>
+    <div id="sideMask" class="side-mask none"></div>
+    <div class="user-account-container">
+      <div class="user-navbar">
+        <div class="user-account-avatar-container">
+          <img id="userAccountAvatar" class="user-account-avatar" src={{ url_for("static", filename="images/icon_avatar.png") }}/>
+          <div id="userAccountName" class="user-account-name content center">xxx</div>
+        </div>
+        <div class="navbar-item">
+          <div><a class="content center" href="/user">帳號設定</a></div>
+          <div><a class="content center" href="/orders">訂單管理</a></div>
+        </div>
+      </div>
+      <div class="user-orders">
+        <div class="account-title title">帳號設定</div>
+      </div>
+    </div>
+    {% block script %}
+      <script type="module" src={{ url_for("static",filename="js/orders.js") }}>
+      </script>
+    {% endblock script %}
+  {% endblock main %}

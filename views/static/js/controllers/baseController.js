@@ -1,5 +1,5 @@
-import UserAuthModel from "../models/userAuthModel.js";
-import UserAuthView from "../views/userAuthView.js";
+import UserAuthModel from "../models/baseModel.js";
+import UserAuthView from "../views/baseView.js";
 import CartModel from "../models/cartModel.js";
 import CartView from "../views/cartView.js";
 
@@ -9,7 +9,7 @@ import {
   passwordValidate,
 } from "/static/js/utils/validatorUtil.js";
 
-export default class UserAuthController {
+export default class BaseController {
   constructor() {
     this.model = new UserAuthModel();
     this.view = new UserAuthView();
@@ -21,7 +21,7 @@ export default class UserAuthController {
   /* Event Handler Function */
   // =================================================================
 
-  init = async (e) => {
+  init = async () => {
     await this.model.init("/api/user/auth");
     this.userData = this.model.userData.data;
     this.userData === null
@@ -32,27 +32,52 @@ export default class UserAuthController {
 
   // =================================================================
 
-  doUserAuth = (e) => {
-    if (e.target.textContent === "登出系統") {
-      this.model.signOut("/api/user/auth", "DELETE");
-    } else if (
-      document.querySelector("#userAuth").textContent === "登入/註冊"
-    ) {
+  doUserAuth = () => {
+    const userAuth = document.querySelector("#userAuth");
+    if (userAuth.textContent === "登入/註冊") {
       this.view.renderModal();
       this.view.renderSignIn();
+    } else {
+      this.view.renderUserService();
     }
   };
 
   // =================================================================
 
-  getToCart = async (e) => {
-    await this.init();
-    await this.doUserAuth(e);
+  doUserAuthCheck = () => {
+    const userAuth = document.querySelector("#userAuth");
+    if (userAuth.textContent === "登入/註冊") {
+      this.view.renderModal();
+      this.view.renderSignIn();
+      return false;
+    }
+    return true;
+  };
 
-    if (document.querySelector("#modal").classList.contains("popup")) {
+  // =================================================================
+
+  closeUserService = (e) => {
+    const avatarArray = ["avatarContainer", "avatar"];
+    if (avatarArray.includes(e.target.id)) return;
+    this.view.renderCloseUserService();
+  };
+
+  // =================================================================
+
+  doSignOut = () => {
+    const userAuth = document.querySelector("#userAuth");
+    if (!userAuth.textContent === "登出系統") {
       return;
     }
-    
+    this.model.signOut("/api/user/auth", "DELETE");
+  };
+
+  // =================================================================
+
+  getToCart = async () => {
+    await this.init();
+    if (!(await this.doUserAuthCheck())) return;
+
     window.location = "/cart";
   };
 

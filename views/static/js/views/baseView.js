@@ -1,4 +1,4 @@
-export default class UserAuthView {
+export default class BaseView {
   renderUserAuth = (textValue) => {
     document.querySelector("#userAuth").textContent = textValue;
   };
@@ -40,6 +40,25 @@ export default class UserAuthView {
 
   // =================================================================
 
+  renderUserService = () => {
+    const userBubble = document.querySelector("#userBubble");
+    if (userBubble.classList.contains("none")) {
+      userBubble.classList.remove("none");
+    } else {
+      userBubble.classList.add("none");
+    }
+  };
+
+  // =================================================================
+
+  renderCloseUserService = () => {
+    if (!userBubble.classList.contains("none")) {
+      userBubble.classList.add("none");
+    }
+  };
+
+  // =================================================================
+
   renderSuccessMessage = (signType) => {
     let title;
     let message;
@@ -48,8 +67,7 @@ export default class UserAuthView {
     const signMessage = document.querySelector("#signMessage");
     if (signType) {
       title = "登入成功";
-      message =
-        "歡迎回來歡迎回來！您已成功登入會員，點擊「確定」返回先前頁面";
+      message = "歡迎回來歡迎回來！您已成功登入會員，點擊「確定」返回先前頁面";
       buttonValue = "確定";
     } else {
       title = "恭喜您，註冊成功!";

@@ -1,7 +1,7 @@
 import BookingModel from "../models/bookingModel.js";
 import BookingView from "../views/bookingView.js";
-import UserAuthController from "./userAuthController.js";
-import UserAuthView from "../views/userAuthView.js";
+import BaseController from "./baseController.js";
+import BaseView from "../views/baseView.js";
 import AttractionController from "../controllers/attractionController.js";
 import AttractionView from "../views/attractionView.js";
 import {
@@ -14,8 +14,8 @@ export default class BookingController {
   constructor() {
     this.model = new BookingModel();
     this.view = new BookingView();
-    this.userController = new UserAuthController();
-    this.userView = new UserAuthView();
+    this.baseController = new BaseController();
+    this.baseView = new BaseView();
     this.attractionController = new AttractionController();
     this.attractoinView = new AttractionView();
     this.userData;
@@ -25,9 +25,9 @@ export default class BookingController {
   /* Event Handler Function */
   // =================================================================
 
-  init = async (e) => {
-    await this.userController.init();
-    this.userData = this.userController.userData;
+  init = async () => {
+    await this.baseController.init();
+    this.userData = this.baseController.userData;
     if (this.userData === null) {
       window.location = "/";
     }
@@ -42,8 +42,8 @@ export default class BookingController {
 
   // =================================================================
 
-  createBooking = async (e) => {
-    if (!(await this.checkUserAuth(e))) {
+  createBooking = async () => {
+    if (!(await this.checkUserAuth())) {
       return;
     }
 
@@ -62,7 +62,7 @@ export default class BookingController {
   // =================================================================
 
   addToCart = async (e) => {
-    if (!(await this.checkUserAuth(e))) {
+    if (!(await this.checkUserAuth())) {
       return;
     }
 
@@ -74,7 +74,7 @@ export default class BookingController {
 
     await this.model.createBooking("/api/booking", this.userData);
     this.view.renderErrorMessage(this.model.createResult.message);
-    this.userController.getCartCount();
+    this.baseController.getCartCount();
     setTimeout(() => {
       this.attractoinView.addedCartDone(false);
     }, 1000);
@@ -106,7 +106,7 @@ export default class BookingController {
 
     if (errorMessage != "") {
       this.view.renderErrorMessage(errorMessage);
-      this.userView.renderModal();
+      this.baseView.renderModal();
       return;
     }
 
@@ -129,10 +129,10 @@ export default class BookingController {
   /* Private Function */
   // =================================================================
 
-  checkUserAuth = async (e) => {
-    await this.userController.init();
-    await this.userController.doUserAuth(e);
-    this.userData = this.userController.userData;
+  checkUserAuth = async () => {
+    await this.baseController.init();
+    await this.baseController.doUserAuthCheck();
+    this.userData = this.baseController.userData;
 
     if (document.querySelector("#modal").classList.contains("popup")) {
       return false;

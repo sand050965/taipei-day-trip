@@ -23,9 +23,14 @@ def cart():
     return render_template("cart.html")
 
 
-@pages.route("/cartcheckout")
-def cartCheckout():
-    return render_template("cartcheckout.html")
+@pages.route("/user")
+def user():
+    return render_template("user.html")
+
+
+@pages.route("/orders")
+def order():
+    return render_template("orders.html")
 
 
 @pages.route("/thankyou")

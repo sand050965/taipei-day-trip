@@ -4,18 +4,24 @@ export default class CartView {
 
     const noBooking = document.querySelector("#noBooking");
     const bookingConfirm = document.querySelector("#bookingConfirm");
+    const footer = document.querySelector("footer");
 
     if (result.data.length === 0) {
       noBooking.classList.remove("none");
       noBooking.classList.add("no-booking");
       bookingConfirm.classList.add("none");
       bookingConfirm.classList.remove("booking");
+      footer.classList.remove("common-footer");
+      footer.classList.add("no-booking-footer");
       return;
     }
+    
     noBooking.classList.add("none");
     noBooking.classList.remove("no-booking");
     bookingConfirm.classList.remove("none");
     bookingConfirm.classList.add("booking");
+    footer.classList.add("common-footer");
+    footer.classList.remove("no-booking-footer");
 
     const bookingContent = document.querySelector("#bookingContent");
     bookingContent.classList.add("booking-content");
@@ -157,19 +163,23 @@ export default class CartView {
       if (input.checked) cnt++;
     }
 
-    if (cnt === inputs.length) {
+    selectAll.checked = false;
+
+    if (cnt == inputs.length) {
       selectAll.checked = true;
-      seperator.classList.remove("none");
-      deleteSelect.classList.remove("none");
-      deleteSelect.classList.add("center");
-    } else {
-      selectAll.checked = false;
+    }
+
+    if (cnt === 0) {
       seperator.classList.add("none");
       deleteSelect.classList.remove("center");
       deleteSelect.classList.add("none");
+    } else {
+      seperator.classList.remove("none");
+      deleteSelect.classList.remove("none");
+      deleteSelect.classList.add("center");
     }
 
-    document.querySelector("#totalSelect").textContent = cnt;
+    document.querySelector("#totalSelect").textContent = inputs.length;
   };
 
   // =================================================================
