@@ -1,0 +1,290 @@
+main {
+  display: flex;
+  justify-content: center;
+  background-color: #e8e8e8;
+  padding: 50px 0;
+  height: auto;
+}
+
+/* cart-booking */
+input[type="checkbox"] {
+  display: inline-block;
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
+input[type="checkbox"]:checked {
+  height: 20px;
+  width: 20px;
+  accent-color: #489;
+}
+
+.cart-booking {
+  background-color: #fff;
+  width: 1200px;
+  border-radius: 10px;
+}
+
+.no-booking {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+  padding: 100px 30px;
+  border-top: 2px solid #e8e8e8;
+  border-bottom: 2px solid #e8e8e8;
+}
+
+.no-booking div {
+  font-size: 25px;
+  padding: 20px;
+}
+
+.no-booking img {
+  min-width: 128px;
+  min-height: 128px;
+}
+
+.cart-title {
+  padding: 20px 30px;
+  font-size: 25px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.booking-item {
+  position: relative;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 20px 266px auto;
+  justify-items: flex-start;
+  align-items: center;
+  gap: 20px;
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.attraction-image {
+  width: 266px;
+  height: 200px;
+}
+
+.attraction-image img {
+  width: 100%;
+  height: 100%;
+}
+
+.booking-attraction-name {
+  padding-bottom: 20px;
+}
+
+.booking-attraction-name {
+  display: grid;
+  grid-template-columns: 100px auto;
+}
+
+.booking-attraction-name span {
+  color: #448899;
+}
+
+.booking-attraction-name,
+.booking-attraction-info {
+  padding: 7px 0;
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.delete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.delete:hover {
+  background-color: rgba(230, 230, 230, 3);
+  border-radius: 5px;
+}
+
+/* booking-confirm */
+.booking {
+  padding: 10px 30px;
+}
+
+.checkCancelAll {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.select-all,
+.cancel-select {
+  margin: 5px;
+  padding: 10px;
+}
+
+.select-all span {
+  padding: 5px;
+}
+
+.cancel-select:hover {
+  background-color: #e8e8e8;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.booking-confirm {
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  justify-items: end;
+  align-items: center;
+}
+
+.top-border {
+  border-top: 1px solid #e8e8e8;
+}
+
+.booking-confirm div {
+  padding: 20px;
+}
+
+.booking-confirm > div:first-child {
+  text-align: right;
+}
+
+input[type="button"] {
+  padding: 15px 20px;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 16px;
+  background: #448899;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="button"]:hover {
+  background-color: #2f5d69;
+}
+
+/* checkout */
+/* contact-info */
+.checkout-contact {
+  background-color: #fff;
+  width: 1200px;
+  border-radius: 10px;
+}
+
+.checkout-title {
+  font-size: 19px;
+  padding: 20px 30px;
+}
+
+.checkout-required-info {
+  padding: 20px 30px;
+}
+
+.info-input {
+  margin-bottom: 15px;
+}
+
+.contact-remind {
+  padding: 0 30px 40px 30px;
+}
+
+/* credit-card-info */
+.checkout-credit-card {
+  background-color: #fff;
+  width: 1200px;
+  border-radius: 10px;
+  margin-top: 50px;
+}
+
+.tpfield {
+  width: 200px;
+  height: 38px;
+  border-radius: 5px;
+  padding-left: 10px;
+  border: 1px solid #e8e8e8e8;
+}
+
+/* check-out-confirm */
+.checkout-confirm-container {
+  background-color: #fff;
+  width: 1200px;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.checkout-confirm {
+  text-align: right;
+  padding: 30px;
+}
+
+.checkout-price {
+  padding: 20px;
+}
+
+/* checkout-content */
+.checkout-list-title {
+  font-size: 19px;
+  padding: 20px 0;
+}
+
+.checkout-content {
+  background-color: #fff;
+  width: 1200px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.checkout-booking-item {
+  position: relative;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 266px auto;
+  justify-items: flex-start;
+  align-items: center;
+  gap: 20px;
+  border-top: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+@media (max-width: 1300px) {
+  .cart-booking,
+  .checkout-contact,
+  .checkout-credit-card,
+  .checkout-confirm-container,
+  .checkout-content {
+    width: 80vw;
+  }
+}
+
+@media (max-width: 900px) {
+  .booking-item {
+    grid-template-columns: 20px auto;
+    grid-template-rows: repeat(2, auto);
+  }
+
+  .attraction-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .booking-info {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    max-height: 216px;
+  }
+
+  .delete {
+    position: relative;
+    left: calc(90vw - 150px);
+  }
+
+  .checkout-booking-item {
+    grid-template-columns: auto;
+    grid-template-rows: repeat(2, auto);
+  }
+}

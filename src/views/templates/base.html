@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <title>Taipei Trip 台北一日遊</title>
+    <link rel="stylesheet" href={{ url_for('static', filename='css/base.css') }} />
+    {% block link %}
+    {% endblock link %}
+  </head>
+  <body>
+    <nav>
+      <div class="navigation-bar">
+        <div>
+          <a id="redirectToHome" href="/">台北一日遊</a>
+        </div>
+        <div id="cart" class="content left-center">
+          <img src={{ url_for('static', filename='images/cart_icon.png') }}/>
+          <span id="cartCount" class="cart-count center"></span>
+        </div>
+        <div id="avatarContainer" class="content center">
+          <img id="avatar" class="avatar" src={{ url_for("static", filename="images/icon_avatar.png") }}/>
+        </div>
+        <div id="menuContainer" class="content center">
+          <img id="menu" class="menu" src={{ url_for("static", filename="images/icon_menu.png") }}/>
+        </div>
+      </div>
+    </nav>
+    <div id="userBubble" class="user-bubble">
+      <a href="/user"><div id="userAccount" class="user-bubble-top center none">帳號設定</div></a>
+      <a href="/orders"><div id="userOrder" class="center none">訂單管理</div></a>
+      <div id="userAuth" class="user-bubble-bottom user-auth center none">登入/註冊</div>
+    </div>
+    <div id="modalContainer" class="modal-container center-top">
+      <div id="modal" class="modal">
+        <div class="modal-border"></div>
+        <div id="closeIcon" class="close-icon">
+          <img src="{{ url_for('static', filename='images/icon_close.png') }}"
+               width="16px"
+               height="16px"
+               alt="X"/>
+        </div>
+        <div class="modal-wrapper">
+          <div id="modalTitle" class="modal-title title center">登入會員帳號</div>
+          <div id="usernameContainer">
+            <input id="username" type="text" placeholder="輸入姓名" class="correct-input" />
+          </div>
+          <div id="usernameMessage" class="error-message none"></div>
+          <div id="emailContainer">
+            <input id="email" type="email" placeholder="輸入電子信箱" class="correct-input" />
+          </div>
+          <div id="emailMessage" class="error-message none"></div>
+          <div id="passwordContainer" class="password-container">
+            <input id="password"
+                   type="password"
+                   placeholder="輸入密碼"
+                   class="correct-input"
+                   maxlength="15"/>
+            <img id="showPassword" class="toggle-password" src={{
+              url_for("static", filename="images/eye_open_icon.png") }}/> <img
+              id="hidePassword" class="toggle-password none" src={{
+              url_for("static", filename="images/eye_close_icon.png") }}/>
+            </div>
+            <div id="passwordMessage" class="error-message none"></div>
+            <div id="signMessage" class="success-message content center none"></div>
+            <input id="signButton"
+                   type="button"
+                   class="sign-button center button-able"
+                   value="登入帳戶"/>
+            <div id="errorMessage" class="error-message center none"></div>
+            <div id="signChangeRemind" class="sign-change-remind center content">
+              <span id="isUser">還沒有帳戶？</span
+                ><span id="signChange" class="sign-change">點此註冊</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <main>
+          {% block main %}
+          {% endblock main %}
+        </main>
+        <footer class="common-footer">
+          COPYRIGHT © 2022 台北一日遊
+        </footer>
+        <script type="module" src="{{ url_for('static', filename='js/base.js') }}"></script>
+        {% block script %}
+        {% endblock script %}
+      </body>
+    </html>
