@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - app
+
+  app:
+    image: sand050965/taipei-day-trip
+    container_name: app
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_SCHEMA=${DB_SCHEMA}
+      - PARTNER_KEY=${PARTNER_KEY}
+      - MERCHANT_ID=${MERCHANT_ID}
+    restart: on-failure
