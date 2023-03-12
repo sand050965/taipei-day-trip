@@ -17,6 +17,7 @@ services:
     container_name: app
     ports:
       - "3000:3000"
+      - "3306:3306"
     environment:
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
