@@ -1,4 +1,3 @@
-import re
 from flask import *
 from models.attraction_model import AttractionModel as model
 from views.attraction_view import AttractionView as view
