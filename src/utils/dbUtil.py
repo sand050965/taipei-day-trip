@@ -1,7 +1,6 @@
 import os
 from flask import current_app
 from dotenv import load_dotenv
-from sqlite3 import connect
 from mysql.connector import pooling
 
 
