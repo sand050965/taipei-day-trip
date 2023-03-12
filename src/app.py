@@ -16,4 +16,4 @@ app.register_blueprint(user_api)
 app.register_blueprint(booking_api)
 app.register_blueprint(order_api)
 
-app.run(host="0.0.0.0", port=8080)
+app.run(host="0.0.0.0", port=3000)
