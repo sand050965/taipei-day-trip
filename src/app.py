@@ -13,7 +13,8 @@ app.register_blueprint(pages)
 app.register_blueprint(attraction_api)
 app.register_blueprint(category_api)
 app.register_blueprint(user_api)
-app.register_blueprint(booking_api)
+app.register_blueprint(booking_api) 
 app.register_blueprint(order_api)
 
-app.run(host="0.0.0.0", port=3000)
+if __name__ == '__main__':
+    app.run(debug=True)

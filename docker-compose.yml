@@ -15,10 +15,8 @@ services:
   app:
     image: sand050965/taipei-day-trip
     container_name: app
-    ports:
-      - "3000:3000"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+    expose:
+      - 8080
     environment:
       - DB_HOST=${DB_HOST}
       - DB_USER=${DB_USER}
