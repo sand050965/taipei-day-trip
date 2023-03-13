@@ -6,22 +6,19 @@ This is built with pure JavaScript and Python Flask, designed according to this 
 
 
 Test account: test@gmail.com
+<br/>
 Test password: @Xyz123
 <br/>
 <br/>
 🔗Website URL: https://triptaipei.online/
 <br/>
 <br/>
-Test account: test@gmail.com
-Test password: 123456
-<br/>
-<br/>
 
   ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/index.png?raw=true)
 
-  ![image](https://github.com/sand050965/Mini-Room/blob/main/readme/booking1.png?raw=true)
+  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/booking1.png?raw=true)
   
-  ![image](https://github.com/sand050965/Mini-Room/blob/main/readme/booking2.png?raw=true)
+  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/booking2.png?raw=true)
 
 ## Table of Contents
 
