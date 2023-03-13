@@ -2,13 +2,18 @@
 
 Taipei-day-trip is an e-commerce website that allows you to discover attractions and book amazing one day tour in Taipei city.
 
-This is built with pure JavaScript and Python Flask, designed according to this figma prototype and Swagger API documentation.
+This wesite is built with pure HTML, CSS, JavaScript and Python Flask, designed according to this ![Figma Prototype](https://www.figma.com/file/MZkYBH31H5gyLoZoZq116j/Taipei-Trip-%E5%8F%B0%E5%8C%97%E4%B8%80%E6%97%A5%E9%81%8A-2.0) and ![Swagger API documentation](https://app.swaggerhub.com/apis-docs/padax/taipei-day-trip/1.1.0).
 
 
 Test account: test@gmail.com
 <br/>
 Test password: @Xyz123
 <br/>
+Test Credit Card Number: 4242-4242-4242-4242
+<br/>
+Date: 04/26
+<br/>
+CVV: 123
 <br/>
 🔗Website URL: https://triptaipei.online/
 <br/>
@@ -39,13 +44,15 @@ Test password: @Xyz123
 
 ## Main Features
 
-- Member system, login and signup.
-- Use keyword to search for related attractions.
+- Provides member system for user to login and signup.
+- User authentication with Json Web Token.
+- Use can use keyword to search for related attractions.
 - Responsive Web Design.
-- Infinite scroll and lazy loading.
-- Custom image carousel.
+- Infinite scroll and attractions' image carousel.
+- Loading animation, displayed while images are being loading.
 - Shopping cart system.
 - Online payment system with Tappay.
+- Allows users to view their history orders.
 
 ## Architecture
 
@@ -65,7 +72,7 @@ Test password: @Xyz123
 
 ### Environment
 
-- Python/Flask
+- Python Flask
 
 ### Database
 
@@ -120,13 +127,8 @@ Test password: @Xyz123
 - CSS
 - JavaScript
 
-## API Doc
-
-[API doc](https://app.swaggerhub.com/apis-docs/padax/taipei-day-trip/1.1.0)
-
 ## Contact
 
-Hsien-Yu, Yang
+🙂Hsien-Yu, Yang
 <br/>
-
-Email: sand050965@gmail.com
+📩Email: sand050965@gmail.com
