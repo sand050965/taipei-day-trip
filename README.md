@@ -16,9 +16,7 @@ Test password: @Xyz123
 
   ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/index.png?raw=true)
 
-  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/booking1.png?raw=true)
-  
-  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/booking2.png?raw=true)
+  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/booking.png?raw=true)
 
 ## Table of Contents
 
@@ -110,7 +108,7 @@ Test password: @Xyz123
 
 ## Database Schema
 
-![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/assets/ERD.png?raw=true)
+![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/ERD.png?raw=true)
 
 <br/>
 <br/>
@@ -124,7 +122,7 @@ Test password: @Xyz123
 
 ## API Doc
 
-[API doc](https://app.swaggerhub.com/apis/SAND050965_1/mini-room_api/1.0.0)
+[API doc](https://app.swaggerhub.com/apis-docs/padax/taipei-day-trip/1.1.0)
 
 ## Contact
 
