@@ -1,11 +1,13 @@
 import uuid
 from flask import *
+from flask_cors import CORS
 from utils.dbUtil import DBUtil
 
-
 def create_app():
-    app = Flask(__name__, template_folder='./views/templates/',
-                static_folder='./views/static/')
+    app = Flask(__name__, template_folder='./public/templates/',
+                static_folder='./public/static/')
+    
+    CORS(app)
 
     connect_pool = DBUtil.get_db()
 

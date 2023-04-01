@@ -1,0 +1,26 @@
+{% extends "base.html" %} {% block link %} <link rel="stylesheet" href={{
+url_for('static', filename='css/index.css') }} /> {% endblock link %} {% block
+main %}
+<div class="banner">
+  <div class="banner-content">
+    <div>輕鬆享受台北一日悠閒</div>
+    <div>探索每個角落，體驗城市的深度旅遊行程</div>
+    <div class="search">
+      <input id="search-bar" placeholder="輸入景點名稱查詢" />
+      <div id="magnifier"></div>
+    </div>
+    <div id="category-list"></div>
+  </div>
+</div>
+<div class="attraction-wrapper">
+  <div id="attraction-container"></div>
+  <div id="loader" class="loader index-loader none">
+    <span id="semiCircle" class="semi-circle none"></span>
+    <div id="count" class="count index-count loading">Loading...</div>
+    <span class="circle index-circle"></span>
+  </div>
+  <div id="mask" class="none"></div>
+  <img id="pageNotFound" class="page-not-found none" src="https://d3e6ndnmeeirod.cloudfront.net/images/no_results.png" />
+</div>
+{% block script %}<script type="module" src={{ url_for("static",
+filename="js/index.js") }}></script> {% endblock script %} {% endblock main %}

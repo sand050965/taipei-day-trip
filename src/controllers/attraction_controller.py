@@ -23,6 +23,8 @@ def getAttractions():
         cursor.close()
         conn.close()
 
+############################################################
+
 
 @attraction_api.route("/api/attraction/<attractionId>", methods=["GET"])
 def getAttractionById(attractionId):

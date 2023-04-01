@@ -1,0 +1,9 @@
+.wide-avatar-img {
+    min-width: 100%;
+    max-width: 100%;
+}
+
+.long-avatar-img {
+    min-height: 100%;
+    max-height: 100%;
+}

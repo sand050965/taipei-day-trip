@@ -1,7 +1,6 @@
 from utils.requestUtil import RequestUtil
 from utils.validatorUtil import ValidatorUtil
 
-
 class UserModel:
 
     def insertUser(cursor, request):
@@ -20,12 +19,15 @@ class UserModel:
             INSERT INTO user ( 
                 name, 
                 email, 
-                password
+                password,
+                sex,
+                birthday,
+                phone,
+                avatarImgUrl
             ) 
             VALUES (%s, %s, %s)
-            """, (name, email, password))
+            """, (name, email, password, '0', None, '', ''))
 
-############################################################
 
     def getUserByEmail(cursor, request):
         email = RequestUtil.get_token(request).get("email")
@@ -36,7 +38,8 @@ class UserModel:
             SELECT 
                 id, 
                 name, 
-                email 
+                email,
+                avatar_img_url
             FROM user 
             WHERE email = %s
             """, (email, ))
@@ -45,7 +48,6 @@ class UserModel:
         ValidatorUtil.validate_user(result)
         return result
 
-############################################################
 
     def getUserIdByEmailPassword(cursor, request):
         data = RequestUtil.get_request_data(request)
@@ -68,7 +70,6 @@ class UserModel:
         result["email"] = email
         return result
 
-############################################################
 
     def getUserInfo(cursor, request):
         email = RequestUtil.get_token(request).get("email")
@@ -82,7 +83,8 @@ class UserModel:
                 email,
                 sex,
                 birthday,
-                phone 
+                phone, 
+                avatar_img_url
             FROM user 
             WHERE email = %s
             """, (email, ))
@@ -91,28 +93,35 @@ class UserModel:
         ValidatorUtil.validate_user(result)
         return result
 
-############################################################
 
     def updateUserInfo(cursor, request):
+        token_id = RequestUtil.get_token(request).get("user_id")
+        
         token_email = RequestUtil.get_token(request).get("email")
         ValidatorUtil.validate_email(token_email, True)
 
         data = RequestUtil.get_request_data(request)
 
         name = data["name"]
-        ValidatorUtil.validate_name(pasnamesword)
+        ValidatorUtil.validate_name(name, True)
 
         email = data["email"]
         ValidatorUtil.validate_email(email, True)
 
         sex = data["sex"]
-        ValidatorUtil.validate_email(sex, True)
+        ValidatorUtil.validate_sex(sex)
 
-        birthday = data["birthday"]
-        ValidatorUtil.validate_email(birthday, True)
+        birthday = data["birthday"] 
+        if birthday != '':
+            ValidatorUtil.validate_date(birthday)
+        else:
+            birthday = None
 
         phone = data["phone"]
-        ValidatorUtil.validate_email(phone, True)
+        if phone != '':
+            ValidatorUtil.validate_phone(phone)
+        
+        avatarImgUrl = data["avatarImgUrl"]
 
         cursor.execute(
             """
@@ -121,7 +130,8 @@ class UserModel:
                 email = %s,
                 sex = %s,
                 birthday = %s,
-                phone = %s
+                phone = %s,
+                avatar_img_url = %s
             WHERE email = %s 
             AND id = %s
-            """, (name, email, sex, birthday, phone, token_email))
+            """, (name, email, sex, birthday, phone, avatarImgUrl, token_email, token_id))

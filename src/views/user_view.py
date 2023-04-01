@@ -6,7 +6,6 @@ class UserView:
     def renderSuccess():
         return jsonify({"ok": True})
 
-############################################################
 
     def renderError(message):
         return jsonify({
@@ -14,12 +13,10 @@ class UserView:
             "message": message
         })
 
-############################################################
 
     def renderGetNoUser():
         return jsonify({"data": None})
 
-############################################################
 
     def renderGetUserByEmail(result):
         if result != None:
@@ -28,13 +25,13 @@ class UserView:
                 "data": {
                     "id": result["id"],
                     "name": result["name"],
-                    "email": result["email"]
+                    "email": result["email"],
+                    "avatarImgUrl": result["avatar_img_url"]
                 }
             })
         else:
             return jsonify({"data": None})
 
-############################################################
 
     def renderGetUserIdByEmailPassword(result):
         email = result["email"]
@@ -43,13 +40,11 @@ class UserView:
         response = UserView.renderSuccess()
         return ResponseUtil.set_token(response, payloadData)
 
-############################################################
 
     def renderDeleteUser():
         response = UserView.renderSuccess()
         return ResponseUtil.delete_token(response)
 
-############################################################
 
     def renderGetUserInfo(result):
         if result == None:
@@ -63,5 +58,6 @@ class UserView:
                 "sex": result["sex"],
                 "birthday": result["birthday"],
                 "phone": result["phone"],
+                "avatarImgUrl": result["avatar_img_url"],
             }
         })

@@ -4,6 +4,7 @@ PyJWT==2.6.0
 mysql-connector-python==8.0.30
 Jinja2==3.1.2
 uuid==1.30
+boto3==1.26.99
 python-dotenv==1.0.0
 DateTime==5.0
 requests==2.28.2

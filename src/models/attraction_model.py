@@ -23,7 +23,6 @@ class AttractionModel:
 
         return result
 
-############################################################
 
     def getAttractionByKeyword(cursor, keyword, limitStart):
         cursor.execute(
@@ -51,7 +50,6 @@ class AttractionModel:
 
         return cursor.fetchall()
 
-############################################################
 
     def getAttractionByPage(cursor, limitStart):
         cursor.execute(
@@ -77,7 +75,6 @@ class AttractionModel:
 
         return cursor.fetchall()
 
-############################################################
 
     def getAttractionById(cursor, attractionId):
         ValidatorUtil.validate_attractionId(attractionId)
