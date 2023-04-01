@@ -16,7 +16,7 @@ export default class UserController {
 		this.view = new UserView();
 		this.baseController = new BaseController();
 		this.baseView = new BaseView();
-		this.userData;
+		this.userData = {};
 		this.originAvatarImgUrl = "";
 	}
 
@@ -92,7 +92,7 @@ export default class UserController {
 			birthday: document.querySelector("#inputBirthday").value,
 			email: document.querySelector("#inputEmail").value,
 			phone: document.querySelector("#inputPhone").value,
-			avatarImgUrl: document.querySelector("#avatarImg").src,
+			avatarImgUrl: document.querySelector("#userAccountAvatarImg").src,
 		};
 
 		const inputCheck = this.validateInputs(userData);
@@ -129,34 +129,6 @@ export default class UserController {
 		if (sidemenuArray.includes(e.target.id)) return;
 		this.view.closeSideMenu();
 	};
-
-	// checkUserAuth = async () => {
-	// 	await this.baseController.init();
-	// 	await this.baseController.doUserAuthCheck();
-	// 	this.userData = this.baseController.userData;
-
-	// 	if (document.querySelector("#modal").classList.contains("popup")) {
-	// 		return false;
-	// 	}
-	// 	return true;
-	// };
-
-	// validateInputs = () => {
-	// 	const name = document.querySelector("#contactName").value.trim();
-	// 	const nameValidateResult = nameValidate(name);
-
-	// 	const email = document.querySelector("#contactMail").value.trim();
-	// 	const emailValidateResult = emailValidate(email);
-
-	// 	const phone = document.querySelector("#contactPhone").value.trim();
-	// 	const phoneValidateResult = phoneValidate(phone);
-
-	// 	return this.view.renderErrorInput(
-	// 		nameValidateResult,
-	// 		emailValidateResult,
-	// 		phoneValidateResult
-	// 	);
-	// };
 
 	validateAvatarImg = (file) => {
 		const fileType = file.name.split(".")[1];

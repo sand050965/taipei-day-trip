@@ -17,6 +17,7 @@ export default class IndexView {
       const attractionItemLink = document.createElement("a");
       attractionItemLink.href = `/attraction/${attractionData.id}`;
       attractionItemLink.id = `attraction_${attractionData.id}`;
+      attractionItemLink.setAttribute("name", "attraction_item");
       attractionItemLink.classList.add("none");
 
       const attractionItem = document.createElement("div");

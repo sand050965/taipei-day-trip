@@ -140,6 +140,7 @@ cython_debug/
 # VSCode stuff
 launch.json
 .vscode/
+.devcontainer/
 
 # Mac stuff
 .DS_Store

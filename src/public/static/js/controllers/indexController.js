@@ -8,9 +8,7 @@ export default class IndexController {
     this.view = new IndexView();
     this.isLoading = false;
     this.isClickedSearchBar = false;
-    this.anchorCount = 0;
     this.currentGroupCount = 0;
-    this.totalCount = 0;
     this.page = 0;
     this.keyword = null;
     this.nextPage = null;
@@ -25,15 +23,14 @@ export default class IndexController {
       apiUrl = `/api/attractions?page=${this.page}`;
     }
 
+    this.totalCount = 0;
+    this.anchorCount = 0;
     this.isLoading = true;
     this.view.renderLoading();
     await this.model.init(apiUrl);
     this.nextPage = this.model.attractionResult.nextPage;
     this.view.renderAttractions(this.model.attractionResult);
-    this.anchorCount = this.page * 12 + 1;
-    this.currentGroupCount = this.view.currentGroupCount;
-    this.totalCount += this.view.currentGroupCount;
-    this.preloadImage(this.anchorCount, this.totalCount);
+    this.preloadImage();
   };
 
 
@@ -96,19 +93,23 @@ export default class IndexController {
 
 
   preloadImage = async (anchorCount, totalCount) => {
-    const attractionItemsArray = [];
+    const attractionItemsArray = document.querySelectorAll(
+			"a[name='attraction_item']"
+		);
+    const attractionImagesArray = document.querySelectorAll(
+			"img[name='attraction_image']"
+		);
     const promiseArray = [];
 
-    for (let i = anchorCount; i <= totalCount; i++) {
-      promiseArray.push(
-        new Promise((resolve) => {
-          document.querySelector(`#image_${i}`).onload = () => {
-            resolve();
-          };
-        })
-      );
-      attractionItemsArray.push(document.querySelector(`#attraction_${i}`));
-    }
+    for (const attractionImg of attractionImagesArray) {
+			promiseArray.push(
+				new Promise((resolve) => {
+					attractionImg.onload = () => {
+						resolve();
+					};
+				})
+			);
+		}
 
     await Promise.all(promiseArray).then(() => {
       setTimeout(() => {
