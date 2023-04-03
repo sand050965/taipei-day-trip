@@ -48,9 +48,9 @@ class ValidatorUtil:
         if (booking_date < today):
             raise ValueError("預定日期不可早於當天日期")
         elif (booking_date == today):
-            if ("morning".__eq__(booking_time) and current_hour > 16):
+            if ("morning".__eq__(booking_time) and current_hour >= 16):
                 raise ValueError("現在時間不可晚於上半天行程結束時間")
-            elif ("afternoon".__eq__(booking_time) and current_hour > 21):
+            elif ("afternoon".__eq__(booking_time) and current_hour >= 21):
                 raise ValueError("預定時間不可晚於下半天行程結束時間")
                 
 
