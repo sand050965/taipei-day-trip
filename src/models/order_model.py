@@ -81,7 +81,6 @@ class OrderModel:
             "message": message
         }
 
-    ############################################################
 
     def postTapPay(data):
         TapPayRequestHeaders = {'content-type': 'application/json',
@@ -103,7 +102,6 @@ class OrderModel:
         return requests.post('https://sandbox.tappaysdk.com/tpc/payment/pay-by-prime',
                              headers=TapPayRequestHeaders, json=TapPayRequestBody).json()
 
-    ############################################################
 
     def insertPayment(cursor, order_id, db_datetime, TapPayResult):
         cursor.execute(
@@ -116,7 +114,6 @@ class OrderModel:
             VALUES (%s, %s, %s)
             """, (order_id, db_datetime, TapPayResult["msg"]))
 
-    ############################################################
 
     def updateOrder(cursor, order_id, TapPayResult):
         cursor.execute(
@@ -126,7 +123,6 @@ class OrderModel:
                 WHERE order_id = %s
                 """, (TapPayResult["status"], order_id))
         
-    ############################################################
 
     def deleteBookings(cursor, user_id, bookingIds):
         executeData = []
@@ -142,7 +138,6 @@ class OrderModel:
             AND id = %s
             """, executeData)
 
-    ############################################################
 
     def getOrderByOrderId(cursor, orderNumber):
         ValidatorUtil.validate_orderNumber(orderNumber)
@@ -173,7 +168,6 @@ class OrderModel:
 
         cursor.fetchone()
 
-    ############################################################
 
     def getAllOrders(cursor, request):
         email = RequestUtil.get_token(request).get("email")

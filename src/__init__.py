@@ -1,4 +1,4 @@
-import uuid
+import os
 from flask import *
 from flask_cors import CORS
 from utils.dbUtil import DBUtil
@@ -15,6 +15,6 @@ def create_app():
     app.config["JSON_AS_ASCII"] = False
     app.config["TEMPLATES_AUTO_RELOAD"] = True
     app.config["JSON_SORT_KEYS"] = False
-    app.config['SECRET_KEY'] = uuid.uuid4().hex
+    app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 
     return app
