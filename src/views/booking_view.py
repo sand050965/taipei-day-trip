@@ -23,7 +23,6 @@ class BookingView:
 
         return jsonify({"data": data})
 
-############################################################
 
     def renderGetBookings(result):
         dataList = []
@@ -47,7 +46,6 @@ class BookingView:
         return jsonify({"data": dataList})
 
 
-############################################################
 
     def renderSuccessInsert(result):
         return {
@@ -56,12 +54,10 @@ class BookingView:
         }
 
 
-############################################################
 
     def renderSuccess():
         return jsonify({"ok": True})
 
-############################################################
 
     def renderError(message):
         return jsonify(

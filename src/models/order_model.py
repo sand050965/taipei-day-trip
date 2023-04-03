@@ -172,3 +172,56 @@ class OrderModel:
             """, (orderNumber,))
 
         cursor.fetchone()
+
+    ############################################################
+
+    def getAllOrders(cursor, request):
+        email = RequestUtil.get_token(request).get("email")
+        ValidatorUtil.validate_email(email, True)
+        
+        cursor.execute(
+            """
+            WITH orders
+            AS (
+                SELECT
+                    odrs.order_id,
+                    odrs.price,
+                    odrs.date,
+                    odrs.time,
+                    odrs.contact_name,
+                    odrs.contact_email,
+                    odrs.contact_phone,
+                    odrs.status,
+                    odrs.attraction_id,
+                    att.attraction_name,
+                    att.address,
+                    img.image_url,
+                    ROW_NUMBER() Over (PARTITION BY odrs.order_id, odrs.attraction_id ORDER BY img.id) AS row_id
+                FROM orders odrs
+                INNER JOIN attraction att
+                ON odrs.attraction_id = att.id
+                INNER JOIN image img
+                ON odrs.attraction_id = img.attraction_id
+                INNER JOIN user
+                ON odrs.user_id = user.id
+                WHERE user.email = %s
+                ORDER BY odrs.order_id)
+            SELECT
+                order_id,
+                price,
+                date,
+                time,
+                contact_name,
+                contact_email,
+                contact_phone,
+                status,
+                attraction_id,
+                attraction_name,
+                address,
+                image_url
+            FROM orders
+            WHERE row_id = 1
+            ORDER BY order_id
+            """, (email,))
+
+        return cursor.fetchall()

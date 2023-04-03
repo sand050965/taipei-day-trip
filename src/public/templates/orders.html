@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block link %}
+  <link rel="stylesheet" href={{
+    url_for('static', filename='css/orders.css') }} />
+  {% endblock link %}
+  {% block
+    main %}
+    <div id="sideMenu" class="side-menu">
+      <div id="sideUserNavbar" class="side-user-navbar">
+        <div id="sideUserAccount" class="side-user-account-outlayer none">
+          <div class="side-user-account-container center" href="/user">
+            <div class="side-user-account-avatar-container center">
+              <div class="side-user-account-avatar center">
+                <img
+                  id="sideUserAccountAvatarImg"
+                  class="wide-avatar-img"
+                  src="https://d3e6ndnmeeirod.cloudfront.net/avatars/avatar.png" />
+              </div>
+            </div>
+            <div
+              id="sideUserAccountName"
+              class="side-user-account-name content center"></div>
+          </div>
+        </div>
+        <div id="sideNavbarItem" class="side-navbar-item none">
+          <a class="content" href="/user">
+              <div>
+              帳號設定
+            </div>
+          </a>
+          <a class="content" href="/orders">
+            <div>
+              訂單管理
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div id="sideMask" class="side-mask none"></div>
+    <div class="user-account-container">
+      <div class="user-navbar">
+        <div class="user-account-avatar-container">
+          <div class="change-avatar-img-container">
+            <div class="user-account-avatar center">
+              <img
+                id="userAccountAvatarImg"
+                class="wide-avatar-img"
+                src="https://d3e6ndnmeeirod.cloudfront.net/avatars/avatar.png" />
+            </div>
+          </div>
+          <div id="userAccountName" class="user-account-name content center"></div>
+        </div>
+        <div class="navbar-item">
+          <div>
+            <a class="content center" href="/user">帳號設定</a>
+          </div>
+          <div>
+            <a class="content center" href="/orders">訂單管理</a>
+          </div>
+        </div>
+      </div>
+      <div class="user-orders">
+        <div class="orders-container-title title">訂單管理</div>
+        <div id="noOrdersContainer" class="none">
+          <div id="noOrders" class="no-orders title">目前無任何訂單記錄</div>
+          <div class="no-orders-img-container">
+            <img class="no-orders-img" src="https://d3e6ndnmeeirod.cloudfront.net/images/noorders.png" />
+          </div>
+        </div>
+        <div id="ordersContainer" class="orders-container"></div>
+      </div>
+    </div>
+    {% block script %}
+      <script type="module" src={{ url_for("static",filename="js/orders.js") }}>
+      </script>
+    {% endblock script %}
+  {% endblock main %}

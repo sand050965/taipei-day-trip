@@ -32,7 +32,6 @@ class AttractionView:
             "data": dataList
         })
 
-############################################################
 
     def renderGetAttractionById(attraction):
         dataSet = {
@@ -50,7 +49,6 @@ class AttractionView:
 
         return jsonify({"data": dataSet})
 
-############################################################
 
     def renderError(message):
         return jsonify(

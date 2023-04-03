@@ -10,7 +10,6 @@ class CategoryView:
 
         return jsonify({"data": list(dataSet)})
         
-############################################################
         
     def renderError(message):
         return jsonify(

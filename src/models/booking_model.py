@@ -34,7 +34,6 @@ class BookingModel:
 
         return cursor.fetchone()
 
-############################################################
 
     def getBookings(cursor, request):
         token = RequestUtil.get_token(request)
@@ -62,7 +61,6 @@ class BookingModel:
 
         return cursor.fetchall()
 
-############################################################
 
     def getBookingId(cursor, request):
         token = RequestUtil.get_token(request)
@@ -78,7 +76,6 @@ class BookingModel:
 
         return cursor.fetchone()
 
-############################################################
 
     def insertBooking(cursor, request):
         token = RequestUtil.get_token(request)
@@ -93,6 +90,7 @@ class BookingModel:
 
         time = data["time"]
         ValidatorUtil.validate_time(time)
+        ValidatorUtil.validate_booking_date_time(date, time)
 
         price = data["price"]
         ValidatorUtil.validate_price(price)
@@ -108,7 +106,6 @@ class BookingModel:
                 VALUES (%s, %s, %s, %s, %s)
                 """, (user_id, attractionId, date, time, price))
 
-############################################################
 
     def deleteBookingById(cursor, request):
         token = RequestUtil.get_token(request)
@@ -126,7 +123,6 @@ class BookingModel:
             AND id = %s
             """, (token_UserId, bookingId,))
 
-############################################################
 
     def deleteBookings(cursor, request):
         token = RequestUtil.get_token(request)

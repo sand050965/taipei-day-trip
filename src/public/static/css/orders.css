@@ -1,0 +1,118 @@
+@import url("userNavbar.css");
+
+div::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+div::-webkit-scrollbar:vertical {
+    width: 11px;
+}
+
+div::-webkit-scrollbar:horizontal {
+    height: 11px;
+}
+
+div::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    border: 2px solid white; /* should match background, can't be transparent */
+    background-color: rgba(0, 0, 0, .5);
+}
+
+
+.navbar-item div:nth-child(2) {
+  color: #489;
+  border-left: 5px solid #489;
+}
+
+.user-orders {
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #fff;
+  height: 80vh;
+  overflow-y: scroll;
+}
+
+.user-orders .orders-container-title {
+  font-size: 30px;
+  border-bottom: 1px solid #666;
+  padding: 5px;
+}
+
+.user-orders .no-orders {
+  font-size: 19px;
+  padding: 5px;
+  padding-top: 20px;
+}
+
+.user-orders .no-orders-img-container {
+  width: 100%;
+  padding-top: 20px;
+}
+
+.user-orders .no-orders-img {
+  width: 100%;
+  height: 100%;
+}
+
+.user-orders .order-container {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  width: 100%;
+  border-radius: 5px;
+  outline: 1px solid #489;
+}
+
+.user-orders .order-title {
+  background-color: #489;
+  color: #fff;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 19px;
+}
+
+.user-orders .order-content {
+  display: grid;
+  grid-template-columns: 300px auto;
+  background-color: #fff;
+  padding: 10px 5px;
+  border-bottom: 1px solid #489;
+}
+
+.user-orders .order-img {
+  width: 266px;
+  height: 200px;
+  padding: 5px;
+}
+
+.user-orders .order-content-title {
+  font-weight: 700;
+  font-size: 19px;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  color: #489;
+  border-bottom: 1px solid #489;
+}
+
+.user-orders .content {
+  margin-bottom: 5px;
+}
+
+.user-orders .total-price {
+  padding: 5px 10px;
+  font-weight: 700;
+  font-size: 19px;
+  border-top: 1px solid #489;
+  background-color: #fff;
+}
+
+@media (max-width: 600px) {
+  .user-orders .order-content {
+    grid-template-columns: 100%;
+    grid-template-rows: 30% 70%;
+  }
+
+  .user-orders .order-img {
+    width: 100%;
+    height: 100%;
+  }
+}

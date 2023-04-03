@@ -1,0 +1,130 @@
+{% extends "base.html" %} 
+{% block link %} 
+  <link rel="stylesheet" href={{
+    url_for('static', filename='css/user.css') }} /> 
+  {% endblock link %} 
+  {% block main %}
+    <div id="sideMenu" class="side-menu">
+      <div id="sideUserNavbar" class="side-user-navbar">
+        <div id="sideUserAccount" class="side-user-account-outlayer none">
+          <div class="side-user-account-container center" href="/user">
+            <div class="side-user-account-avatar-container center">
+              <div class="side-user-account-avatar center">
+                <img
+                  id="sideUserAccountAvatarImg"
+                  class="wide-avatar-img"
+                  src="https://d3e6ndnmeeirod.cloudfront.net/avatars/avatar.png" />
+              </div>
+            </div>
+            <div
+              id="sideUserAccountName"
+              class="side-user-account-name content center"></div>
+          </div>
+        </div>
+        <div id="sideNavbarItem" class="side-navbar-item none">
+          <a class="content" href="/user">
+              <div>
+              帳號設定
+            </div>
+          </a>
+          <a class="content" href="/orders">
+            <div>
+              訂單管理
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div id="sideMask" class="side-mask none"></div>
+    <div id="preloader" class="preloader none">
+      <div id="loader" class="loader user-loader">
+        <span id="semiCircle" class="semi-circle"></span>
+        <span class="circle index-circle"></span>
+      </div>
+    </div>
+    <div class="user-account-container">
+      <div class="user-navbar">
+        <div class="user-account-avatar-container">
+          <div class="change-avatar-img-container">
+            <div class="user-account-avatar center">
+              <img
+                id="userAccountAvatarImg"
+                class="wide-avatar-img"
+                src="https://d3e6ndnmeeirod.cloudfront.net/avatars/avatar.png" />
+            </div>
+            <div class="change-avatar center">
+              <label for="avatarFileUpload" class="change-avatar-btn center">
+                <i class="fa-solid fa-camera"></i>
+              </label>
+              <input
+                id="avatarFileUpload"
+                name="avatar"
+                type="file"
+                accept=".png, .jpg, .jpeg"
+                class="none" />
+            </div>
+            <div id="fileError" class="file-error none">檔案上傳失敗!</div>
+          </div>
+          <div id="userAccountName" class="user-account-name content center"></div>
+        </div>
+        <div class="navbar-item">
+          <div>
+            <a class="content center" href="/user">帳號設定</a>
+          </div>
+          <div>
+            <a class="content center" href="/orders">訂單管理</a>
+          </div>
+        </div>
+      </div>
+      <div class="user-account-inputs">
+        <div class="account-title title">帳號設定</div>
+        <div type="text" class="user-info user-info-grid content">
+          <div class="left-center">會員姓名：</div>
+          <input id="inputName" class="input-name" />
+          <div></div>
+          <div id="failedName" class="error none">請輸入姓名!</div>
+        </div>
+        <div class="user-info user-info-grid content">
+          <div class="left-center">性別：</div>
+          <select id="selectSex" class="select-sex">
+            <option id="noSelect" value="0">-請選擇-</option>
+            <option id="male" value="1">男性</option>
+            <option id="female" value="2">女性</option>
+          </select>
+        </div>
+        <div class="user-info user-info-grid content">
+          <div class="left-center">出生日期：</div>
+          <input id="inputBirthday" type="date" class="input-birthday" />
+          <div></div>
+          <div id="failedBirthday" class="error none">請輸入正確出生日期!</div>
+        </div>
+        <div type="tel" class="user-info user-info-grid content">
+          <div class="left-center">行動電話：</div>
+          <input id="inputPhone" class="input-phone" />
+          <div></div>
+          <div id="failedPhone" class="error none">請輸入正確行動電話!</div>
+        </div>
+        <div type="email" class="user-info user-info-grid content">
+          <div class="left-center">email：</div>
+          <input id="inputEmail" class="input-email" />
+          <div></div>
+          <div id="failedEmail" class="error none">請輸入正確 email!</div>
+        </div>
+        <div class="save">
+          <div class="result">
+            <div id="error" class="error msg none">儲存失敗!</div>
+            <div id="success" class="success msg none">儲存成功!</div>
+          </div>
+          <input
+            id="saveButton"
+            type="button"
+            value="儲存"
+            class="save-button title" />
+        </div>
+      </div>
+    </div>
+  {% endblock main %}
+  {% block script %} 
+    <script type="module" src={{ url_for("static",filename="js/user.js") }}></script>
+    <script src="https://kit.fontawesome.com/8de498932c.js" crossorigin="anonymous"></script>
+  {% endblock script %}
