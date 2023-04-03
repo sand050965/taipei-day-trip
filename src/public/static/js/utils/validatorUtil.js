@@ -95,10 +95,10 @@ const bookingTimeValidate = (bookingDate, bookingTime) => {
 	const currentDate = new Date().toISOString().slice(0, 10);
 	const currentHour = new Date().getHours();
 	if (bookingDate === currentDate) {
-		if ("morning" === bookingTime && currentHour > 16) {
+		if ("morning" === bookingTime && currentHour >= 16) {
 			result = false;
 			message = "預定行程已過期，現在時間不可晚於上半天行程結束時間";
-		} else if ("afternoon" === bookingTime && currentHour > 21) {
+		} else if ("afternoon" === bookingTime && currentHour >= 21) {
 			result = false;
 			message = "預定行程已過期，預定時間不可晚於下半天行程結束時間";
 		}
