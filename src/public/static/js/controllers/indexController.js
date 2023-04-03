@@ -78,12 +78,12 @@ export default class IndexController {
 
 
   searchByKeyword = () => {
-    this.view.clearAttraction();
-    this.page = 0;
     this.keyword = document.querySelector("#search-bar").value.trim();
     if (this.keyword === "") {
       return;
     }
+    this.view.clearAttraction();
+    this.page = 0;
     this.init();
   };
 
