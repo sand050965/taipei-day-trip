@@ -1,22 +1,5 @@
 @import url("userNavbar.css");
 
-.preloader {
-	position: absolute;
-	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 999;
-	top: 0;
-	width: 100vw;
-	height: 100vh;
-}
-
-.user-loader {
-	position: relative;
-	top: calc(50vh - 200px);
-	left: calc(50vw - 54px);
-	min-width: 100vw;
-	margin: 100px 0;
-}
-
 input {
 	border: 1px solid #666;
 	border-radius: 5px;

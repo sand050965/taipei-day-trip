@@ -8,7 +8,6 @@ export default class IndexController {
     this.view = new IndexView();
     this.isLoading = false;
     this.isClickedSearchBar = false;
-    this.currentGroupCount = 0;
     this.page = 0;
     this.keyword = null;
     this.nextPage = null;
@@ -23,8 +22,6 @@ export default class IndexController {
       apiUrl = `/api/attractions?page=${this.page}`;
     }
 
-    this.totalCount = 0;
-    this.anchorCount = 0;
     this.isLoading = true;
     this.view.renderLoading();
     await this.model.init(apiUrl);
@@ -95,18 +92,21 @@ export default class IndexController {
   preloadImage = async (anchorCount, totalCount) => {
     const attractionItemsArray = document.querySelectorAll(
 			"a[name='attraction_item']"
-		);
-    const attractionImagesArray = document.querySelectorAll(
-			"img[name='attraction_image']"
-		);
+    );
+    
     const promiseArray = [];
 
-    for (const attractionImg of attractionImagesArray) {
+    for (const attractionItem of attractionItemsArray) {
+      if (!attractionItem.classList.contains("none")) {
+        continue;
+      }
+      
 			promiseArray.push(
 				new Promise((resolve) => {
-					attractionImg.onload = () => {
+          const id = attractionItem.id.replace("attraction", "image");
+          (document.querySelector(`#${id}`).onload = () => {
 						resolve();
-					};
+					});
 				})
 			);
 		}
@@ -115,7 +115,7 @@ export default class IndexController {
       setTimeout(() => {
         this.view.showContent(attractionItemsArray);
         this.isLoading = false;
-      }, 1000);
+      }, 0);
     });
   };
 }

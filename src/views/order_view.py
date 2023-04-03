@@ -39,6 +39,7 @@ class OrderView:
             cnt += 1
         return {"data": orders}
         
+        
     def renderNewOrder(result):
         return {
             "data": {
@@ -49,6 +50,7 @@ class OrderView:
                 }
             }
         }
+
 
     def renderGetOrderByOrderId(order):
         return {
@@ -73,6 +75,7 @@ class OrderView:
                 "status": order["status"]
             }
         }
+
 
     def renderError(message):
         return {

@@ -61,7 +61,7 @@ export default class CartController {
   };
 
 
-  deleteBookingById = async () => {
+  deleteBookingById = async (e) => {
     const bookingItemId = e.target.id;
     const bookingId = bookingItemId.replace("booking_", "");
     await this.model.deleteBookingById("/api/booking", bookingId);
@@ -92,6 +92,11 @@ export default class CartController {
     }
 
     this.checkSelected(this.checkedBookingIdList);
+    const checkResult = this.checkSelectedValid(this.checkedBookingIdList);
+    if (!checkResult) {
+			return;
+		}
+
     this.view.renderCartCheckOut(
       this.userData,
       this.model.cartResult,
@@ -136,6 +141,19 @@ export default class CartController {
         idArrays.push(parseInt(input.value));
       }
     }
+  };
+
+
+  checkSelectedValid = (idArrays) => {
+    for (const id of idArrays) {
+      const itemValid = document.querySelector(`#booking_valid_${id}`);
+			if (!itemValid.classList.contains("none")) {
+				this.baseView.renderModal();
+        this.view.renderErrorMessage("選取行程已過期失效，請刪除失效行程後再進行結帳!");
+        return false;
+			}
+		}
+    return true;
   };
 
 

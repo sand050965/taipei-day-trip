@@ -9,8 +9,6 @@ const inputs = document.querySelectorAll("[name='info']");
 
 window.addEventListener("load", controller.init, false);
 
-window.addEventListener("load", controller.cartCheckOutInit, false);
-
 selectAll.addEventListener("change", controller.selectAll, false);
 
 deleteSelect.addEventListener("click", controller.deleteBookings, false);

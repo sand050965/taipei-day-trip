@@ -5,9 +5,9 @@ import BaseView from "../views/baseView.js";
 import AttractionController from "./attractionController.js";
 import AttractionView from "../views/attractionView.js";
 import {
-  nameValidate,
-  emailValidate,
-  phoneValidate,
+	nameValidate,
+	emailValidate,
+	phoneValidate,
 } from "../utils/validatorUtil.js";
 
 export default class BookingController {
@@ -48,6 +48,10 @@ export default class BookingController {
       return;
     }
 
+    if (!this.attractionController.validateTime()) {
+			return;
+		}
+
     await this.model.createBooking("/api/booking", this.userData);
     if (this.model.createResult.ok) {
       window.location = `/booking/${this.model.createResult.book_id}`;
@@ -65,6 +69,10 @@ export default class BookingController {
     if (!this.attractionController.validateDate()) {
       return;
     }
+
+    if (!this.attractionController.validateTime()) {
+			return;
+		}
 
     this.attractoinView.addedCartDone(true);
 
@@ -86,6 +94,7 @@ export default class BookingController {
 
 
   doPayOrder = async (e) => {
+    this.view.renderPreloader(true);
     e.preventDefault();
 
     const tappayStatus = TPDirect.card.getTappayFieldsStatus();
@@ -99,6 +108,7 @@ export default class BookingController {
     if (errorMessage != "") {
       this.view.renderErrorMessage(errorMessage);
       this.baseView.renderModal();
+      this.view.renderPreloader(false);
       return;
     }
 
@@ -116,7 +126,6 @@ export default class BookingController {
     this.view.renderCorrectInput(id, revalidateResult);
   };
 
-  /* Private Function */
   checkUserAuth = async () => {
     await this.baseController.init();
     await this.baseController.doUserAuthCheck();

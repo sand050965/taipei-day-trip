@@ -64,9 +64,9 @@ CREATE TABLE `booking` (
   PRIMARY KEY (`id`),
   KEY `user_id_index` (`user_id`),
   KEY `fk_booking_attraction_id` (`attraction_id`),
-  CONSTRAINT `fk_booking_attraction_id` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_booking_attraction_id` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_booking_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='預定行程資料表';
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='預定行程資料表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +75,7 @@ CREATE TABLE `booking` (
 
 LOCK TABLES `booking` WRITE;
 /*!40000 ALTER TABLE `booking` DISABLE KEYS */;
-INSERT INTO `booking` VALUES (28,1,8,'2022-12-31','morning',2000),(29,1,16,'2022-12-30','morning',2000),(34,1,3,'2022-12-31','morning',2000),(35,1,8,'2022-12-31','afternoon',2500),(36,1,7,'2022-12-31','morning',2000),(37,1,7,'2022-12-31','morning',2000),(38,1,7,'2022-12-31','morning',2000),(39,1,7,'2022-12-31','morning',2000),(40,1,7,'2022-12-31','afternoon',2500),(41,1,7,'2022-12-31','afternoon',2500),(42,1,7,'2022-12-31','afternoon',2500),(43,1,7,'2022-12-31','afternoon',2500),(44,1,42,'2022-12-31','afternoon',2500),(45,1,42,'2022-12-31','morning',2000),(46,1,42,'2022-12-30','afternoon',2500),(47,1,42,'2022-12-31','afternoon',2500),(48,1,42,'2022-12-31','morning',2000),(49,1,42,'2022-12-31','morning',2000),(50,1,42,'2022-12-31','morning',2000),(51,1,42,'2022-12-30','morning',2000),(52,1,2,'2022-12-31','morning',2000),(53,1,2,'2022-12-31','morning',2000),(54,1,3,'2022-12-31','morning',2000),(55,1,3,'2022-12-31','morning',2000),(56,1,6,'2022-12-31','morning',2000),(57,1,6,'2022-12-31','morning',2000),(58,1,3,'2022-12-31','morning',2000),(59,1,4,'2022-12-31','morning',2000),(60,1,8,'2022-12-31','morning',2000),(61,1,1,'2022-12-31','morning',2000),(63,1,11,'2022-12-31','morning',2000);
+INSERT INTO `booking` VALUES (81,1,8,'2023-05-04','morning',2000),(82,1,2,'2023-04-03','morning',2000);
 /*!40000 ALTER TABLE `booking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -92,7 +92,7 @@ CREATE TABLE `image` (
   `image_url` varchar(500) NOT NULL COMMENT '圖片URL',
   PRIMARY KEY (`id`),
   KEY `fk_attraction_id` (`attraction_id`),
-  CONSTRAINT `fk_image_attraction_id` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`id`) ON DELETE CASCADE
+  CONSTRAINT `fk_image_attraction_id` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=329 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -129,11 +129,11 @@ CREATE TABLE `orders` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   KEY `order_id_index` (`order_id`),
-  KEY `attraction_id` (`attraction_id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`id`),
+  KEY `orders_ibfk_1` (`attraction_id`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`attraction_id`) REFERENCES `attraction` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='訂單資料表';
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='訂單資料表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,7 +142,6 @@ CREATE TABLE `orders` (
 
 LOCK TABLES `orders` WRITE;
 /*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-INSERT INTO `orders` VALUES (7,'20221222221447-1',0,8,2500,'2022-12-31','afternoon',1,'test','test@gmail.com','0958954776',0),(8,'20221222222406-1',0,11,2500,'2022-12-29','afternoon',1,'test','test@gmail.com','0911111111',0),(9,'20221222222745-1',0,7,2000,'2022-12-29','morning',1,'test','test@gmail.com','0958954776',0),(10,'20221222231629-1',0,3,2000,'2022-12-30','morning',1,'test','test@gmail.com','0958954776',0),(15,'20221230015837-1',4000,19,2000,'2023-01-07','morning',1,'test','test@gmail.com','0999999999',0),(16,'20221230015837-1',4000,2,2000,'2022-12-31','morning',1,'test','test@gmail.com','0999999999',0),(25,'20221230224945-1',2000,7,2000,'2022-12-31','morning',1,'test','test@gmail.com','0999999999',0);
 /*!40000 ALTER TABLE `orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,9 +159,9 @@ CREATE TABLE `payment` (
   `message` varchar(500) NOT NULL COMMENT '付款記錄資訊',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
-  KEY `order_id` (`order_id`),
-  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `payment_ibfk_1` (`order_id`),
+  CONSTRAINT `payment_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -171,7 +170,6 @@ CREATE TABLE `payment` (
 
 LOCK TABLES `payment` WRITE;
 /*!40000 ALTER TABLE `payment` DISABLE KEYS */;
-INSERT INTO `payment` VALUES (1,'20221222221447-1','2022-12-22 22:14:47','Success'),(2,'20221222222406-1','2022-12-22 22:24:06','Success'),(3,'20221222222745-1','2022-12-22 22:27:45','Success'),(4,'20221222231629-1','2022-12-22 23:16:29','Success'),(6,'20221230015837-1','2022-12-30 01:58:37','Success'),(15,'20221230224945-1','2022-12-30 22:49:45','Success');
 /*!40000 ALTER TABLE `payment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -187,11 +185,15 @@ CREATE TABLE `user` (
   `name` varchar(255) NOT NULL COMMENT '會員姓名',
   `email` varchar(255) NOT NULL COMMENT '會員電子信箱',
   `password` varchar(255) NOT NULL COMMENT '會員密碼',
+  `sex` varchar(1) NOT NULL DEFAULT '0',
+  `birthday` date DEFAULT NULL,
+  `phone` varchar(45) NOT NULL DEFAULT '',
+  `avatar_img_url` varchar(255) NOT NULL DEFAULT 'https://d3e6ndnmeeirod.cloudfront.net/avatars/avatar.png',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `email_index` (`email`),
   KEY `email_password_index` (`email`,`password`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='會員資料表';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='會員資料表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,7 +202,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'test','test@gmail.com','@Qwe13579'),(2,'彭彭彭','plyply@ply.com','12345678'),(4,'彭彭彭','ply@ply.com','12345678'),(6,'test2','test@outlook.com','@Qwe13579');
+INSERT INTO `user` VALUES (1,'test','test@gmail.com','@Test12345','1',NULL,'0912345678','https://d3e6ndnmeeirod.cloudfront.net/avatars/65396b1ddf654b68acb4ae70ffe3f031.jpg'),(9,'test1','test1@gmail.com','@Test12345','0',NULL,'','https://d3e6ndnmeeirod.cloudfront.net/avatars/avatar.png');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -213,4 +215,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-30 23:42:43
+-- Dump completed on 2023-04-03  1:10:06

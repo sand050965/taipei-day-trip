@@ -7,7 +7,7 @@ from models.booking_model import BookingModel as model
 from views.booking_view import BookingView as view
 
 class BookingController:
-    def getBooking(request):
+    def doBooking(request):
 
         conn = DBUtil.get_connect()
         cursor = DBUtil.get_cursor(conn)
@@ -63,7 +63,7 @@ class BookingController:
             conn.close()
 
 
-    def getBookings(request):
+    def doBookings(request):
 
         conn = DBUtil.get_connect()
         cursor = DBUtil.get_cursor(conn)

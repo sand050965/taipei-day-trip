@@ -90,6 +90,7 @@ class BookingModel:
 
         time = data["time"]
         ValidatorUtil.validate_time(time)
+        ValidatorUtil.validate_booking_date_time(date, time)
 
         price = data["price"]
         ValidatorUtil.validate_price(price)

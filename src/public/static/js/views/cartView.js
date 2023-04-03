@@ -1,3 +1,8 @@
+import {
+	bookingDateValidate,
+	bookingTimeValidate,
+} from "../utils/validatorUtil.js";
+
 export default class CartView {
 
   renderInit = (result) => {
@@ -116,7 +121,25 @@ export default class CartView {
       bookingAddress.textContent = data.attraction.address;
       bookingAddressContainer.appendChild(bookingAddress);
       bookingInfo.appendChild(bookingAddressContainer);
-      bookingItem.appendChild(bookingInfo);
+      
+      
+      const bookingValidContainer = document.createElement("div");
+      bookingValidContainer.classList.add("booking-attraction-info");
+      bookingValidContainer.classList.add("left-top");
+      const bookingValidTitle = document.createElement("span");
+      bookingValidTitle.classList.add("title");
+      bookingValidTitle.classList.add("error");
+			bookingValidTitle.textContent = "行程已失效，請刪除！";
+      bookingValidTitle.id = `booking_valid_${data.bookingId}`;
+      const bookingDateValidateResult = bookingDateValidate(data.date);
+      const bookingTimeValidateResult = bookingTimeValidate(data.date, data.time);
+      if (bookingDateValidateResult.result && bookingTimeValidateResult.result) {
+				bookingValidTitle.classList.add("none");
+      }
+      
+      bookingValidContainer.appendChild(bookingValidTitle);
+			bookingInfo.appendChild(bookingValidContainer);
+			bookingItem.appendChild(bookingInfo);
 
       const deleteImgContainer = document.createElement("div");
       deleteImgContainer.classList.add("delete");

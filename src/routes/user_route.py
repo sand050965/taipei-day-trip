@@ -15,5 +15,5 @@ def doUserAuth():
 
 
 @user_api.route("/api/user/info", methods=["GET", "POST"])
-def getUserInfo():
-   return controller.getUserInfo(request)
+def doUserInfo():
+   return controller.doUserInfo(request)

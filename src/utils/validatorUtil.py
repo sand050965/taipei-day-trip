@@ -1,5 +1,6 @@
-import os
 import re
+import time
+import datetime
 from jwt import InvalidSignatureError
 
 class ValidatorUtil:
@@ -37,7 +38,21 @@ class ValidatorUtil:
     def validate_bookingId(bookingId):
         if not re.match(r'^[+]?[1-9][0-9]*$', bookingId):
             raise ValueError("預定id輸入有誤")
-
+    
+    
+    def validate_booking_date_time(booking_date, booking_time):
+        current_datetime = datetime.datetime.now()
+        today = datetime.datetime.strptime(current_datetime.strftime('%Y-%m-%d'), '%Y-%m-%d')
+        booking_date = datetime.datetime.strptime(booking_date, '%Y-%m-%d')
+        current_hour = time.localtime()[3]
+        if (booking_date < today):
+            raise ValueError("預定日期不可早於當天日期")
+        elif (booking_date == today):
+            if ("morning".__eq__(booking_time) and current_hour > 16):
+                raise ValueError("現在時間不可晚於上半天行程結束時間")
+            elif ("afternoon".__eq__(booking_time) and current_hour > 21):
+                raise ValueError("預定時間不可晚於下半天行程結束時間")
+                
 
     def validate_name(name, isUserAuth):
         if (name == ""):
@@ -71,6 +86,14 @@ class ValidatorUtil:
     def validate_date(date):
         if (date == "" or not re.match(r'^[1-9]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$', date)):
             raise ValueError("日期有誤")
+
+
+    def validate_birthday(birthday):
+        current_datetime = datetime.datetime.now()
+        today = datetime.datetime.strptime(current_datetime.strftime('%Y-%m-%d'), '%Y-%m-%d')
+        birthday = datetime.datetime.strptime(birthday, '%Y-%m-%d')
+        if (birthday > today):
+            raise ValueError("生日不可晚於當天日期")
 
 
     def validate_time(time):

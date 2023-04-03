@@ -4,6 +4,12 @@
     url_for('static', filename='css/booking.css') }} />
   {% endblock link %}
   {% block main %}
+    <div id="preloader" class="preloader none">
+      <div id="loader" class="loader bookings-loader">
+        <span id="semiCircle" class="semi-circle"></span>
+        <span class="circle index-circle"></span>
+      </div>
+    </div>
     <div class="booking-container">
       <div class="booking-wrapper">
         <div id="bookingAttraction" class="booking bottom-line">

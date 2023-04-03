@@ -78,7 +78,7 @@ class UserController:
                     conn.close()
 
 
-    def getUserInfo(request):
+    def doUserInfo(request):
         conn = DBUtil.get_connect()
         cursor = DBUtil.get_cursor(conn)
 

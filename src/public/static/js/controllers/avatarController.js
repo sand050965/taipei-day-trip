@@ -3,7 +3,7 @@ class AvatarController {
 	resizeAvatar = (e) => {
 		const width = e.target.width;
 		const height = e.target.height;
-		if (width > height) {
+		if (width < height) {
 			e.target.classList.remove("wide-avatar-img");
 			e.target.classList.add("long-avatar-img");
 		} else {

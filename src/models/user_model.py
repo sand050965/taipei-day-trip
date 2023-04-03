@@ -19,14 +19,10 @@ class UserModel:
             INSERT INTO user ( 
                 name, 
                 email, 
-                password,
-                sex,
-                birthday,
-                phone,
-                avatarImgUrl
+                password
             ) 
             VALUES (%s, %s, %s)
-            """, (name, email, password, '0', None, '', ''))
+            """, (name, email, password))
 
 
     def getUserByEmail(cursor, request):
@@ -114,6 +110,7 @@ class UserModel:
         birthday = data["birthday"] 
         if birthday != '':
             ValidatorUtil.validate_date(birthday)
+            ValidatorUtil.validate_birthday(birthday)
         else:
             birthday = None
 

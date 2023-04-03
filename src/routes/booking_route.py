@@ -5,14 +5,14 @@ booking_api = Blueprint("booking_api", __name__)
 
 
 @booking_api.route("/api/booking", methods=["POST", "DELETE"])
-def getBooking():
-    return controller.getBooking(request)
+def doBooking():
+    return controller.doBooking(request)
 
 
 @booking_api.route("/api/bookings", methods=["GET", "DELETE"])
-def getBookings():
-    return controller.getBookings(request) 
+def doBookings():
+    return controller.doBookings(request) 
 
 @booking_api.route("/api/booking/<bookingId>", methods=["GET"])
 def getBookingByBookingId(bookingId):
-    return controller.getBookings(request, bookingId) 
+    return controller.getBookingByBookingId(request, bookingId) 
