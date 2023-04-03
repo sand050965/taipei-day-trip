@@ -82,7 +82,6 @@ export default class IndexController {
     this.page = 0;
     this.keyword = document.querySelector("#search-bar").value.trim();
     if (this.keyword === "") {
-      this.view.renderResultNotFound(true);
       return;
     }
     this.init();
