@@ -61,6 +61,7 @@ export default class BaseController {
 	};
 
 	doSignOut = () => {
+		window.location = "/";
 		const userAuth = document.querySelector("#userAuth");
 		if (!userAuth.textContent === "登出系統") {
 			return;

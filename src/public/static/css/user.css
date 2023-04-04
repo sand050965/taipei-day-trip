@@ -100,7 +100,7 @@ select {
 	border: 1px solid red;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1200px) {
 	.user-account-inputs {
 		width: 90vw;
 		margin: 0 20px;

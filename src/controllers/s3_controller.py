@@ -3,7 +3,7 @@ from models.s3_model import S3Model as model
 from views.s3_view import S3View as view
 
 class S3Controller:
-    def insertUser(request):
+    def doAvatar(request):
 
         match request.method :
             case"POST":
