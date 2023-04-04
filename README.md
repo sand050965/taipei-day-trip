@@ -33,8 +33,9 @@ Taipei-day-trip is an e-commerce website that allows you to discover attractions
 <br/>
 
 <p align="center">
-  <img width="350" src="https://github.com/sand050965/taipei-day-trip/blob/main/readme/index.png?raw=true">
-  <img width="350" src="https://github.com/sand050965/taipei-day-trip/blob/main/readme/booking.png?raw=true">
+  <img width="350" height="330" src="https://github.com/sand050965/taipei-day-trip/blob/main/readme/index.png?raw=true">
+  &nbsp; &nbsp; &nbsp;
+  <img width="350" height="330" src="https://github.com/sand050965/taipei-day-trip/blob/main/readme/booking.png?raw=true">
 </p>
 
 ## Table of Contents
