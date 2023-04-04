@@ -32,10 +32,10 @@ Taipei-day-trip is an e-commerce website that allows you to discover attractions
 <br/>
 <br/>
 
-
-  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/index.png?raw=true)
-
-  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/booking.png?raw=true)
+<p align="center">
+  <img width="350" src="https://github.com/sand050965/taipei-day-trip/blob/main/readme/index.png?raw=true">
+  <img width="350" src="https://github.com/sand050965/taipei-day-trip/blob/main/readme/booking.png?raw=true">
+</p>
 
 ## Table of Contents
 
@@ -64,24 +64,40 @@ Taipei-day-trip is an e-commerce website that allows you to discover attractions
 - Allows user to upload their own avatar image.
 - User authentication with JWT (Json Web Token).
 - Allows users to view their history orders.
+  
+  <br/>
 
   ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/preload-and-infinite-scroll.gif?raw=true)
+<br/>
+<br/>
+
 #### Third-Party Payment System
 - Online payment system with Tappay.
 #### Shopping Cart System
-- Allows user to add trip to cart.
+- Allows user to add trip to cart. 
+  
+  <br/>
 
   ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/cart-and-payment.gif?raw=true)
+<br/>
+<br/>
+
 #### Frontend
 
 - Loading animation, displayed while images are being loading.
 - RWD (Responsive Web Design).
 - Infinite scroll and attractions' image carousel.
 - Frontend is built with pure HTML, CSS, JavaScript.
+  
+  <br/>
 
   ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/preload-and-infinite-scroll.gif?raw=true)
   
+  <br/>
+
   ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/RWD.gif?raw=true)
+<br/>
+<br/>
 
 ## Architecture
 
