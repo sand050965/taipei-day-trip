@@ -2,7 +2,6 @@ class OrderView:
     def renderAllOrders(result):
         orders = []
         preOrder = ""
-        cnt = 0
         for order in result:
             if order["order_id"] != preOrder:
                 orderData = {
@@ -34,9 +33,8 @@ class OrderView:
                     "address": order["address"],
                     "image": order["image_url"]
                 }
-                orders[cnt - 1]["trip"]["attraction"].append(orderResult)
+                orders[len(orders) - 1]["trip"]["attraction"].append(orderResult)
             preOrder = order["order_id"]
-            cnt += 1
         return {"data": orders}
         
         

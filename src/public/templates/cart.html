@@ -4,6 +4,12 @@
         url_for('static', filename='css/cart.css') }} />
     {% endblock link %}
     {% block main %}
+        <div id="preloader" class="preloader none">
+            <div id="loader" class="loader cart-loader">
+                <span id="semiCircle" class="semi-circle"></span>
+                <span class="circle index-circle"></span>
+            </div>
+        </div>
         <div>
             <div id="cartBooking" class="cart-booking">
                 <div class="cart-title title">購物車</div>

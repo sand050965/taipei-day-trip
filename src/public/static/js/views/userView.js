@@ -10,7 +10,13 @@ export default class userView {
 		document.querySelector("#userAccountName").textContent = userData.name;
 		document.querySelector("#sideUserAccountName").textContent = userData.name;
 		document.querySelector("#inputName").value = userData.name;
-		document.querySelector("#inputBirthday").value = userData.birthday;
+		if (userData.birthday) {
+			document.querySelector("#inputBirthday").value = new Date(
+				userData.birthday
+			)
+				.toISOString()
+				.substring(0, 10);
+		}
 		document
 			.querySelector("#inputBirthday")
 			.setAttribute("max", `${year}-${month}-${day}`);
@@ -33,7 +39,6 @@ export default class userView {
 		}
 	};
 
-
 	renderPreloader = (isRendered) => {
 		const preloader = document.querySelector("#preloader");
 		if (isRendered) {
@@ -42,7 +47,6 @@ export default class userView {
 			preloader.classList.add("none");
 		}
 	};
-
 
 	renderFileUploadError = (isShow, originAvatarURL) => {
 		document.querySelector("#userAccountAvatarImg").src = originAvatarURL;
@@ -54,7 +58,6 @@ export default class userView {
 		}
 	};
 
-
 	renderChangeAvatar = (file) => {
 		document.querySelector("#userAccountAvatarImg").src =
 			URL.createObjectURL(file);
@@ -62,12 +65,10 @@ export default class userView {
 			URL.createObjectURL(file);
 	};
 
-
 	renderUploadAvatar = (avatarImgUrl) => {
 		document.querySelector("#userAccountAvatarImg").src = avatarImgUrl;
 		document.querySelector("#sideUserAccountAvatarImg").src = avatarImgUrl;
 	};
-
 
 	renderValidateUserInput = (id, checkResult, isReValidate) => {
 		if (checkResult.result && isReValidate) {
@@ -81,7 +82,6 @@ export default class userView {
 		}
 	};
 
-
 	renderSaveUserResult = (result) => {
 		if (result.ok) {
 			document.querySelector("#success").classList.remove("none");
@@ -91,7 +91,6 @@ export default class userView {
 			document.querySelector("#success").classList.add("none");
 		}
 	};
-	
 
 	closeSideMenu = () => {
 		const sideMenu = document.querySelector("#sideMenu");
@@ -107,7 +106,6 @@ export default class userView {
 			sideMask.classList.add("none");
 		}
 	};
-
 
 	reset = () => {
 		document.querySelector("#fileError").classList.add("none");

@@ -170,7 +170,7 @@ main {
   background-color: #d6d6d6;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1200px) {
   nav .navigation-bar {
     grid-template-columns: auto 50px 50px 50px;
   }

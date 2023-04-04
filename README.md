@@ -1,23 +1,37 @@
 # taipei-day-trip
 
+<p align="center">
+  <img width="350" src="https://github.com/sand050965/taipei-day-trip/blob/main/readme/logo.png?raw=true">
+</p>
 Taipei-day-trip is an e-commerce website that allows you to discover attractions and book amazing one day tour in Taipei city.
+<br/>
+<br/>
+🔗 Website URL: https://triptaipei.online/
+<br/>
+<br/>
+📄 Swagger API documentation: https://app.swaggerhub.com/apis-docs/padax/taipei-day-trip/1.1.0
+<br/>
+<br/>
+📊 Figma Prototype: https://www.figma.com/file/MZkYBH31H5gyLoZoZq116j/Taipei-Trip-%E5%8F%B0%E5%8C%97%E4%B8%80%E6%97%A5%E9%81%8A-2.0
+<br/>
+<br/>
+<b>🧑‍💻 Login With:</b>
+<br/>
+&nbsp; &nbsp; Test Account: test@gmail.com
+<br/>
+&nbsp; &nbsp; Test Password: @Test12345
+<br/>
+<br/>
+<b>💳 Make Payment With Test Credit Card:</b>
+<br/>
+&nbsp; &nbsp; Card Number: 4242-4242-4242-4242
+<br/>
+&nbsp; &nbsp; Card Expiration Date: 12/33
+<br/>
+&nbsp; &nbsp; Card CVV: 123
+<br/>
+<br/>
 
-This wesite is built with pure HTML, CSS, JavaScript and Python Flask, designed according to this ![Figma Prototype](https://www.figma.com/file/MZkYBH31H5gyLoZoZq116j/Taipei-Trip-%E5%8F%B0%E5%8C%97%E4%B8%80%E6%97%A5%E9%81%8A-2.0) and ![Swagger API documentation](https://app.swaggerhub.com/apis-docs/padax/taipei-day-trip/1.1.0).
-
-
-Test account: test@gmail.com
-<br/>
-Test password: @Xyz123
-<br/>
-Test Credit Card Number: 4242-4242-4242-4242
-<br/>
-Date: 04/26
-<br/>
-CVV: 123
-<br/>
-🔗Website URL: https://triptaipei.online/
-<br/>
-<br/>
 
   ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/index.png?raw=true)
 
@@ -44,15 +58,30 @@ CVV: 123
 
 ## Main Features
 
-- Provides member system for user to login and signup.
-- User authentication with Json Web Token.
-- Use can use keyword to search for related attractions.
-- Responsive Web Design.
-- Infinite scroll and attractions' image carousel.
-- Loading animation, displayed while images are being loading.
-- Shopping cart system.
-- Online payment system with Tappay.
+#### Member System
+- Basic signup, login, and logout.
+- User can view and modify their personal information and avatar image.
+- Allows user to upload their own avatar image.
+- User authentication with JWT (Json Web Token).
 - Allows users to view their history orders.
+
+  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/preload-and-infinite-scroll.gif?raw=true)
+#### Third-Party Payment System
+- Online payment system with Tappay.
+#### Shopping Cart System
+- Allows user to add trip to cart.
+
+  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/cart-and-payment.gif?raw=true)
+#### Frontend
+
+- Loading animation, displayed while images are being loading.
+- RWD (Responsive Web Design).
+- Infinite scroll and attractions' image carousel.
+- Frontend is built with pure HTML, CSS, JavaScript.
+
+  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/preload-and-infinite-scroll.gif?raw=true)
+  
+  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/RWD.gif?raw=true)
 
 ## Architecture
 
@@ -89,7 +118,7 @@ CVV: 123
 - HTTP & HTTPS
 - Domain Name System (DNS)
 - NGINX
-- SSL (Let's Encrypt)
+- SSL (ZeroSSL)
 
 ### CI / CD
 
@@ -100,6 +129,10 @@ CVV: 123
   - Jenkins
   - AWS CodeDeploy
 
+### Test
+
+- Unit test: Pytest
+
 ### Third Party Library
 
 - TapPay
@@ -107,7 +140,7 @@ CVV: 123
 ### Version Control
 
 - Git / GitHub
-- Dcoker Hub
+- Docker Hub
 
 ### Key Points
 
@@ -122,13 +155,14 @@ CVV: 123
 
 ## Frontend Technique
 
-- JinJa2 template
 - HTML
 - CSS
 - JavaScript
+- JinJa2 template
 
 ## Contact
 
 🙂Hsien-Yu, Yang
 <br/>
+
 📩Email: sand050965@gmail.com
