@@ -62,9 +62,9 @@ Taipei-day-trip is an e-commerce website that allows you to discover attractions
 #### Member System
 - Basic signup, login, and logout.
 - User can view and modify their personal information and avatar image.
-- Allows user to upload their own avatar image.
+- Allow user to upload their own avatar image.
 - User authentication with JWT (Json Web Token).
-- Allows users to view their history orders.
+- Allow users to view their history orders.
   
   <br/>
 
@@ -75,7 +75,7 @@ Taipei-day-trip is an e-commerce website that allows you to discover attractions
 #### Third-Party Payment System
 - Online payment system with Tappay.
 #### Shopping Cart System
-- Allows user to add trip to cart. 
+- Allow user to add trip to cart. 
   
   <br/>
 
@@ -87,7 +87,7 @@ Taipei-day-trip is an e-commerce website that allows you to discover attractions
 
 - Loading animation, displayed while images are being loading.
 - RWD (Responsive Web Design).
-- Infinite scroll and attractions' image carousel.
+- Infinite scroll and attractions' images carousel.
 - Frontend is built with pure HTML, CSS, JavaScript.
   
   <br/>
