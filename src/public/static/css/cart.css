@@ -51,6 +51,12 @@ input[type="checkbox"]:checked {
   border-bottom: 1px solid #e8e8e8;
 }
 
+.booking-content {
+  border-top: 2px solid #e8e8e8;
+  border-bottom: 2px solid #e8e8e8;
+  min-height: 30vh;
+}
+
 .booking-item {
   position: relative;
   padding: 30px;
