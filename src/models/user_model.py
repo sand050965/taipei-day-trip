@@ -1,5 +1,7 @@
+from flask_bcrypt import Bcrypt
 from utils.requestUtil import RequestUtil
 from utils.validatorUtil import ValidatorUtil
+bcrypt = Bcrypt()
 
 class UserModel:
 
@@ -13,6 +15,8 @@ class UserModel:
 
         password = data["password"]
         ValidatorUtil.validate_password(password)
+        
+        hashed_password = bcrypt.generate_password_hash(password=password)
 
         cursor.execute(
             """
@@ -22,7 +26,7 @@ class UserModel:
                 password
             ) 
             VALUES (%s, %s, %s)
-            """, (name, email, password))
+            """, (name, email, hashed_password))
 
 
     def getUserByEmail(cursor, request):
@@ -55,16 +59,22 @@ class UserModel:
 
         cursor.execute(
             """
-            SELECT id 
+            SELECT id, password
             FROM user 
             WHERE email = %s 
-            AND password = %s
-            """, (email, password))
-
+            """, (email, ))
+        
         result = cursor.fetchone()
+        hashed_password = result["password"]
+        check_password = bcrypt.check_password_hash(hashed_password, password)
+        
+        if not check_password:
+            raise ValueError
+        
         ValidatorUtil.validate_user(result)
         result["email"] = email
         return result
+
 
 
     def getUserInfo(cursor, request):

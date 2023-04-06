@@ -8,12 +8,14 @@ export default class CartView {
 		this.reset();
 
 		const noBooking = document.querySelector("#noBooking");
+		const bookingContent = document.querySelector("#bookingContent");
 		const bookingConfirm = document.querySelector("#bookingConfirm");
 		const footer = document.querySelector("footer");
 
 		if (result.data.length === 0) {
 			noBooking.classList.remove("none");
 			noBooking.classList.add("no-booking");
+			bookingContent.classList.add("none");;
 			bookingConfirm.classList.add("none");
 			bookingConfirm.classList.remove("booking");
 			footer.classList.remove("common-footer");
@@ -28,7 +30,6 @@ export default class CartView {
 		footer.classList.add("common-footer");
 		footer.classList.remove("no-booking-footer");
 
-		const bookingContent = document.querySelector("#bookingContent");
 		bookingContent.classList.add("booking-content");
 
 		for (const data of result.data) {
