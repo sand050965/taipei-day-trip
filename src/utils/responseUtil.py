@@ -10,7 +10,8 @@ class ResponseUtil:
         response.set_cookie(
             key="token",
             value=token,
-            max_age=604800
+            max_age=604800,
+            httponly = True
         )
 
         return response

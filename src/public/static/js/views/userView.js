@@ -84,6 +84,9 @@ export default class userView {
 
 	renderSaveUserResult = (result) => {
 		if (result.ok) {
+			const username = document.querySelector("#inputName").value;
+			document.querySelector("#userAccountName").innerText = username;
+			document.querySelector("#sideUserAccountName").innerText = username;
 			document.querySelector("#success").classList.remove("none");
 			document.querySelector("#error").classList.add("none");
 		} else {
