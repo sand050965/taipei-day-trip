@@ -68,7 +68,7 @@ Taipei-day-trip is an e-commerce website that allows you to discover attractions
   
   <br/>
 
-  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/preload-and-infinite-scroll.gif?raw=true)
+  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/user.gif?raw=true)
 <br/>
 <br/>
 
