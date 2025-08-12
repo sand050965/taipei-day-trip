@@ -3,10 +3,8 @@
 <p align="center">
   <img width="350" src="https://github.com/sand050965/taipei-day-trip/blob/main/readme/logo.png?raw=true">
 </p>
-Taipei-day-trip is an e-commerce website that allows you to discover attractions and book amazing one day tour in Taipei city.
+Taipei-day-trip is an e-commerce tourism platform enabling users to discover attractions, plan itineraries, and book one-day tours in Taipei with integrated booking and payment features.
 <br/>
-<br/>
-🔗 Website URL: https://triptaipei.online/
 <br/>
 <br/>
 📄 Swagger API documentation: https://app.swaggerhub.com/apis-docs/padax/taipei-day-trip/1.1.0
@@ -68,7 +66,7 @@ Taipei-day-trip is an e-commerce website that allows you to discover attractions
   
   <br/>
 
-  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/preload-and-infinite-scroll.gif?raw=true)
+  ![image](https://github.com/sand050965/taipei-day-trip/blob/main/readme/user.gif?raw=true)
 <br/>
 <br/>
 
